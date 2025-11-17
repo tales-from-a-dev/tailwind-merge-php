@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
+use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
+
 /**
  * @internal
  */
-class AnyValueValidator implements \TailwindMerge\Contracts\ValidatorContract
+class AnyValueValidator implements ValidatorContract
 {
     public static function validate(string $value): bool
     {

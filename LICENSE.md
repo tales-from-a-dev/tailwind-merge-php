@@ -1,6 +1,7 @@
 MIT License
 
-Copyright (c) Sandro Gehri <sandrogehri@gmail.com>
+Copyright (c) 2023 Sandro Gehri <sandrogehri@gmail.com>
+Copyright (c) 2025 Tales from a Dev <romain@talesfroma.dev>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

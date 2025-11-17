@@ -2,8 +2,12 @@ includes:
     - phpstan-baseline.neon
 
 parameters:
-    level: max
     paths:
         - src
+
+    fileExtensions:
+    	- php
+
+    level: max
 
     reportUnmatchedIgnoredErrors: false
