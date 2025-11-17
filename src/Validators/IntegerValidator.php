@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
-use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
+use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
 
 /**
  * @internal
  */
-class IntegerValidator implements \TailwindMerge\Contracts\ValidatorContract
+class IntegerValidator implements ValidatorContract
 {
-    use ValidatesArbitraryValue;
-
     public static function validate(string $value): bool
     {
         return self::isIntegerOnly($value);

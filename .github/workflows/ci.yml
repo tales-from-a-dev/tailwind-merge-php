@@ -1,0 +1,47 @@
+name: ci
+
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+    name: tests (PHP ${{ matrix.php-version }})
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 10
+      fail-fast: false
+      matrix:
+        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 'Set up PHP'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: xdebug
+          tools: composer:2.8, flex
+
+      - if: matrix.minimum-stability
+        name: 'Set minimum-stability for Composer'
+        run: composer config minimum-stability ${{ matrix.minimum-stability }}
+
+      - name: 'Install Composer dependencies'
+        env:
+          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
+        uses: 'ramsey/composer-install@v3'
+        with:
+          composer-options: '--optimize-autoloader'
+
+      - name: 'Run PHP-CS-Fixer'
+        run: composer test:lint
+
+      - name: 'Run PHPStan'
+        run: composer test:types
+
+#      - name: 'Run PHPUnit'
+#        run: composer test

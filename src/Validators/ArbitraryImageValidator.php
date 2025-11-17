@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
+use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
 use TalesFromADev\TailwindMerge\Support\Str;
 use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 
 /**
  * @internal
  */
-class ArbitraryImageValidator implements \TailwindMerge\Contracts\ValidatorContract
+class ArbitraryImageValidator implements ValidatorContract
 {
     use ValidatesArbitraryValue;
 

@@ -1,12 +1,13 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/gehrisandro/tailwind-merge-php/main/art/example.png" width="600" alt="TailwindMerge for PHP">
-    <p align="center">
-        <a href="https://github.com/gehrisandro/tailwind-merge-php/actions"><img alt="GitHub Workflow Status (main)" src="https://img.shields.io/github/actions/workflow/status/gehrisandro/tailwind-merge-php/tests.yml?branch=main&label=tests&style=round-square"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-php"><img alt="Total Downloads" src="https://img.shields.io/packagist/dt/gehrisandro/tailwind-merge-php"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-php"><img alt="Latest Version" src="https://img.shields.io/packagist/v/gehrisandro/tailwind-merge-php"></a>
-        <a href="https://packagist.org/packages/gehrisandro/tailwind-merge-php"><img alt="License" src="https://img.shields.io/github/license/gehrisandro/tailwind-merge-php"></a>
-    </p>
-</p>
+> [!NOTE]
+> This project is a fork from [tailwind-merge](https://github.com/gehrisandro/tailwind-merge-php) by [gehrisandro](https://github.com/gehrisandro).
+
+------
+
+[![Tests](https://img.shields.io/github/actions/workflow/status/tales-from-a-dev/tailwind-merge-php/ci.yml?label=tests&style=for-the-badge)](https://github.com/tales-from-a-dev/flowbite-bundle/actions/workflows/ci.yml)
+![PHP Version](https://img.shields.io/badge/php->=8.1-4f5b93.svg?style=for-the-badge)
+![Tailwind Version](https://img.shields.io/badge/tailwind->=3.0-00bcff.svg?style=for-the-badge)
+[![Packagist Version](https://img.shields.io/packagist/v/tales-from-a-dev/tailwind-merge-php?style=for-the-badge)](https://packagist.org/packages/tales-from-a-dev/twig-tailwind-extra)
+[![License](https://img.shields.io/github/license/tales-from-a-dev/twig-tailwind-extra?style=for-the-badge)](https://github.com/tales-from-a-dev/twig-tailwind-extra/blob/main/LICENSE)
 
 ------
 
@@ -14,12 +15,7 @@
 
 A PHP port of [tailwind-merge](https://github.com/dcastil/tailwind-merge) by [dcastil](https://github.com/dcastil).
 
-Supports Tailwind v3.0 up to v3.4.
-
-If you find this package helpful, please consider sponsoring the maintainer:
-- Sandro Gehri: **[github.com/sponsors/gehrisandro](https://github.com/sponsors/gehrisandro)**
-
-> If you are using **Laravel**, you can use the [TailwindMerge for Laravel](https://github.com/gehrisandro/tailwind-merge-laravel)
+Supports Tailwind **v3.0** and **v4.0**.
 
 ## Table of Contents
 - [Get Started](#get-started)
@@ -35,13 +31,13 @@ If you find this package helpful, please consider sponsoring the maintainer:
 First, install TailwindMerge via the [Composer](https://getcomposer.org/) package manager:
 
 ```bash
-composer require gehrisandro/tailwind-merge-php
+composer require tales-from-a-dev/tailwind-merge-php
 ```
 
 Then, use the `TailwindMerge` class to merge your Tailwind CSS classes:
 
 ```php
-use TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 $tw = TailwindMerge::instance();
 
@@ -51,7 +47,7 @@ $tw->merge('text-red-500', 'text-blue-500'); // 'text-blue-500'
 You can adjust the configuration of `TailwindMerge` by using the factory to create a new instance:
 
 ```php
-use TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 $instance = TailwindMerge::factory()
     ->withConfiguration([
@@ -68,7 +64,7 @@ For more information on how to configure `TailwindMerge`, see the [Configuration
 `TailwindMerge` is not only capable of resolving conflicts between basic Tailwind CSS classes, but also handles more complex scenarios:
 
 ```php
-use TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 $tw = TailwindMerge::instance();
 
@@ -142,12 +138,12 @@ If some of these points don't apply to you, you need to customize the configurat
 This is an example to add a custom font size of "very-large":
 ```php
 TailwindMerge::factory()->withConfiguration([
-        'classGroups' => [
-            'font-size' => [
-                ['text' => ['very-large']]
-            ],
+    'classGroups' => [
+        'font-size' => [
+            ['text' => ['very-large']],
         ],
-    ])->make();
+    ],
+])->make();
 ```
 
 For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/v1.14.0/docs/configuration.md).

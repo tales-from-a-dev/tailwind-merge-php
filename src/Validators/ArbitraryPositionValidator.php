@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
+use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
 use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 
 /**
  * @internal
  */
-class ArbitraryPositionValidator implements \TailwindMerge\Contracts\ValidatorContract
+class ArbitraryPositionValidator implements ValidatorContract
 {
     use ValidatesArbitraryValue;
 
