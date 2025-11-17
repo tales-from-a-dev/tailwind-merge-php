@@ -1,9 +1,9 @@
 <?php
 
-namespace TailwindMerge\Validators;
+namespace TalesFromADev\TailwindMerge\Validators;
 
-use TailwindMerge\Support\Collection;
-use TailwindMerge\Support\Str;
+use TalesFromADev\TailwindMerge\Support\Collection;
+use TalesFromADev\TailwindMerge\Support\Str;
 
 /**
  * @internal

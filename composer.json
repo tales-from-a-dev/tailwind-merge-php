@@ -1,5 +1,5 @@
 {
-    "name": "gehrisandro/tailwind-merge-php",
+    "name": "tales-from-a-dev/tailwind-merge-php",
     "description": "TailwindMerge for PHP merges multiple Tailwind CSS classes by automatically resolving conflicts between them",
     "keywords": ["php", "tailwindcss", "merge", "classes"],
     "license": "MIT",
@@ -26,7 +26,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TailwindMerge\\": "src/"
+            "TalesFromADev\\TailwindMerge\\": "src/"
         },
         "files": [
             "src/TailwindMerge.php"
@@ -34,7 +34,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "tests/"
+            "TalesFromADev\\TailwindMerge\\Tests\\": "tests/"
         }
     },
     "minimum-stability": "dev",

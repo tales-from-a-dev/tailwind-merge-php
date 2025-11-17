@@ -1,6 +1,6 @@
 <?php
 
-namespace TailwindMerge\Contracts;
+namespace TalesFromADev\TailwindMerge\Contracts;
 
 interface TailwindMergeContract
 {

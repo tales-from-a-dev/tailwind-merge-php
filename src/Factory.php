@@ -1,9 +1,9 @@
 <?php
 
-namespace TailwindMerge;
+namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
-use TailwindMerge\Support\Config;
+use TalesFromADev\TailwindMerge\Support\Config;
 
 final class Factory
 {

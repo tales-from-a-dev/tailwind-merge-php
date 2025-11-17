@@ -1,8 +1,8 @@
 <?php
 
-namespace TailwindMerge\Validators;
+namespace TalesFromADev\TailwindMerge\Validators;
 
-use TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
+use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 
 /**
  * @internal

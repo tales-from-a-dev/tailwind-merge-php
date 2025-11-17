@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\TailwindMerge;
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 it('handles simple conflicts with arbitrary values correctly', function (string $input, string $output) {
     expect(TailwindMerge::instance()->merge($input))

@@ -1,6 +1,6 @@
 <?php
 
-namespace TailwindMerge\Support;
+namespace TalesFromADev\TailwindMerge\Support;
 
 class Str
 {

@@ -1,9 +1,11 @@
 <?php
 
-use TailwindMerge\Support\ClassMap;
-use TailwindMerge\Support\Collection;
-use TailwindMerge\Support\Config;
-use TailwindMerge\ValueObjects\ClassPartObject;
+namespace TalesFromADev\TailwindMerge\Tests\Unit;
+
+use TalesFromADev\TailwindMerge\Support\ClassMap;
+use TalesFromADev\TailwindMerge\Support\Collection;
+use TalesFromADev\TailwindMerge\Support\Config;
+use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
 
 test('class map has correct class groups at first part', function () {
     $classMap = ClassMap::create(Config::getDefaultConfig());

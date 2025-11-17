@@ -1,9 +1,9 @@
 <?php
 
-namespace TailwindMerge\Validators;
+namespace TalesFromADev\TailwindMerge\Validators;
 
-use TailwindMerge\Support\Str;
-use TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
+use TalesFromADev\TailwindMerge\Support\Str;
+use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 
 /**
  * @internal

@@ -1,7 +1,9 @@
 <?php
 
-use TailwindMerge\Support\Config;
-use TailwindMerge\TailwindMerge;
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\Support\Config;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 test('theme scale can be extended', function ($input, $output) {
     $instance = TailwindMerge::factory()

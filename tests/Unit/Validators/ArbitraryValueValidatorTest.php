@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\Validators\ArbitraryValueValidator;
+namespace TalesFromADev\TailwindMerge\Tests\Unit\Validators;
+
+use TalesFromADev\TailwindMerge\Validators\ArbitraryValueValidator;
 
 test('is arbitrary value', function ($input, $output) {
     expect(ArbitraryValueValidator::validate($input))->toBe($output);
