@@ -10,7 +10,7 @@ namespace TalesFromADev\TailwindMerge\Support;
  *
  * @internal
  */
-class Collection
+final class Collection
 {
     /**
      * @var array<TKey, TValue>
@@ -193,10 +193,5 @@ class Collection
     public function filter(): self
     {
         return new self(array_filter($this->items));
-    }
-
-    public function dd(): void
-    {
-        dd($this->items);
     }
 }

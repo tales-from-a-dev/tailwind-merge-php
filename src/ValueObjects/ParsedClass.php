@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
-class ParsedClass
+final class ParsedClass
 {
     /**
      * @param array<array-key, string> $modifiers

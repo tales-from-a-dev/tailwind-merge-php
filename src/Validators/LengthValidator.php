@@ -11,7 +11,7 @@ use TalesFromADev\TailwindMerge\Support\Str;
 /**
  * @internal
  */
-class LengthValidator implements ValidatorContract
+final class LengthValidator implements ValidatorContract
 {
     final public const FRACTION_REGEX = '/^\d+\/\d+$/';
 

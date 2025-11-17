@@ -10,7 +10,7 @@ use TalesFromADev\TailwindMerge\Support\Str;
 /**
  * @internal
  */
-class TshirtSizeValidator implements ValidatorContract
+final class TshirtSizeValidator implements ValidatorContract
 {
     final public const T_SHIRT_UNIT_REGEX = '/^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/';
 

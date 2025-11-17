@@ -8,7 +8,7 @@ use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassValidatorObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
-class ClassMap
+final class ClassMap
 {
     final public const CLASS_PART_SEPARATOR = '-';
 

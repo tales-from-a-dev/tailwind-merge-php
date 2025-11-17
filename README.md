@@ -1,7 +1,5 @@
 > [!NOTE]
-> This project is a fork from [tailwind-merge](https://github.com/gehrisandro/tailwind-merge-php) by [gehrisandro](https://github.com/gehrisandro).
-
-------
+> This project is a fork from [tailwind-merge](https://github.com/gehrisandro/tailwind-merge-php) by [Sandro Gehri](https://github.com/gehrisandro).
 
 [![Tests](https://img.shields.io/github/actions/workflow/status/tales-from-a-dev/tailwind-merge-php/ci.yml?label=tests&style=for-the-badge)](https://github.com/tales-from-a-dev/flowbite-bundle/actions/workflows/ci.yml)
 ![PHP Version](https://img.shields.io/badge/php->=8.1-4f5b93.svg?style=for-the-badge)
@@ -152,6 +150,13 @@ For a more detailed explanation of the configuration options, visit the [origina
 
 Thank you for considering contributing to `TailwindMerge for PHP`! The contribution guide can be found in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
----
+## Credits
 
-TailwindMerge for PHP is an open-sourced software licensed under the **[MIT license](https://opensource.org/licenses/MIT)**.
+* [Sandro Gehri](https://github.com/gehrisandro)
+* [Romain Monteil](https://github.com/ker0x)
+* [All contributors](https://github.com/talesfromadev/twig-tailwind-extra/graphs/contributors)
+
+## License
+
+This package is under the MIT license.  
+For the whole copyright, see the [LICENSE](LICENSE) file distributed with this source code.

@@ -10,7 +10,7 @@ use TalesFromADev\TailwindMerge\Support\Str;
 /**
  * @internal
  */
-class ArbitraryValueValidator implements ValidatorContract
+final class ArbitraryValueValidator implements ValidatorContract
 {
     final public const ARBITRARY_VALUE_REGEX = '/^\[(?:([a-z-]+):)?(.+)\]$/i';
 

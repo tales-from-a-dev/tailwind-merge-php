@@ -14,7 +14,7 @@ jobs:
       max-parallel: 10
       fail-fast: false
       matrix:
-        php-version: [ '8.1', '8.2', '8.3', '8.4' ]
+        php-version: [ '8.2', '8.3', '8.4' ]
 
     steps:
       - uses: actions/checkout@v4
@@ -24,15 +24,9 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: xdebug
-          tools: composer:2.8, flex
-
-      - if: matrix.minimum-stability
-        name: 'Set minimum-stability for Composer'
-        run: composer config minimum-stability ${{ matrix.minimum-stability }}
+          tools: composer
 
       - name: 'Install Composer dependencies'
-        env:
-          SYMFONY_REQUIRE: ${{ matrix.symfony-version }}
         uses: 'ramsey/composer-install@v3'
         with:
           composer-options: '--optimize-autoloader'
@@ -43,5 +37,5 @@ jobs:
       - name: 'Run PHPStan'
         run: composer test:types
 
-#      - name: 'Run PHPUnit'
-#        run: composer test
+      - name: 'Run PHPUnit'
+        run: composer test

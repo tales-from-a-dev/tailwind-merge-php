@@ -9,7 +9,7 @@ use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
 /**
  * @internal
  */
-class AnyValueValidator implements ValidatorContract
+final class AnyValueValidator implements ValidatorContract
 {
     public static function validate(string $value): bool
     {

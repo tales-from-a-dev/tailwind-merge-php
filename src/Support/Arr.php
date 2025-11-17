@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-class Arr
+/**
+ * @internal
+ */
+final class Arr
 {
     /**
      * @param array<array-key, mixed> $array
@@ -23,7 +26,7 @@ class Arr
             } else {
                 $values = 1 === $depth
                     ? array_values($item)
-                    : static::flatten($item, $depth - 1);
+                    : self::flatten($item, $depth - 1);
 
                 foreach ($values as $value) {
                     $result[] = $value;

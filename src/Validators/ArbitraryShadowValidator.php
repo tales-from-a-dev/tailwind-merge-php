@@ -11,7 +11,7 @@ use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 /**
  * @internal
  */
-class ArbitraryShadowValidator implements ValidatorContract
+final class ArbitraryShadowValidator implements ValidatorContract
 {
     use ValidatesArbitraryValue;
 

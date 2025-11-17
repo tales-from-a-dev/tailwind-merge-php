@@ -4,15 +4,29 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Tests\Feature;
 
+use PHPUnit\Framework\TestCase;
 use TalesFromADev\TailwindMerge\Support\Config;
 
-test('default config has correct types', function () {
-    $defaultConfig = Config::getDefaultConfig();
+final class DefaultConfigTest extends TestCase
+{
+    public function testDefaultConfigHasCorrectTypes(): void
+    {
+        $defaultConfig = Config::getDefaultConfig();
 
-    expect($defaultConfig)
-        ->not->toHaveKey('nonExistent')
-        ->cacheSize->toBe(500)
-        ->classGroups->display->{0}->toBe('block')
-        ->classGroups->overflow->{0}->overflow->{0}->toBe('auto')
-        ->classGroups->overflow->{0}->not->toHaveKey('nonExistent');
-});
+        $this->assertArrayNotHasKey('nonExistent', $defaultConfig);
+
+        $this->assertArrayHasKey('cacheSize', $defaultConfig);
+        $this->assertSame(500, $defaultConfig['cacheSize']);
+
+        $this->assertArrayHasKey('classGroups', $defaultConfig);
+        $this->assertIsArray($defaultConfig['classGroups']);
+
+        $this->assertArrayHasKey('display', $defaultConfig['classGroups']);
+        $this->assertIsArray($defaultConfig['classGroups']['display']);
+        $this->assertSame('block', $defaultConfig['classGroups']['display'][0]);
+
+        $this->assertArrayHasKey('overflow', $defaultConfig['classGroups']);
+        $this->assertIsArray($defaultConfig['classGroups']['overflow']);
+        $this->assertSame('auto', $defaultConfig['classGroups']['overflow'][0]['overflow'][0]);
+    }
+}
