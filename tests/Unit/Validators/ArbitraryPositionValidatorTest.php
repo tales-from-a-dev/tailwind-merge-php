@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Tests\Unit\Validators;
 
 use TalesFromADev\TailwindMerge\Validators\ArbitraryPositionValidator;

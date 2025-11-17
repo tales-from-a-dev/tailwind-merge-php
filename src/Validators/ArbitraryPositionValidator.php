@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Validators;
 
 use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;

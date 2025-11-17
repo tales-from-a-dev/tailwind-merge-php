@@ -1,16 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
 class ThemeGetter
 {
     public function __construct(
-        public string $key
+        public string $key,
     ) {
     }
 
     /**
-     * @param  array<string, array<string, mixed>>  $theme
+     * @param array<string, array<string, mixed>> $theme
+     *
      * @return array<string, mixed>
      */
     public function get(array $theme): array

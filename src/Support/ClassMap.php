@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Support;
 
 use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
@@ -11,7 +13,7 @@ class ClassMap
     final public const CLASS_PART_SEPARATOR = '-';
 
     /**
-     * @param  array{cacheSize: int, prefix: ?string, theme: array<string, mixed>, classGroups: array<string, mixed>,conflictingClassGroups: array<string, array<int, string>>, conflictingClassGroupModifiers: array<string, array<int, string>>}  $config
+     * @param array{cacheSize: int, prefix: ?string, theme: array<string, mixed>, classGroups: array<string, mixed>,conflictingClassGroups: array<string, array<int, string>>, conflictingClassGroupModifiers: array<string, array<int, string>>} $config
      */
     public static function create(array $config): ClassPartObject
     {
@@ -33,23 +35,24 @@ class ClassMap
     }
 
     /**
-     * @param  array<string, mixed>  $classGroupEntries
+     * @param array<string, mixed> $classGroupEntries
+     *
      * @return array<string, mixed>
      */
     private static function getPrefixedClassGroupEntries(array $classGroupEntries, ?string $prefix): array
     {
-        if (! $prefix) {
+        if (!$prefix) {
             return $classGroupEntries;
         }
 
         // @phpstan-ignore-next-line
         return Collection::make($classGroupEntries)->mapWithKeys(function (array $classGroup, string $classGroupId) use ($prefix): array {
             $prefixedClassGroup = Collection::make($classGroup)->map(function (string|array $classDefinition) use ($prefix): string|array {
-                if (is_string($classDefinition)) {
+                if (\is_string($classDefinition)) {
                     return $prefix.$classDefinition;
                 }
 
-                if (is_array($classDefinition)) {
+                if (\is_array($classDefinition)) {
                     return Collection::make($classDefinition)->mapWithKeys(fn (array $value, string $key): array => [$prefix.$key => $value])->all();
                 }
 
@@ -63,8 +66,8 @@ class ClassMap
     public static function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classGroup as $classDefinition) {
-            if (is_string($classDefinition)) {
-                $classPartObjectToEdit = $classDefinition === '' ? $classPartObject : self::getPart($classPartObject, $classDefinition);
+            if (\is_string($classDefinition)) {
+                $classPartObjectToEdit = '' === $classDefinition ? $classPartObject : self::getPart($classPartObject, $classDefinition);
                 $classPartObjectToEdit->classGroupId = $classGroupId;
 
                 continue;
@@ -81,7 +84,7 @@ class ClassMap
                 continue;
             }
 
-            if (is_callable($classDefinition)) {
+            if (\is_callable($classDefinition)) {
                 $classPartObject->validators[] = new ClassValidatorObject(
                     classGroupId: $classGroupId,
                     validator: $classDefinition,
@@ -111,7 +114,7 @@ class ClassMap
         $currentClassPartObject = $classPartObject;
 
         foreach (explode(self::CLASS_PART_SEPARATOR, $path) as $pathPart) {
-            if (! isset($currentClassPartObject->nextPart[$pathPart])) {
+            if (!isset($currentClassPartObject->nextPart[$pathPart])) {
                 $currentClassPartObject->nextPart[$pathPart] = new ClassPartObject();
             }
 

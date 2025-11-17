@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Tests\Feature;
 
 use Psr\SimpleCache\CacheInterface;
@@ -39,7 +41,7 @@ it('does cache the result', function () {
         ->misses->toBe(2);
 });
 
-class FakeCache implements CacheInterface
+class CacheTest implements CacheInterface
 {
     private array $cache = [];
 
@@ -49,13 +51,13 @@ class FakeCache implements CacheInterface
 
     public function get(string $key, mixed $default = null): mixed
     {
-        if (array_key_exists($key, $this->cache)) {
-            $this->hits++;
+        if (\array_key_exists($key, $this->cache)) {
+            ++$this->hits;
 
             return $this->cache[$key];
         }
 
-        $this->misses++;
+        ++$this->misses;
 
         return $default;
     }
@@ -98,10 +100,10 @@ class FakeCache implements CacheInterface
 
     public function has(string $key): bool
     {
-        $found = array_key_exists($key, $this->cache);
+        $found = \array_key_exists($key, $this->cache);
 
-        if (! $found) {
-            $this->misses++;
+        if (!$found) {
+            ++$this->misses;
         }
 
         return $found;

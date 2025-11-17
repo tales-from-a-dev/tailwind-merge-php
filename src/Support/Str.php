@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Support;
 
 class Str
 {
     public static function hasMatch(string $pattern, string $value): bool
     {
-        return preg_match($pattern, $value) === 1;
+        return 1 === preg_match($pattern, $value);
     }
 
     public static function of(string $string): Stringable
@@ -23,7 +25,7 @@ class Str
     {
         preg_match($pattern, $subject, $matches);
 
-        if ($matches === []) {
+        if ([] === $matches) {
             return '';
         }
 
@@ -32,13 +34,13 @@ class Str
 
     public static function before(string $subject, string $search): string
     {
-        if ($search === '') {
+        if ('' === $search) {
             return $subject;
         }
 
         $result = strstr($subject, $search, true);
 
-        return $result === false ? $subject : $result;
+        return false === $result ? $subject : $result;
     }
 
     public static function substr(string $string, int $start, ?int $length = null, string $encoding = 'UTF-8'): string

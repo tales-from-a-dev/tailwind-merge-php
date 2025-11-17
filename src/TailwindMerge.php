@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
@@ -19,7 +21,7 @@ class TailwindMerge implements TailwindMergeContract
     }
 
     /**
-     * Creates a new factory instance
+     * Creates a new factory instance.
      */
     public static function factory(): Factory
     {
@@ -27,7 +29,7 @@ class TailwindMerge implements TailwindMergeContract
     }
 
     /**
-     * @param  array<string, mixed>  $configuration
+     * @param array<string, mixed> $configuration
      */
     public function __construct(
         private readonly array $configuration,
@@ -36,7 +38,7 @@ class TailwindMerge implements TailwindMergeContract
     }
 
     /**
-     * @param  string|array<array-key, string|array<array-key, string>>  ...$args
+     * @param string|array<array-key, string|array<array-key, string>> ...$args
      */
     public function merge(...$args): string
     {
@@ -55,7 +57,7 @@ class TailwindMerge implements TailwindMergeContract
                 ->map(function (ParsedClass $class) use (&$conflictingClassGroups): ?string {
                     $classId = $class->modifierId.$class->classGroupId;
 
-                    if (array_key_exists($classId, $conflictingClassGroups)) {
+                    if (\array_key_exists($classId, $conflictingClassGroups)) {
                         return null;
                     }
 
@@ -89,7 +91,7 @@ class TailwindMerge implements TailwindMergeContract
 
     private function withCache(string $input, \Closure $callback): string
     {
-        if (! $this->cache instanceof CacheInterface) {
+        if (!$this->cache instanceof CacheInterface) {
             return $callback($input);
         }
 
@@ -98,7 +100,7 @@ class TailwindMerge implements TailwindMergeContract
         if ($this->cache->has($key)) {
             $cachedValue = $this->cache->get($key);
 
-            if (is_string($cachedValue)) {
+            if (\is_string($cachedValue)) {
                 return $cachedValue;
             }
         }

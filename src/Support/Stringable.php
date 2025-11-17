@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Support;
 
 class Stringable
@@ -20,7 +22,7 @@ class Stringable
     {
         $segments = preg_split($pattern, $this->value, $limit, $flags);
 
-        return $segments === [] || $segments === false ? Collection::make() : Collection::make($segments);
+        return [] === $segments || false === $segments ? Collection::make() : Collection::make($segments);
     }
 
     public function substr(int $start, ?int $length = null, string $encoding = 'UTF-8'): self
