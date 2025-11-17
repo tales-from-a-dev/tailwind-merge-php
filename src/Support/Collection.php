@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Support;
 
 /**
@@ -16,7 +18,8 @@ class Collection
     protected array $items = [];
 
     /**
-     * @param  self<array-key, TValue>|array<array-key, TValue>  $items
+     * @param self<array-key, TValue>|array<array-key, TValue> $items
+     *
      * @return void
      */
     public function __construct(self|array $items = [])
@@ -32,7 +35,8 @@ class Collection
      * @template TMakeKey of array-key
      * @template TMakeValue
      *
-     * @param  array<TMakeKey, TMakeValue>  $items
+     * @param array<TMakeKey, TMakeValue> $items
+     *
      * @return self<TMakeKey, TMakeValue>
      */
     public static function make(array $items = []): self
@@ -42,13 +46,13 @@ class Collection
 
     public function contains(string $key): bool
     {
-        return in_array($key, $this->items);
+        return \in_array($key, $this->items);
     }
 
     /**
      * @return self<int, mixed>
      */
-    public function flatten(int $depth = PHP_INT_MAX): self
+    public function flatten(int $depth = \PHP_INT_MAX): self
     {
         return new self(Arr::flatten($this->items, $depth));
     }
@@ -62,7 +66,8 @@ class Collection
      * @template TMapWithKeysKey of array-key
      * @template TMapWithKeysValue
      *
-     * @param  callable(TValue, TKey): array<TMapWithKeysKey, TMapWithKeysValue>  $callback
+     * @param callable(TValue, TKey): array<TMapWithKeysKey, TMapWithKeysValue> $callback
+     *
      * @return self<TMapWithKeysKey, TMapWithKeysValue>
      */
     public function mapWithKeys(callable $callback): self
@@ -101,7 +106,8 @@ class Collection
     /**
      * @template TMapValue
      *
-     * @param  callable(TValue, TKey): TMapValue  $callback
+     * @param callable(TValue, TKey): TMapValue $callback
+     *
      * @return self<TKey, TMapValue>
      */
     public function map(callable $callback): self
@@ -118,7 +124,8 @@ class Collection
     }
 
     /**
-     * @param  TValue  $item
+     * @param TValue $item
+     *
      * @return $this
      */
     public function add(mixed $item): self
@@ -129,7 +136,8 @@ class Collection
     }
 
     /**
-     * @param  (callable(TValue, TKey): bool)|null  $callback
+     * @param (callable(TValue, TKey): bool)|null $callback
+     *
      * @return ?TValue
      */
     public function first(?callable $callback = null): mixed
@@ -138,7 +146,8 @@ class Collection
     }
 
     /**
-     * @param  array<array-key, TValue>|self<array-key, TValue>  $source
+     * @param array<array-key, TValue>|self<array-key, TValue> $source
+     *
      * @return self<array-key, TValue>
      */
     public function concat(array|self $source): self
@@ -157,7 +166,8 @@ class Collection
     }
 
     /**
-     * @param  TValue  ...$values
+     * @param TValue ...$values
+     *
      * @return $this
      */
     public function push(...$values): self

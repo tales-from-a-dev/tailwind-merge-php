@@ -1,14 +1,14 @@
 <?php
 
-namespace TalesFromADev\TailwindMerge\ValueObjects;
+declare(strict_types=1);
 
-use Closure;
+namespace TalesFromADev\TailwindMerge\ValueObjects;
 
 class ClassValidatorObject
 {
     public function __construct(
         public string $classGroupId,
-        public Closure $validator,
+        public \Closure $validator,
     ) {
     }
 }

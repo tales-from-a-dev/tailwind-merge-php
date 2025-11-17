@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Tests\Unit;
 
 use TalesFromADev\TailwindMerge\Support\ClassMap;
@@ -283,7 +285,7 @@ function getClassGroupsInClassPart(ClassPartObject $classPart): array
 {
     $classGroups = [];
 
-    if ($classPart->classGroupId !== null) {
+    if (null !== $classPart->classGroupId) {
         $classGroups[] = $classPart->classGroupId;
     }
 

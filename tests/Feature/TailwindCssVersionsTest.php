@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Tests\Feature;
 
 use TalesFromADev\TailwindMerge\TailwindMerge;

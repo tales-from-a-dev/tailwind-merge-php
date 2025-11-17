@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
 class ParsedClass
 {
     /**
-     * @param  array<array-key, string>  $modifiers
+     * @param array<array-key, string> $modifiers
      */
     public function __construct(
         public array $modifiers,
@@ -16,6 +18,5 @@ class ParsedClass
         public string $baseClassName,
         public string $originalClassName,
     ) {
-        //
     }
 }

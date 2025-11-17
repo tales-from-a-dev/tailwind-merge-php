@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Validators;
 
 use TalesFromADev\TailwindMerge\Support\Str;
@@ -11,7 +13,7 @@ class PercentValidator implements \TailwindMerge\Contracts\ValidatorContract
 {
     public static function validate(string $value): bool
     {
-        if (! Str::endsWith($value, '%')) {
+        if (!Str::endsWith($value, '%')) {
             return false;
         }
 

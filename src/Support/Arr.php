@@ -1,24 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\Support;
 
 class Arr
 {
     /**
-     * @param  array<array-key, mixed>  $array
+     * @param array<array-key, mixed> $array
+     *
      * @return array<int, mixed>
      */
-    public static function flatten(array $array, int $depth = PHP_INT_MAX): array
+    public static function flatten(array $array, int $depth = \PHP_INT_MAX): array
     {
         $result = [];
 
         foreach ($array as $item) {
             $item = $item instanceof Collection ? $item->all() : $item;
 
-            if (! is_array($item)) {
+            if (!\is_array($item)) {
                 $result[] = $item;
             } else {
-                $values = $depth === 1
+                $values = 1 === $depth
                     ? array_values($item)
                     : static::flatten($item, $depth - 1);
 
@@ -37,8 +40,9 @@ class Arr
      * @template TMapWithKeysKey of array-key
      * @template TMapWithKeysValue
      *
-     * @param  array<TKey, TValue>  $array
-     * @param  callable(TValue, TKey): array<TMapWithKeysKey, TMapWithKeysValue>  $callback
+     * @param array<TKey, TValue>                                               $array
+     * @param callable(TValue, TKey): array<TMapWithKeysKey, TMapWithKeysValue> $callback
+     *
      * @return array<TMapWithKeysKey, TMapWithKeysValue>
      */
     public static function mapWithKeys(array $array, callable $callback): array
@@ -61,8 +65,9 @@ class Arr
      * @template TValue
      * @template TMapValue
      *
-     * @param  array<TKey, TValue>  $array
-     * @param  callable(TValue, TKey): TMapValue  $callback
+     * @param array<TKey, TValue>               $array
+     * @param callable(TValue, TKey): TMapValue $callback
+     *
      * @return array<TKey, TMapValue>
      */
     public static function map(array $array, callable $callback): array
@@ -78,8 +83,9 @@ class Arr
      * @template TKey
      * @template TValue
      *
-     * @param  array<TKey, TValue>  $array
-     * @param  callable(TValue, TKey): bool  $callback
+     * @param array<TKey, TValue>          $array
+     * @param callable(TValue, TKey): bool $callback
+     *
      * @return ?TValue
      */
     public static function first(array $array, callable $callback): mixed

@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
 class ClassPartObject
 {
     /**
-     * @param  array<array-key, ClassPartObject>  $nextPart
-     * @param  array<array-key, ClassValidatorObject>  $validators
+     * @param array<array-key, ClassPartObject>      $nextPart
+     * @param array<array-key, ClassValidatorObject> $validators
      */
     public function __construct(
         public array $nextPart = [],

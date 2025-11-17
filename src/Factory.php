@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
@@ -17,7 +19,7 @@ final class Factory
     /**
      * Override the default configuration.
      *
-     * @param  array<string, mixed>  $configuration
+     * @param array<string, mixed> $configuration
      */
     public function withConfiguration(array $configuration): self
     {
