@@ -1,6 +1,6 @@
 <?php
 
-namespace TailwindMerge\Validators\Concerns;
+namespace TalesFromADev\TailwindMerge\Validators\Concerns;
 
 /**
  * @internal

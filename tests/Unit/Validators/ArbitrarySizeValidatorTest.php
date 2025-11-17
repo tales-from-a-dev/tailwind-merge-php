@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\Validators\ArbitrarySizeValidator;
+namespace TalesFromADev\TailwindMerge\Tests\Unit\Validators;
+
+use TalesFromADev\TailwindMerge\Validators\ArbitrarySizeValidator;
 
 test('is arbitrary size', function ($input, $output) {
     expect(ArbitrarySizeValidator::validate($input))->toBe($output);

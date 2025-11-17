@@ -1,10 +1,10 @@
 <?php
 
-namespace TailwindMerge\Support;
+namespace TalesFromADev\TailwindMerge\Support;
 
-use TailwindMerge\ValueObjects\ClassPartObject;
-use TailwindMerge\ValueObjects\ClassValidatorObject;
-use TailwindMerge\ValueObjects\ThemeGetter;
+use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
+use TalesFromADev\TailwindMerge\ValueObjects\ClassValidatorObject;
+use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
 class ClassMap
 {

@@ -1,7 +1,9 @@
 <?php
 
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
 use Psr\SimpleCache\CacheInterface;
-use TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 it('does cache the result', function () {
     $cache = new FakeCache();

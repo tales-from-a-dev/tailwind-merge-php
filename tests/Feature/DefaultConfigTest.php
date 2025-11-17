@@ -1,7 +1,11 @@
 <?php
 
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\Support\Config;
+
 test('default config has correct types', function () {
-    $defaultConfig = \TailwindMerge\Support\Config::getDefaultConfig();
+    $defaultConfig = Config::getDefaultConfig();
 
     expect($defaultConfig)
         ->not->toHaveKey('nonExistent')

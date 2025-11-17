@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\TailwindMerge;
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 it('does basic merges', function (string $input, string $output) {
     expect(TailwindMerge::instance()->merge($input))

@@ -1,21 +1,21 @@
 <?php
 
-namespace TailwindMerge\Support;
+namespace TalesFromADev\TailwindMerge\Support;
 
-use TailwindMerge\Validators\AnyValueValidator;
-use TailwindMerge\Validators\ArbitraryImageValidator;
-use TailwindMerge\Validators\ArbitraryLengthValidator;
-use TailwindMerge\Validators\ArbitraryNumberValidator;
-use TailwindMerge\Validators\ArbitraryPositionValidator;
-use TailwindMerge\Validators\ArbitraryShadowValidator;
-use TailwindMerge\Validators\ArbitrarySizeValidator;
-use TailwindMerge\Validators\ArbitraryValueValidator;
-use TailwindMerge\Validators\IntegerValidator;
-use TailwindMerge\Validators\LengthValidator;
-use TailwindMerge\Validators\NumberValidator;
-use TailwindMerge\Validators\PercentValidator;
-use TailwindMerge\Validators\TshirtSizeValidator;
-use TailwindMerge\ValueObjects\ThemeGetter;
+use TalesFromADev\TailwindMerge\Validators\AnyValueValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryImageValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryLengthValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryNumberValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryPositionValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryShadowValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitrarySizeValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryValueValidator;
+use TalesFromADev\TailwindMerge\Validators\IntegerValidator;
+use TalesFromADev\TailwindMerge\Validators\LengthValidator;
+use TalesFromADev\TailwindMerge\Validators\NumberValidator;
+use TalesFromADev\TailwindMerge\Validators\PercentValidator;
+use TalesFromADev\TailwindMerge\Validators\TshirtSizeValidator;
+use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
 class Config
 {

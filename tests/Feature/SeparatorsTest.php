@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\TailwindMerge;
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 test('single character separator working correctly', function ($input, $output) {
     $instance = TailwindMerge::factory()

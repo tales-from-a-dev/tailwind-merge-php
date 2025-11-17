@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\Validators\IntegerValidator;
+namespace TalesFromADev\TailwindMerge\Tests\Unit\Validators;
+
+use TalesFromADev\TailwindMerge\Validators\IntegerValidator;
 
 test('is integer', function ($input, $output) {
     expect(IntegerValidator::validate($input))->toBe($output);

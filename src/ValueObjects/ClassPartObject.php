@@ -1,6 +1,6 @@
 <?php
 
-namespace TailwindMerge\ValueObjects;
+namespace TalesFromADev\TailwindMerge\ValueObjects;
 
 class ClassPartObject
 {

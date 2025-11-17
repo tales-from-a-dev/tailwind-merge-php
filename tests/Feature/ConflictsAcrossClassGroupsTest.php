@@ -1,6 +1,8 @@
 <?php
 
-use TailwindMerge\TailwindMerge;
+namespace TalesFromADev\TailwindMerge\Tests\Feature;
+
+use TalesFromADev\TailwindMerge\TailwindMerge;
 
 it('handles conflicts across class groups correctly', function (string $input, string $output) {
     expect(TailwindMerge::instance()->merge($input))

@@ -1,14 +1,14 @@
 <?php
 
-namespace TailwindMerge;
+namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
-use TailwindMerge\Contracts\TailwindMergeContract;
-use TailwindMerge\Support\Collection;
-use TailwindMerge\Support\Config;
-use TailwindMerge\Support\Str;
-use TailwindMerge\Support\TailwindClassParser;
-use TailwindMerge\ValueObjects\ParsedClass;
+use TalesFromADev\TailwindMerge\Contracts\TailwindMergeContract;
+use TalesFromADev\TailwindMerge\Support\Collection;
+use TalesFromADev\TailwindMerge\Support\Config;
+use TalesFromADev\TailwindMerge\Support\Str;
+use TalesFromADev\TailwindMerge\Support\TailwindClassParser;
+use TalesFromADev\TailwindMerge\ValueObjects\ParsedClass;
 
 class TailwindMerge implements TailwindMergeContract
 {
