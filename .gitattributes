@@ -9,4 +9,3 @@
 /phpstan.neon.dist       export-ignore
 /phpstan-baseline.neon   export-ignore
 /phpunit.xml.dist        export-ignore
-/rector.php              export-ignore
