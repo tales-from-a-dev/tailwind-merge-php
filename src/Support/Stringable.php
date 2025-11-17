@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-class Stringable
+/**
+ * @internal
+ */
+final class Stringable
 {
     public function __construct(protected string $value)
     {

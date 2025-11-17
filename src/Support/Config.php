@@ -19,7 +19,7 @@ use TalesFromADev\TailwindMerge\Validators\PercentValidator;
 use TalesFromADev\TailwindMerge\Validators\TshirtSizeValidator;
 use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
-class Config
+final class Config
 {
     /**
      * @var array<string, mixed>
@@ -70,7 +70,7 @@ class Config
             return [...$baseConfig[$mergeKey], ...$mergeValue];
         }
 
-        if (\is_array($mergeValue) && !array_is_list($mergeValue) /* && is_array($baseConfig[$mergeKey]) && array_is_list($baseConfig[$mergeKey]) */) {
+        if (\is_array($mergeValue) && !array_is_list($mergeValue)) {
             if (null === $baseConfig[$mergeKey]) {
                 return $mergeValue;
             }
@@ -92,7 +92,14 @@ class Config
     }
 
     /**
-     * @return array{cacheSize: int, prefix: ?string, theme: array<string, mixed>, classGroups: array<string, mixed>,conflictingClassGroups: array<string, array<int, string>>, conflictingClassGroupModifiers: array<string, array<int, string>>}
+     * @return array{
+     *     cacheSize: int,
+     *     prefix: ?string,
+     *     theme: array<string, mixed>,
+     *     classGroups: array<string, mixed>,
+     *     conflictingClassGroups: array<string, array<int, string>>,
+     *     conflictingClassGroupModifiers: array<string, array<int, string>>
+     * }
      */
     public static function getDefaultConfig(): array
     {

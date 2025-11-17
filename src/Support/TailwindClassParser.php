@@ -8,7 +8,10 @@ use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassValidatorObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ParsedClass;
 
-class TailwindClassParser
+/**
+ * @internal
+ */
+final class TailwindClassParser
 {
     final public const CLASS_PART_SEPARATOR = '-';
 

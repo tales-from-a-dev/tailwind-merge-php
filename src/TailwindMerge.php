@@ -12,7 +12,7 @@ use TalesFromADev\TailwindMerge\Support\Str;
 use TalesFromADev\TailwindMerge\Support\TailwindClassParser;
 use TalesFromADev\TailwindMerge\ValueObjects\ParsedClass;
 
-class TailwindMerge implements TailwindMergeContract
+final class TailwindMerge implements TailwindMergeContract
 {
     public static function instance(): self
     {

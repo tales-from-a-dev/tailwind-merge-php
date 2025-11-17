@@ -20,12 +20,13 @@
     }
   ],
   "require": {
-    "php": ">=8.1",
+    "php": ">=8.2",
     "psr/simple-cache": "^3.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.89",
-    "phpstan/phpstan": "^2.1"
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^11.5"
   },
   "config": {
     "optimize-autoloader": true,
@@ -37,10 +38,7 @@
   "autoload": {
     "psr-4": {
       "TalesFromADev\\TailwindMerge\\": "src/"
-    },
-    "files": [
-      "src/TailwindMerge.php"
-    ]
+    }
   },
   "autoload-dev": {
     "psr-4": {
@@ -52,13 +50,7 @@
     "test:lint:fix": "vendor/bin/php-cs-fixer fix -v",
     "test:types": "vendor/bin/phpstan analyse --memory-limit 256M --ansi",
     "test:types:baseline": "vendor/bin/phpstan analyse --memory-limit 256M --generate-baseline --allow-empty-baseline",
-    "test:type-coverage": "pest --type-coverage --min=100",
-    "test:pest": "pest --colors=always",
-    "test": [
-      "@test:lint",
-      "@test:types",
-      "@test:type-coverage",
-      "@test:pest"
-    ]
+    "test:coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit",
+    "test": "vendor/bin/phpunit --no-coverage"
   }
 }

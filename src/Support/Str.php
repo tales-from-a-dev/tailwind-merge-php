@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-class Str
+/**
+ * @internal
+ */
+final class Str
 {
     public static function hasMatch(string $pattern, string $value): bool
     {

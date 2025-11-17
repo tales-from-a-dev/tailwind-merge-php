@@ -10,7 +10,7 @@ use TalesFromADev\TailwindMerge\Support\Str;
 /**
  * @internal
  */
-class PercentValidator implements ValidatorContract
+final class PercentValidator implements ValidatorContract
 {
     public static function validate(string $value): bool
     {

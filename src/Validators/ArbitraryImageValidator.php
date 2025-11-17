@@ -11,7 +11,7 @@ use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 /**
  * @internal
  */
-class ArbitraryImageValidator implements ValidatorContract
+final class ArbitraryImageValidator implements ValidatorContract
 {
     use ValidatesArbitraryValue;
 

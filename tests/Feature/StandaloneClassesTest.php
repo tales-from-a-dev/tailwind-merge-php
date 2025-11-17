@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Tests\Feature;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
 use TalesFromADev\TailwindMerge\TailwindMerge;
 
-it('merges standalone classes from same group correctly', function (string $input, string $output) {
-    expect(TailwindMerge::instance()->merge($input))
-        ->toBe($output);
-})->with([
-    ['inline block', 'block'],
-    ['hover:block hover:inline', 'hover:inline'],
-    ['hover:block hover:block', 'hover:block'],
-    ['inline hover:inline focus:inline hover:block hover:focus:block', 'inline focus:inline hover:block hover:focus:block'],
-    ['underline line-through', 'line-through'],
-    ['line-through no-underline', 'no-underline'],
-]);
+final class StandaloneClassesTest extends TestCase
+{
+    public static function standaloneClassesProvider(): array
+    {
+        return [
+            ['inline block', 'block'],
+            ['hover:block hover:inline', 'hover:inline'],
+            ['hover:block hover:block', 'hover:block'],
+            ['inline hover:inline focus:inline hover:block hover:focus:block', 'inline focus:inline hover:block hover:focus:block'],
+            ['underline line-through', 'line-through'],
+            ['line-through no-underline', 'no-underline'],
+        ];
+    }
+
+    #[DataProvider('standaloneClassesProvider')]
+    public function testItHandlesStandaloneClassesCorrectly(string $input, string $output)
+    {
+        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+    }
+}

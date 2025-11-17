@@ -10,7 +10,7 @@ use TalesFromADev\TailwindMerge\Validators\Concerns\ValidatesArbitraryValue;
 /**
  * @internal
  */
-class ArbitraryNumberValidator implements ValidatorContract
+final class ArbitraryNumberValidator implements ValidatorContract
 {
     use ValidatesArbitraryValue;
 

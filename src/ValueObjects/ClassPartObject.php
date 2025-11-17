@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
-class ClassPartObject
+final class ClassPartObject
 {
     /**
      * @param array<array-key, ClassPartObject>      $nextPart

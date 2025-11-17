@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\ValueObjects;
 
-class ThemeGetter
+final class ThemeGetter
 {
     public function __construct(
         public string $key,
