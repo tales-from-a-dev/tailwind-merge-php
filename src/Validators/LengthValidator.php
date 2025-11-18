@@ -13,13 +13,12 @@ use TalesFromADev\TailwindMerge\Support\Str;
  */
 final class LengthValidator implements ValidatorContract
 {
-    final public const FRACTION_REGEX = '/^\d+\/\d+$/';
-
     public static function validate(string $value): bool
     {
         if (NumberValidator::validate($value)) {
             return true;
         }
+
         if (self::stringLengths()->contains($value)) {
             return true;
         }

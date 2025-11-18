@@ -16,7 +16,7 @@ trait ValidatesArbitraryValue
     {
         $labels = \is_string($labels) ? [$labels] : $labels;
 
-        preg_match('/^\[(?:([a-z-]+):)?(.+)\]$/i', $value, $result);
+        preg_match(self::ARBITRARY_VALUE_REGEX, $value, $result);
 
         if ([] !== $result) {
             if ('' !== $result[1] && '0' !== $result[1]) {
