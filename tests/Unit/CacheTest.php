@@ -7,19 +7,19 @@ namespace TalesFromADev\TailwindMerge\Tests\Unit;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
-use TalesFromADev\TailwindMerge\Contracts\TailwindMergeContract;
 use TalesFromADev\TailwindMerge\TailwindMerge;
+use TalesFromADev\TailwindMerge\TailwindMergeInterface;
 
 final class CacheTest extends TestCase
 {
     private MockObject $cache;
 
-    private TailwindMergeContract $tailwindMerge;
+    private TailwindMergeInterface $tailwindMerge;
 
     protected function setUp(): void
     {
         $this->cache = $this->createMock(CacheInterface::class);
-        $this->tailwindMerge = TailwindMerge::factory()->withCache($this->cache)->make();
+        $this->tailwindMerge = new TailwindMerge(cache: $this->cache);
     }
 
     public function testItCacheResult(): void

@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
-use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
-use TalesFromADev\TailwindMerge\Support\Str;
+use function Symfony\Component\String\u;
 
 /**
  * @internal
  */
-final class PercentValidator implements ValidatorContract
+final class PercentValidator implements ValidatorInterface
 {
     public static function validate(string $value): bool
     {
-        if (!Str::endsWith($value, '%')) {
+        if (!str_ends_with($value, '%')) {
             return false;
         }
 
-        return NumberValidator::validate(Str::of($value)->substr(0, -1)->toString());
+        return NumberValidator::validate(u($value)->slice(0, -1)->toString());
     }
 }

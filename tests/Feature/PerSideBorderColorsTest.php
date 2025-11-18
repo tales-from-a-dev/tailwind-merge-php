@@ -10,17 +10,22 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class PerSideBorderColorsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function perSideBorderColorsProvider(): array
     {
         return [
             ['border-t-some-blue border-t-other-blue', 'border-t-other-blue'],
             ['border-t-some-blue border-some-blue', 'border-some-blue'],
+            ['border-some-blue border-s-some-blue', 'border-some-blue border-s-some-blue'],
+            ['border-e-some-blue border-some-blue', 'border-some-blue'],
         ];
     }
 
     #[DataProvider('perSideBorderColorsProvider')]
-    public function testItMergesClassesWithPerSideBorderColorsCorrectly(string $input, string $output)
+    public function testItMergesClassesWithPerSideBorderColorsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

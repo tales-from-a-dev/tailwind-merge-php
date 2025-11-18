@@ -10,14 +10,27 @@ use TalesFromADev\TailwindMerge\Validators\NumberValidator;
 
 final class NumberValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
             ['1', true],
-            ['1.5', true],
+            ['123', true],
+            ['8312', true],
+            ['8312.2', true],
+            ['1.2', true],
+
+            ['[8312]', false],
+            ['[2]', false],
+            ['[8312px]', false],
+            ['[8312%]', false],
+            ['[8312rem]', false],
             ['one', false],
+            ['1/2', false],
+            ['1%', false],
             ['1px', false],
-            ['', false],
         ];
     }
 

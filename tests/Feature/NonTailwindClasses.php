@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class NonTailwindClasses extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function nonTailwindClassesProvider(): array
     {
         return [
@@ -21,8 +24,8 @@ final class NonTailwindClasses extends TestCase
     }
 
     #[DataProvider('nonTailwindClassesProvider')]
-    public function testItDoesNotAlterNonTailwindClassesCorrectly(string $input, string $output)
+    public function testItDoesNotAlterNonTailwindClassesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

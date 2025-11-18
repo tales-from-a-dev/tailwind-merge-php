@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ConflictsAcrossClassGroupsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function conflictsAcrossClassGroupsProvider(): array
     {
         return [
@@ -26,6 +29,9 @@ final class ConflictsAcrossClassGroupsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function ringAndShadowClassesProvider(): array
     {
         return [
@@ -36,6 +42,9 @@ final class ConflictsAcrossClassGroupsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function touchClassesProvider(): array
     {
         return [
@@ -48,6 +57,9 @@ final class ConflictsAcrossClassGroupsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function lineClampClassesProvider(): array
     {
         return [
@@ -57,26 +69,26 @@ final class ConflictsAcrossClassGroupsTest extends TestCase
     }
 
     #[DataProvider('conflictsAcrossClassGroupsProvider')]
-    public function testItHandlesConflictsAcrossClassGroupsCorrectly(string $input, string $output)
+    public function testItHandlesConflictsAcrossClassGroupsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('ringAndShadowClassesProvider')]
-    public function testRingAndShadowClassesDoNotCreateConflictCorrectly(string $input, string $output)
+    public function testRingAndShadowClassesDoNotCreateConflictCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('touchClassesProvider')]
-    public function testTouchClassesDoCreateConflictsCorrectly(string $input, string $output)
+    public function testTouchClassesDoCreateConflictsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('lineClampClassesProvider')]
-    public function testLineClampClassesDoCreateConflictsCorrectly(string $input, string $output)
+    public function testLineClampClassesDoCreateConflictsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

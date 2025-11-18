@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
-use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
-use TalesFromADev\TailwindMerge\Support\Str;
+use function Symfony\Component\String\u;
 
 /**
  * @internal
  */
-final class ArbitraryValueValidator implements ValidatorContract
+final class ArbitraryValueValidator implements ValidatorInterface
 {
     public static function validate(string $value): bool
     {
-        return Str::hasMatch(self::ARBITRARY_VALUE_REGEX, $value);
+        return [] !== u($value)->match(self::ARBITRARY_VALUE_REGEX);
     }
 }

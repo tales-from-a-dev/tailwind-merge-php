@@ -10,17 +10,21 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ColorsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function colorConflictsProvider(): array
     {
         return [
             ['bg-grey-5 bg-hotpink', 'bg-hotpink'],
             ['hover:bg-grey-5 hover:bg-hotpink', 'hover:bg-hotpink'],
+            ['stroke-[hsl(350_80%_0%)] stroke-[10px]', 'stroke-[hsl(350_80%_0%)] stroke-[10px]'],
         ];
     }
 
     #[DataProvider('colorConflictsProvider')]
-    public function testItHandlesColorConflictsCorrectly(string $input, string $output)
+    public function testItHandlesColorConflictsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

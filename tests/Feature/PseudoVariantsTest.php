@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class PseudoVariantsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function pseudoVariantsConflictProvider(): array
     {
         return [
@@ -19,6 +22,9 @@ final class PseudoVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function pseudoVariantGroupConflictsProvider(): array
     {
         return [
@@ -31,14 +37,14 @@ final class PseudoVariantsTest extends TestCase
     }
 
     #[DataProvider('pseudoVariantsConflictProvider')]
-    public function testItHandlesPseudoVariantsConflictCorrectly(string $input, string $output)
+    public function testItHandlesPseudoVariantsConflictCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('pseudoVariantGroupConflictsProvider')]
-    public function testItHandlesPseudoVariantGroupConflictsProviderCorrectly(string $input, string $output)
+    public function testItHandlesPseudoVariantGroupConflictsProviderCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

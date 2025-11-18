@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\Validators\PercentValidator;
 
 final class PercentValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
@@ -17,6 +20,7 @@ final class PercentValidatorTest extends TestCase
             ['100.001%', true],
             ['.01%', true],
             ['0%', true],
+
             ['0', false],
             ['one%', false],
         ];

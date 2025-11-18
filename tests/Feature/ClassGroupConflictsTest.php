@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ClassGroupConflictsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function classesFromSameGroupProvider(): array
     {
         return [
@@ -19,9 +22,13 @@ final class ClassGroupConflictsTest extends TestCase
             ['overflow-x-auto hover:overflow-x-hidden overflow-x-scroll', 'hover:overflow-x-hidden overflow-x-scroll'],
             ['overflow-x-auto hover:overflow-x-hidden hover:overflow-x-auto overflow-x-scroll', 'hover:overflow-x-auto overflow-x-scroll'],
             ['col-span-1 col-span-full', 'col-span-full'],
+            ['gap-2 gap-px basis-px basis-3', 'gap-px basis-3'],
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function classesFromFontVariantNumericSection(): array
     {
         return [
@@ -33,14 +40,14 @@ final class ClassGroupConflictsTest extends TestCase
     }
 
     #[DataProvider('classesFromSameGroupProvider')]
-    public function testItMergesClassesFromSameGroupCorrectly(string $input, string $output)
+    public function testItMergesClassesFromSameGroupCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('classesFromFontVariantNumericSection')]
-    public function testItMergesClassesFromFontVariantNumericSectionCorrectly(string $input, string $output)
+    public function testItMergesClassesFromFontVariantNumericSectionCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

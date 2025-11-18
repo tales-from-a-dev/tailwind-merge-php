@@ -5,97 +5,40 @@ declare(strict_types=1);
 namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
-use TalesFromADev\TailwindMerge\Contracts\TailwindMergeContract;
-use TalesFromADev\TailwindMerge\Support\Collection;
+use TalesFromADev\TailwindMerge\Helper\Collection;
+use TalesFromADev\TailwindMerge\Support\ClassListMerger;
 use TalesFromADev\TailwindMerge\Support\Config;
-use TalesFromADev\TailwindMerge\Support\Str;
-use TalesFromADev\TailwindMerge\Support\TailwindClassParser;
-use TalesFromADev\TailwindMerge\ValueObjects\ParsedClass;
 
-final class TailwindMerge implements TailwindMergeContract
+final class TailwindMerge implements TailwindMergeInterface
 {
-    public static function instance(): self
-    {
-        return self::factory()
-            ->make();
-    }
+    private ClassListMerger $merger;
 
     /**
-     * Creates a new factory instance.
-     */
-    public static function factory(): Factory
-    {
-        return new Factory();
-    }
-
-    /**
-     * @param array<string, mixed> $configuration
+     * @param array<string, mixed> $additionalConfiguration
      */
     public function __construct(
-        private readonly array $configuration,
+        array $additionalConfiguration = [],
         private readonly ?CacheInterface $cache = null,
     ) {
+        Config::setAdditionalConfig($additionalConfiguration);
+
+        $configuration = Config::getMergedConfig();
+
+        $this->merger = new ClassListMerger($configuration);
     }
 
     /**
-     * @param string|array<array-key, string|array<array-key, string>> ...$args
+     * @param string|list<mixed> ...$classLists
      */
-    public function merge(...$args): string
+    public function merge(...$classLists): string
     {
-        $input = Collection::make($args)->flatten()->join(' ');
+        $classList = Collection::make($classLists)->flatten()->join(' ');
 
-        return $this->withCache($input, function (string $input): string {
-            $conflictingClassGroups = [];
-
-            $parser = new TailwindClassParser($this->configuration);
-
-            return Str::of($input)
-                ->trim()
-                ->split('/\s+/')
-                ->map(fn (string $class): ParsedClass => $parser->parse($class)) // @phpstan-ignore-line
-                ->reverse()
-                ->map(function (ParsedClass $class) use (&$conflictingClassGroups): ?string {
-                    $classId = $class->modifierId.$class->classGroupId;
-
-                    if (\array_key_exists($classId, $conflictingClassGroups)) {
-                        return null;
-                    }
-
-                    $conflictingClassGroups[$classId] = true;
-
-                    foreach ($this->getConflictingClassGroupIds($class->classGroupId, $class->hasPostfixModifier) as $group) {
-                        $conflictingClassGroups[$class->modifierId.$group] = true;
-                    }
-
-                    return $class->originalClassName;
-                })
-                ->reverse()
-                ->filter()
-                ->join(' ');
-        });
-    }
-
-    /**
-     * @return array<array-key, string>
-     */
-    private function getConflictingClassGroupIds(string $classGroupId, bool $hasPostfixModifier): array
-    {
-        $conflicts = Config::getMergedConfig()['conflictingClassGroups'][$classGroupId] ?? [];
-
-        if ($hasPostfixModifier && isset(Config::getMergedConfig()['conflictingClassGroupModifiers'][$classGroupId])) {
-            return [...$conflicts, ...Config::getMergedConfig()['conflictingClassGroupModifiers'][$classGroupId]];
-        }
-
-        return $conflicts;
-    }
-
-    private function withCache(string $input, \Closure $callback): string
-    {
         if (!$this->cache instanceof CacheInterface) {
-            return $callback($input);
+            return $this->merger->merge($classList);
         }
 
-        $key = hash('xxh3', 'tailwind-merge-'.$input);
+        $key = hash('xxh3', 'tailwind-merge-'.$classList);
 
         if ($this->cache->has($key)) {
             $cachedValue = $this->cache->get($key);
@@ -105,7 +48,7 @@ final class TailwindMerge implements TailwindMergeContract
             }
         }
 
-        $mergedClasses = $callback($input);
+        $mergedClasses = $this->merger->merge($classList);
 
         $this->cache->set($key, $mergedClasses);
 

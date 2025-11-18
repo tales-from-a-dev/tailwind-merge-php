@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ModifiersTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function conflictsAcrossPrefixModifiersProvider(): array
     {
         return [
@@ -20,6 +23,9 @@ final class ModifiersTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function conflictsAcrossPostfixModifiersProvider(): array
     {
         return [
@@ -30,10 +36,13 @@ final class ModifiersTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function conflictsAcrossPostfixModifiersWithCustomConfigurationProvider(): array
     {
         return [
-            //            ['foo-1/2 foo-2/3', 'foo-2/3'], TODO: this one is failing, because the '/'  is considered as possible postfix modifier
+            ['foo-1/2 foo-2/3', 'foo-2/3'],
             ['bar-1 bar-2', 'bar-2'],
             ['bar-1 baz-1', 'bar-1 baz-1'],
             ['bar-1/2 bar-2', 'bar-2'],
@@ -45,33 +54,31 @@ final class ModifiersTest extends TestCase
     #[DataProvider('conflictsAcrossPrefixModifiersProvider')]
     public function testItHandlesConflictsAcrossPrefixModifiersCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('conflictsAcrossPostfixModifiersProvider')]
     public function testItHandlesConflictsAcrossPostfixModifiersCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('conflictsAcrossPostfixModifiersWithCustomConfigurationProvider')]
     public function testItHandlesConflictsAcrossPostfixModifiersWithCustomConfigurationCorrectly(string $input, string $output): void
     {
-        $instance = TailwindMerge::factory()
-            ->withConfiguration([
-                'cacheSize' => 10,
-                'theme' => [],
-                'classGroups' => [
-                    'foo' => ['foo-1/2', 'foo-2/3'],
-                    'bar' => ['bar-1', 'bar-2'],
-                    'baz' => ['baz-1', 'baz-2'],
-                ],
-                'conflictingClassGroups' => [],
-                'conflictingClassGroupModifiers' => [
-                    'baz' => ['bar'],
-                ],
-            ])
-            ->make();
+        $instance = new TailwindMerge([
+            'cacheSize' => 10,
+            'theme' => [],
+            'classGroups' => [
+                'foo' => ['foo-1/2', 'foo-2/3'],
+                'bar' => ['bar-1', 'bar-2'],
+                'baz' => ['baz-1', 'baz-2'],
+            ],
+            'conflictingClassGroups' => [],
+            'conflictingClassGroupModifiers' => [
+                'baz' => ['bar'],
+            ],
+        ]);
 
         $this->assertSame($output, $instance->merge($input));
     }

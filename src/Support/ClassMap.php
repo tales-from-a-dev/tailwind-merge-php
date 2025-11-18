@@ -8,108 +8,96 @@ use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassValidatorObject;
 use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
+/**
+ * @internal
+ */
 final class ClassMap
 {
     final public const CLASS_PART_SEPARATOR = '-';
 
     /**
-     * @param array{cacheSize: int, prefix: ?string, theme: array<string, mixed>, classGroups: array<string, mixed>,conflictingClassGroups: array<string, array<int, string>>, conflictingClassGroupModifiers: array<string, array<int, string>>} $config
+     * @param array<string, list<mixed>> $classGroups
+     * @param array<string, list<mixed>> $theme
      */
-    public static function create(array $config): ClassPartObject
+    public function processClassGroup(array $classGroups, array $theme): ClassPartObject
     {
-        $theme = $config['theme'];
-        $prefix = $config['prefix'];
+        $classPartObject = new ClassPartObject();
 
-        $classMap = new ClassPartObject();
-
-        $prefixedClassGroupEntries = self::getPrefixedClassGroupEntries(
-            $config['classGroups'],
-            $prefix,
-        );
-
-        foreach ($prefixedClassGroupEntries as $classGroupId => $classGroup) {
-            self::processClassesRecursively($classGroup, $classMap, $classGroupId, $theme);
+        foreach ($classGroups as $classGroupId => $classGroup) {
+            $this->processClassesRecursively($classGroup, $classPartObject, $classGroupId, $theme);
         }
 
-        return $classMap;
+        return $classPartObject;
     }
 
     /**
-     * @param array<string, mixed> $classGroupEntries
-     *
-     * @return array<string, mixed>
+     * @param list<mixed>                $classGroup
+     * @param array<string, list<mixed>> $theme
      */
-    private static function getPrefixedClassGroupEntries(array $classGroupEntries, ?string $prefix): array
-    {
-        if (!$prefix) {
-            return $classGroupEntries;
-        }
-
-        // @phpstan-ignore-next-line
-        return Collection::make($classGroupEntries)->mapWithKeys(function (array $classGroup, string $classGroupId) use ($prefix): array {
-            $prefixedClassGroup = Collection::make($classGroup)->map(function (string|array $classDefinition) use ($prefix): string|array {
-                if (\is_string($classDefinition)) {
-                    return $prefix.$classDefinition;
-                }
-
-                if (\is_array($classDefinition)) {
-                    return Collection::make($classDefinition)->mapWithKeys(fn (array $value, string $key): array => [$prefix.$key => $value])->all();
-                }
-
-                //                return $classDefinition;
-            })->all();
-
-            return [$classGroupId => $prefixedClassGroup];
-        })->all();
-    }
-
-    public static function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    public function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classGroup as $classDefinition) {
-            if (\is_string($classDefinition)) {
-                $classPartObjectToEdit = '' === $classDefinition ? $classPartObject : self::getPart($classPartObject, $classDefinition);
-                $classPartObjectToEdit->classGroupId = $classGroupId;
-
-                continue;
-            }
-
-            if (self::isThemeGetter($classDefinition)) {
-                self::processClassesRecursively(
-                    $classDefinition->get($theme),
-                    $classPartObject,
-                    $classGroupId,
-                    $theme,
-                );
-
-                continue;
-            }
-
-            if (\is_callable($classDefinition)) {
-                $classPartObject->validators[] = new ClassValidatorObject(
-                    classGroupId: $classGroupId,
-                    validator: $classDefinition,
-                );
-
-                continue;
-            }
-
-            foreach ($classDefinition as $key => $classGroup) {
-                self::processClassesRecursively(
-                    $classGroup,
-                    self::getPart($classPartObject, $key),
-                    $classGroupId,
-                    $theme,
-                );
-            }
+            $this->processClassDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
         }
     }
 
-    private static function isThemeGetter(ThemeGetter|array|callable $classDefinition): bool
+    /**
+     * @param array<string, list<mixed>> $theme
+     */
+    public function processClassDefinition(string|array|callable|ThemeGetter $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
-        return $classDefinition instanceof ThemeGetter;
+        if (\is_string($classDefinition)) {
+            $this->processStringDefinition($classDefinition, $classPartObject, $classGroupId);
+
+            return;
+        }
+
+        if ($classDefinition instanceof ThemeGetter) {
+            $this->processClassesRecursively($classDefinition->get($theme), $classPartObject, $classGroupId, $theme);
+
+            return;
+        }
+
+        if (\is_callable($classDefinition)) {
+            $this->processFunctionDefinition($classDefinition, $classPartObject, $classGroupId);
+
+            return;
+        }
+
+        $this->processObjectDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
     }
 
-    private static function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
+    public function processStringDefinition(string $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
+    {
+        $classPartObjectToEdit = '' === $classDefinition ? $classPartObject : $this->getPart($classPartObject, $classDefinition);
+        $classPartObjectToEdit->classGroupId = $classGroupId;
+    }
+
+    public function processFunctionDefinition(callable $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
+    {
+        $classPartObject->validators[] = new ClassValidatorObject(
+            classGroupId: $classGroupId,
+            validator: $classDefinition,
+        );
+    }
+
+    /**
+     * @param array<string, list<mixed>> $classDefinition
+     * @param array<string, list<mixed>> $theme
+     */
+    public function processObjectDefinition(array $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    {
+        foreach ($classDefinition as $key => $classGroup) {
+            $this->processClassesRecursively(
+                $classGroup,
+                self::getPart($classPartObject, $key),
+                $classGroupId,
+                $theme,
+            );
+        }
+    }
+
+    public function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
     {
         $currentClassPartObject = $classPartObject;
 

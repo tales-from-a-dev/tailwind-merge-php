@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\Validators\ArbitraryValueValidator;
 
 final class ArbitraryValueValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
@@ -17,6 +20,7 @@ final class ArbitraryValueValidatorTest extends TestCase
             ['[bla]', true],
             ['[not-an-arbitrary-value?]', true],
             ['[auto,auto,minmax(0,1fr),calc(100vw-50%)]', true],
+
             ['[]', false],
             ['[1', false],
             ['1]', false],

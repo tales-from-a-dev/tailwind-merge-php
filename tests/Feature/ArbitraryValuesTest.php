@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ArbitraryValuesTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function simpleConflictsWithArbitraryValuesProvider(): array
     {
         return [
@@ -27,10 +30,13 @@ final class ArbitraryValuesTest extends TestCase
             // Handling of value `0`
             ['min-h-[0.5px] min-h-[0]', 'min-h-[0]'],
             ['text-[0.5px] text-[color:0]', 'text-[0.5px] text-[color:0]'],
-            ['text-[0.5px] text-[--my-0]', 'text-[0.5px] text-[--my-0]'],
+            ['text-[0.5px] text-(--my-0)', 'text-[0.5px] text-(--my-0)'],
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryLengthConflictsWithLabelsAndModifiersProvider(): array
     {
         return [
@@ -42,6 +48,9 @@ final class ArbitraryValuesTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function complexArbitraryValueConflictsProvider(): array
     {
         return [
@@ -53,6 +62,9 @@ final class ArbitraryValuesTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function ambiguousArbitraryValuesProvider(): array
     {
         return [
@@ -62,11 +74,25 @@ final class ArbitraryValuesTest extends TestCase
             ['mt-2 mt-[theme(someScale.someValue)]', 'mt-[theme(someScale.someValue)]'],
             ['text-2xl text-[length:theme(someScale.someValue)]', 'text-[length:theme(someScale.someValue)]'],
             ['text-2xl text-[calc(theme(fontSize.4xl)/1.125)]', 'text-[calc(theme(fontSize.4xl)/1.125)]'],
-            ['bg-cover bg-[percentage:30%] bg-[length:200px_100px]', 'bg-[length:200px_100px]'],
-            ['bg-none bg-[url(.)] bg-[image:.] bg-[url:.] bg-[linear-gradient(.)] bg-gradient-to-r', 'bg-gradient-to-r'],
+            ['bg-cover bg-[percentage:30%] bg-[length:200px_100px]', 'bg-[percentage:30%] bg-[length:200px_100px]'],
+            ['bg-none bg-[url(.)] bg-[image:.] bg-[url:.] bg-[linear-gradient(.)] bg-linear-to-r', 'bg-linear-to-r'],
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
+    public static function arbitraryCustomPropertiesProvider(): array
+    {
+        return [
+            ['bg-red bg-(--other-red) bg-bottom bg-(position:-my-pos)', 'bg-(--other-red) bg-(position:-my-pos)'],
+            ['shadow-xs shadow-(shadow:--something) shadow-red shadow-(--some-other-shadow) shadow-(color:--some-color)', 'shadow-(--some-other-shadow) shadow-(color:--some-color)'],
+        ];
+    }
+
+    /**
+     * @return list<list<string>>
+     */
     public static function ambiguousNonConflictingArbitraryValuesProvider(): array
     {
         return [
@@ -75,32 +101,38 @@ final class ArbitraryValuesTest extends TestCase
     }
 
     #[DataProvider('simpleConflictsWithArbitraryValuesProvider')]
-    public function testHandlesSimpleConflictsWithArbitraryValuesCorrectly(string $input, string $output): void
+    public function testItHandlesSimpleConflictsWithArbitraryValuesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryLengthConflictsWithLabelsAndModifiersProvider')]
-    public function testHandlesArbitraryLengthConflictsWithLabelsAndModifiersCorrectly(string $input, string $output): void
+    public function testItHandlesArbitraryLengthConflictsWithLabelsAndModifiersCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('complexArbitraryValueConflictsProvider')]
-    public function testHandlesComplexArbitraryValueConflictsCorrectly(string $input, string $output): void
+    public function testItHandlesComplexArbitraryValueConflictsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('ambiguousArbitraryValuesProvider')]
-    public function testHandlesAmbiguousArbitraryValuesCorrectly(string $input, string $output): void
+    public function testItHandlesAmbiguousArbitraryValuesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
+    }
+
+    #[DataProvider('arbitraryCustomPropertiesProvider')]
+    public function testItHandlesArbitraryCustomPropertiesProviderCorrectly(string $input, string $output): void
+    {
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('ambiguousNonConflictingArbitraryValuesProvider')]
-    public function testHandlesAmbiguousNonConflictingArbitraryValuesCorrectly(string $input, string $output): void
+    public function testItHandlesAmbiguousNonConflictingArbitraryValuesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

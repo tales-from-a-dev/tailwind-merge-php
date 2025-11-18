@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\Validators\LengthValidator;
 
 final class LengthValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
