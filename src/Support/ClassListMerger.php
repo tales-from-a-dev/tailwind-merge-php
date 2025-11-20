@@ -10,6 +10,8 @@ use TalesFromADev\TailwindMerge\Helper\Collection;
 use function Symfony\Component\String\u;
 
 /**
+ * @internal
+ *
  * @phpstan-import-type Configuration from Config
  */
 final class ClassListMerger

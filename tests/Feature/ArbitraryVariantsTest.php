@@ -31,7 +31,7 @@ final class ArbitraryVariantsTest extends TestCase
         return [
             ['dark:lg:hover:[&>*]:underline dark:lg:hover:[&>*]:line-through', 'dark:lg:hover:[&>*]:line-through'],
             ['dark:lg:hover:[&>*]:underline dark:hover:lg:[&>*]:line-through', 'dark:hover:lg:[&>*]:line-through'],
-            'Whether a modifier is before or after arbitrary variant matters' => ['hover:[&>*]:underline [&>*]:hover:line-through', 'hover:[&>*]:underline [&>*]:hover:line-through'],
+            ['hover:[&>*]:underline [&>*]:hover:line-through', 'hover:[&>*]:underline [&>*]:hover:line-through'],
             ['hover:dark:[&>*]:underline dark:hover:[&>*]:underline dark:[&>*]:hover:line-through', 'dark:hover:[&>*]:underline dark:[&>*]:hover:line-through'],
         ];
     }
