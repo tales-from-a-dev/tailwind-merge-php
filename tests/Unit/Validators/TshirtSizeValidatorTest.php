@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\Validators\TshirtSizeValidator;
 
 final class TshirtSizeValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
@@ -23,6 +26,7 @@ final class TshirtSizeValidatorTest extends TestCase
             ['10xl', true],
             ['2xs', true],
             ['2lg', true],
+
             ['', false],
             ['hello', false],
             ['1', false],

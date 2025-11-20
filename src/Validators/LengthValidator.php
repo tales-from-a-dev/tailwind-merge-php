@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Validators;
 
-use TalesFromADev\TailwindMerge\Contracts\ValidatorContract;
-use TalesFromADev\TailwindMerge\Support\Collection;
-use TalesFromADev\TailwindMerge\Support\Str;
+use TalesFromADev\TailwindMerge\Helper\Collection;
+
+use function Symfony\Component\String\u;
 
 /**
  * @internal
  */
-final class LengthValidator implements ValidatorContract
+final class LengthValidator implements ValidatorInterface
 {
     public static function validate(string $value): bool
     {
@@ -23,7 +23,7 @@ final class LengthValidator implements ValidatorContract
             return true;
         }
 
-        return Str::hasMatch(self::FRACTION_REGEX, $value);
+        return [] !== u($value)->match(self::FRACTION_REGEX);
     }
 
     /**

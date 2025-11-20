@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace TalesFromADev\TailwindMerge\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use TalesFromADev\TailwindMerge\Helper\Collection;
 use TalesFromADev\TailwindMerge\Support\ClassMap;
-use TalesFromADev\TailwindMerge\Support\Collection;
 use TalesFromADev\TailwindMerge\Support\Config;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
 
@@ -14,15 +14,18 @@ final class ClassMapTest extends TestCase
 {
     public function testClassMapHasCorrectClassGroups(): void
     {
-        $classMap = ClassMap::create(Config::getDefaultConfig());
+        $configuration = Config::getDefaultConfig();
+        $classMap = new ClassMap();
 
-        $classGroupsByFirstPart = Collection::make($classMap->nextPart)
+        $classPartObject = $classMap->processClassGroup($configuration['classGroups'], $configuration['theme']);
+
+        $classGroupsByFirstPart = Collection::make($classPartObject->nextPart)
             ->mapWithKeys(function ($value, $key) {
                 return [$key => Collection::make($this->getClassGroupsInClassPart($value))->sort()->values()];
             })->toArray();
 
-        $this->assertNull($classMap->classGroupId);
-        $this->assertEmpty($classMap->validators);
+        $this->assertNull($classPartObject->classGroupId);
+        $this->assertEmpty($classPartObject->validators);
         $this->assertEquals(
             [
                 'absolute' => ['position'],
@@ -45,6 +48,7 @@ final class ClassMapTest extends TestCase
                     'backdrop-saturate',
                     'backdrop-sepia',
                 ],
+                'backface' => ['backface'],
                 'basis' => ['basis'],
                 'bg' => [
                     'bg-attachment',
@@ -52,7 +56,6 @@ final class ClassMapTest extends TestCase
                     'bg-clip',
                     'bg-color',
                     'bg-image',
-                    'bg-opacity',
                     'bg-origin',
                     'bg-position',
                     'bg-repeat',
@@ -64,12 +67,13 @@ final class ClassMapTest extends TestCase
                     'border-collapse',
                     'border-color',
                     'border-color-b',
+                    'border-color-e',
                     'border-color-l',
                     'border-color-r',
+                    'border-color-s',
                     'border-color-t',
                     'border-color-x',
                     'border-color-y',
-                    'border-opacity',
                     'border-spacing',
                     'border-spacing-x',
                     'border-spacing-y',
@@ -105,24 +109,24 @@ final class ClassMapTest extends TestCase
                 'diagonal' => ['fvn-fraction'],
                 'divide' => [
                     'divide-color',
-                    'divide-opacity',
                     'divide-style',
                     'divide-x',
                     'divide-x-reverse',
                     'divide-y',
                     'divide-y-reverse',
                 ],
-                'drop' => ['drop-shadow'],
+                'drop' => ['drop-shadow', 'drop-shadow-color'],
                 'duration' => ['duration'],
                 'ease' => ['ease'],
                 'end' => ['end'],
+                'field' => ['field-sizing'],
                 'fill' => ['fill'],
                 'filter' => ['filter'],
                 'fixed' => ['position'],
                 'flex' => ['display', 'flex', 'flex-direction', 'flex-wrap'],
                 'float' => ['float'],
                 'flow' => ['display'],
-                'font' => ['font-family', 'font-weight'],
+                'font' => ['font-family', 'font-stretch', 'font-weight'],
                 'forced' => ['forced-color-adjust'],
                 'from' => ['gradient-from', 'gradient-from-pos'],
                 'gap' => ['gap', 'gap-x', 'gap-y'],
@@ -135,7 +139,15 @@ final class ClassMapTest extends TestCase
                 'hyphens' => ['hyphens'],
                 'indent' => ['indent'],
                 'inline' => ['display'],
-                'inset' => ['inset', 'inset-x', 'inset-y'],
+                'inset' => [
+                    'inset',
+                    'inset-ring-color',
+                    'inset-ring-w',
+                    'inset-shadow',
+                    'inset-shadow-color',
+                    'inset-x',
+                    'inset-y',
+                ],
                 'invert' => ['invert'],
                 'invisible' => ['visibility'],
                 'isolate' => ['isolation'],
@@ -150,6 +162,59 @@ final class ClassMapTest extends TestCase
                 'list' => ['display', 'list-image', 'list-style-position', 'list-style-type'],
                 'lowercase' => ['text-transform'],
                 'm' => ['m'],
+                'mask' => [
+                    'mask-clip',
+                    'mask-composite',
+                    'mask-image',
+                    'mask-image-b-from-color',
+                    'mask-image-b-from-pos',
+                    'mask-image-b-to-color',
+                    'mask-image-b-to-pos',
+                    'mask-image-conic-from-color',
+                    'mask-image-conic-from-pos',
+                    'mask-image-conic-pos',
+                    'mask-image-conic-to-color',
+                    'mask-image-conic-to-pos',
+                    'mask-image-l-from-color',
+                    'mask-image-l-from-pos',
+                    'mask-image-l-to-color',
+                    'mask-image-l-to-pos',
+                    'mask-image-linear-from-color',
+                    'mask-image-linear-from-pos',
+                    'mask-image-linear-pos',
+                    'mask-image-linear-to-color',
+                    'mask-image-linear-to-pos',
+                    'mask-image-r-from-color',
+                    'mask-image-r-from-pos',
+                    'mask-image-r-to-color',
+                    'mask-image-r-to-pos',
+                    'mask-image-radial',
+                    'mask-image-radial-from-color',
+                    'mask-image-radial-from-pos',
+                    'mask-image-radial-pos',
+                    'mask-image-radial-shape',
+                    'mask-image-radial-size',
+                    'mask-image-radial-to-color',
+                    'mask-image-radial-to-pos',
+                    'mask-image-t-from-color',
+                    'mask-image-t-from-pos',
+                    'mask-image-t-to-color',
+                    'mask-image-t-to-pos',
+                    'mask-image-x-from-color',
+                    'mask-image-x-from-pos',
+                    'mask-image-x-to-color',
+                    'mask-image-x-to-pos',
+                    'mask-image-y-from-color',
+                    'mask-image-y-from-pos',
+                    'mask-image-y-to-color',
+                    'mask-image-y-to-pos',
+                    'mask-mode',
+                    'mask-origin',
+                    'mask-position',
+                    'mask-repeat',
+                    'mask-size',
+                    'mask-type',
+                ],
                 'max' => ['max-h', 'max-w'],
                 'mb' => ['mb'],
                 'me' => ['me'],
@@ -177,9 +242,10 @@ final class ClassMapTest extends TestCase
                 'p' => ['p'],
                 'pb' => ['pb'],
                 'pe' => ['pe'],
+                'perspective' => ['perspective', 'perspective-origin'],
                 'pl' => ['pl'],
                 'place' => ['place-content', 'place-items', 'place-self'],
-                'placeholder' => ['placeholder-color', 'placeholder-opacity'],
+                'placeholder' => ['placeholder-color'],
                 'pointer' => ['pointer-events'],
                 'pr' => ['pr'],
                 'proportional' => ['fvn-spacing'],
@@ -194,11 +260,15 @@ final class ClassMapTest extends TestCase
                     'ring-color',
                     'ring-offset-color',
                     'ring-offset-w',
-                    'ring-opacity',
                     'ring-w',
                     'ring-w-inset',
                 ],
-                'rotate' => ['rotate'],
+                'rotate' => [
+                    'rotate',
+                    'rotate-x',
+                    'rotate-y',
+                    'rotate-z',
+                ],
                 'rounded' => [
                     'rounded',
                     'rounded-b',
@@ -218,7 +288,8 @@ final class ClassMapTest extends TestCase
                 ],
                 'row' => ['row-end', 'row-start', 'row-start-end'],
                 'saturate' => ['saturate'],
-                'scale' => ['scale', 'scale-x', 'scale-y'],
+                'scale' => ['scale', 'scale-3d', 'scale-x', 'scale-y', 'scale-z'],
+                'scheme' => ['color-scheme'],
                 'scroll' => [
                     'scroll-behavior',
                     'scroll-m',
@@ -246,7 +317,7 @@ final class ClassMapTest extends TestCase
                 'shadow' => ['shadow', 'shadow-color'],
                 'shrink' => ['shrink'],
                 'size' => ['size'],
-                'skew' => ['skew-x', 'skew-y'],
+                'skew' => ['skew', 'skew-x', 'skew-y'],
                 'slashed' => ['fvn-slashed-zero'],
                 'snap' => ['snap-align', 'snap-stop', 'snap-strictness', 'snap-type'],
                 'space' => ['space-x', 'space-x-reverse', 'space-y', 'space-y-reverse'],
@@ -263,17 +334,18 @@ final class ClassMapTest extends TestCase
                     'font-size',
                     'text-alignment',
                     'text-color',
-                    'text-opacity',
                     'text-overflow',
+                    'text-shadow',
+                    'text-shadow-color',
                     'text-wrap',
                 ],
                 'to' => ['gradient-to', 'gradient-to-pos'],
                 'top' => ['top'],
                 'touch' => ['touch', 'touch-pz', 'touch-x', 'touch-y'],
                 'tracking' => ['tracking'],
-                'transform' => ['transform'],
-                'transition' => ['transition'],
-                'translate' => ['translate-x', 'translate-y'],
+                'transform' => ['transform', 'transform-style'],
+                'transition' => ['transition', 'transition-behavior'],
+                'translate' => ['translate', 'translate-none', 'translate-x', 'translate-y', 'translate-z'],
                 'truncate' => ['text-overflow'],
                 'underline' => ['text-decoration', 'underline-offset'],
                 'uppercase' => ['text-transform'],
@@ -282,12 +354,16 @@ final class ClassMapTest extends TestCase
                 'w' => ['w'],
                 'whitespace' => ['whitespace'],
                 'will' => ['will-change'],
+                'wrap' => ['wrap'],
                 'z' => ['z'],
             ],
             $classGroupsByFirstPart,
         );
     }
 
+    /**
+     * @return array<int, string|null>
+     */
     private function getClassGroupsInClassPart(ClassPartObject $classPart): array
     {
         $classGroups = [];

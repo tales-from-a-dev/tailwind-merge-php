@@ -12,9 +12,9 @@ final class ThemeGetter
     }
 
     /**
-     * @param array<string, array<string, mixed>> $theme
+     * @param array<string, list<mixed>> $theme
      *
-     * @return array<string, mixed>
+     * @return list<mixed>
      */
     public function get(array $theme): array
     {

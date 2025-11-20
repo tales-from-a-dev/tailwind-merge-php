@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class TailwindCssVersionsTest extends TestCase
 {
+    /**
+     * @return array<int, list<string|list<string>>>
+     */
     public static function v33Provider(): array
     {
         return [
@@ -36,6 +39,9 @@ final class TailwindCssVersionsTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<int, list<string|list<string>>>
+     */
     public static function v34Provider(): array
     {
         return [
@@ -62,15 +68,49 @@ final class TailwindCssVersionsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
+    public static function v40Provider(): array
+    {
+        return [
+            ['transform-3d transform-flat', 'transform-flat'],
+            ['rotate-12 rotate-x-2 rotate-none rotate-y-3', 'rotate-x-2 rotate-none rotate-y-3'],
+            ['perspective-dramatic perspective-none perspective-midrange', 'perspective-midrange'],
+            ['perspective-origin-center perspective-origin-top-left', 'perspective-origin-top-left'],
+            ['bg-linear-to-r bg-linear-45', 'bg-linear-45'],
+            ['bg-linear-to-r bg-radial-[something] bg-conic-10', 'bg-conic-10'],
+            ['ring-4 ring-orange inset-ring inset-ring-3 inset-ring-blue', 'ring-4 ring-orange inset-ring-3 inset-ring-blue'],
+            ['field-sizing-content field-sizing-fixed', 'field-sizing-fixed'],
+            ['scheme-normal scheme-dark', 'scheme-dark'],
+            ['font-stretch-expanded font-stretch-[66.66%] font-stretch-50%', 'font-stretch-50%'],
+        ];
+    }
+
+    /**
+     * @param string|list<string> $input
+     */
     #[DataProvider('v33Provider')]
     public function testItHandlesV33FeaturesCorrectly(string|array $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
+    /**
+     * @param string|list<string> $input
+     */
     #[DataProvider('v34Provider')]
     public function testItHandlesV34FeaturesCorrectly(string|array $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
+    }
+
+    /**
+     * @param string|list<string> $input
+     */
+    #[DataProvider('v40Provider')]
+    public function testItHandlesV40FeaturesCorrectly(string|array $input, string $output): void
+    {
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

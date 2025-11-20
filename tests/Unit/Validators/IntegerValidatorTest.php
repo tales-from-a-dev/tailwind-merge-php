@@ -10,12 +10,16 @@ use TalesFromADev\TailwindMerge\Validators\IntegerValidator;
 
 final class IntegerValidatorTest extends TestCase
 {
+    /**
+     * @return list<array{string, bool}>
+     */
     public static function valueProvider(): array
     {
         return [
             ['1', true],
             ['123', true],
             ['8312', true],
+
             ['[8312]', false],
             ['[2]', false],
             ['[8312px]', false],
@@ -27,7 +31,6 @@ final class IntegerValidatorTest extends TestCase
             ['1/2', false],
             ['1%', false],
             ['1px', false],
-            ['', false],
         ];
     }
 

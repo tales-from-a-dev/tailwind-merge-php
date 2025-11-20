@@ -10,15 +10,22 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class ArbitraryVariantsTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsProvider(): array
     {
         return [
+            ['[p]:underline [p]:line-through', '[p]:line-through'],
             ['[&>*]:underline [&>*]:line-through', '[&>*]:line-through'],
             ['[&>*]:underline [&>*]:line-through [&_div]:line-through', '[&>*]:line-through [&_div]:line-through'],
             ['supports-[display:grid]:flex supports-[display:grid]:grid', 'supports-[display:grid]:grid'],
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsWithModifiersProvider(): array
     {
         return [
@@ -29,6 +36,9 @@ final class ArbitraryVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsWithComplexSyntaxProvider(): array
     {
         return [
@@ -37,6 +47,9 @@ final class ArbitraryVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsWithAttributeSelectorProvider(): array
     {
         return [
@@ -44,6 +57,9 @@ final class ArbitraryVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsWithMultipleAttributeSelectorProvider(): array
     {
         return [
@@ -51,6 +67,9 @@ final class ArbitraryVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function multipleArbitraryVariantsProvider(): array
     {
         return [
@@ -61,6 +80,9 @@ final class ArbitraryVariantsTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function arbitraryVariantsWithArbitraryPropertiesProvider(): array
     {
         return [
@@ -72,42 +94,42 @@ final class ArbitraryVariantsTest extends TestCase
     #[DataProvider('arbitraryVariantsProvider')]
     public function testItHandlesArbitraryVariantsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryVariantsWithModifiersProvider')]
-    public function testItHandlesArbitraryVariantsWithModifiersCorrectly(string $input, string $output)
+    public function testItHandlesArbitraryVariantsWithModifiersCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryVariantsWithComplexSyntaxProvider')]
-    public function testItHandlesArbitraryVariantsWithComplexSyntaxCorrectly(string $input, string $output)
+    public function testItHandlesArbitraryVariantsWithComplexSyntaxCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryVariantsWithAttributeSelectorProvider')]
-    public function testItHandlesArbitraryVariantsWithAttributeSelectorCorrectly(string $input, string $output)
+    public function testItHandlesArbitraryVariantsWithAttributeSelectorCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryVariantsWithMultipleAttributeSelectorProvider')]
-    public function testItHandlesArbitraryVariantsWithMultipleAttributeSelectorCorrectly(string $input, string $output)
+    public function testItHandlesArbitraryVariantsWithMultipleAttributeSelectorCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('multipleArbitraryVariantsProvider')]
-    public function testItHandlesMultipleArbitraryVariantsCorrectly(string $input, string $output)
+    public function testItHandlesMultipleArbitraryVariantsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('arbitraryVariantsWithArbitraryPropertiesProvider')]
-    public function testItHandlesArbitraryVariantsWithArbitraryPropertiesCorrectly(string $input, string $output)
+    public function testItHandlesArbitraryVariantsWithArbitraryPropertiesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

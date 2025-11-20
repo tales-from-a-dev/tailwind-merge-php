@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class NonConflictingClasses extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function nonConflictingClassesProvider(): array
     {
         return [
@@ -20,8 +23,8 @@ final class NonConflictingClasses extends TestCase
     }
 
     #[DataProvider('nonConflictingClassesProvider')]
-    public function testItMergesNonConflictingClassesCorrectly(string $input, string $output)
+    public function testItMergesNonConflictingClassesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }

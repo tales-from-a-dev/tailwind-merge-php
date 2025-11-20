@@ -10,6 +10,9 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class NegativeValuesTest extends TestCase
 {
+    /**
+     * @return list<list<string>>
+     */
     public static function negativeValuesProvider(): array
     {
         return [
@@ -18,6 +21,9 @@ final class NegativeValuesTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function positiveAndNegativeValuesProvider(): array
     {
         return [
@@ -26,6 +32,9 @@ final class NegativeValuesTest extends TestCase
         ];
     }
 
+    /**
+     * @return list<list<string>>
+     */
     public static function negativeGroupValuesProvider(): array
     {
         return [
@@ -35,20 +44,20 @@ final class NegativeValuesTest extends TestCase
     }
 
     #[DataProvider('negativeValuesProvider')]
-    public function testItHandlesNegativeValuesConflictsCorrectly(string $input, string $output)
+    public function testItHandlesNegativeValuesConflictsCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('positiveAndNegativeValuesProvider')]
-    public function testItHandlesPositiveAndNegativeValuesCorrectly(string $input, string $output)
+    public function testItHandlesPositiveAndNegativeValuesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 
     #[DataProvider('negativeGroupValuesProvider')]
-    public function testItHandlesNegativeGroupValuesCorrectly(string $input, string $output)
+    public function testItHandlesNegativeGroupValuesCorrectly(string $input, string $output): void
     {
-        $this->assertSame($output, TailwindMerge::instance()->merge($input));
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
     }
 }
