@@ -32,7 +32,8 @@ $tw = new TailwindMerge(['prefix' => 'tw']);
 $tw->merge('tw:text-red-500', 'tw:text-blue-500'); // 'tw:text-blue-500'
 ```
 
-For more information on how to configure `TailwindMerge`, see the [Configuration](#configuration) section.
+> [!IMPORTANT]
+> For more information on how to configure `TailwindMerge`, see the [Configuration](#configuration) section.
 
 ## Cache
 
@@ -50,7 +51,8 @@ $cache = new Psr16Cache(new FilesystemAdapter());
 $tw = new TailwindMerge(cache: $cache)
 ```
 
-When you are making changes to the configuration, make sure to clear the cache.
+> [!IMPORTANT]
+> When you are making changes to the configuration, make sure to clear the cache.
 
 ## Configuration
 
@@ -79,4 +81,5 @@ new TailwindMerge:([
 ]);
 ```
 
-For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md).
+> [!TIP]
+> For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md).
