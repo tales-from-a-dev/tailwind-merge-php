@@ -13,6 +13,6 @@ final class ArbitraryValuePositionValidator implements ValidatorInterface
 
     public static function validate(string $value): bool
     {
-        return self::getIsArbitraryValue($value, ['position', 'percentage'], fn (): bool => false);
+        return self::getIsArbitraryValue($value, ['position', 'percentage'], static fn (): bool => false);
     }
 }

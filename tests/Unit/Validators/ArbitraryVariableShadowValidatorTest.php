@@ -25,7 +25,7 @@ final class ArbitraryVariableShadowValidatorTest extends TestCase
     }
 
     #[DataProvider('valueProvider')]
-    public function testIsArbitraryValue(string $value, bool $expected): void
+    public function testIsArbitraryVariableShadow(string $value, bool $expected): void
     {
         $this->assertSame($expected, ArbitraryVariableShadowValidator::validate($value));
     }

@@ -76,6 +76,13 @@ final class ArbitraryValuesTest extends TestCase
             ['text-2xl text-[calc(theme(fontSize.4xl)/1.125)]', 'text-[calc(theme(fontSize.4xl)/1.125)]'],
             ['bg-cover bg-[percentage:30%] bg-[length:200px_100px]', 'bg-[percentage:30%] bg-[length:200px_100px]'],
             ['bg-none bg-[url(.)] bg-[image:.] bg-[url:.] bg-[linear-gradient(.)] bg-linear-to-r', 'bg-linear-to-r'],
+            ['border-[color-mix(in_oklab,var(--background),var(--calendar-color)_30%)] border', 'border-[color-mix(in_oklab,var(--background),var(--calendar-color)_30%)] border'],
+            ['font-[400] font-[600]', 'font-[600]'],
+            ['font-[var(--a)] font-[var(--b)]', 'font-[var(--b)]'],
+            ['font-[weight:var(--a)] font-[var(--b)]', 'font-[var(--b)]'],
+            ['font-[400] font-[weight:var(--b)]', 'font-[weight:var(--b)]'],
+            ['font-[weight:var(--a)] font-[weight:var(--b)]', 'font-[weight:var(--b)]'],
+            ['font-[family-name:var(--a)] font-[var(--b)]', 'font-[family-name:var(--a)] font-[var(--b)]'],
         ];
     }
 
@@ -87,6 +94,9 @@ final class ArbitraryValuesTest extends TestCase
         return [
             ['bg-red bg-(--other-red) bg-bottom bg-(position:-my-pos)', 'bg-(--other-red) bg-(position:-my-pos)'],
             ['shadow-xs shadow-(shadow:--something) shadow-red shadow-(--some-other-shadow) shadow-(color:--some-color)', 'shadow-(--some-other-shadow) shadow-(color:--some-color)'],
+            ['font-(--a) font-(--b)', 'font-(--b)'],
+            ['font-(weight:--a) font-(--b)', 'font-(--b)'],
+            ['font-(family-name:--a) font-(--b)', 'font-(family-name:--a) font-(--b)'],
         ];
     }
 

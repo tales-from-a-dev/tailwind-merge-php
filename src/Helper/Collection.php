@@ -15,7 +15,7 @@ final class Collection
     /**
      * @var array<TKey, TValue>
      */
-    protected array $items = [];
+    private array $items = [];
 
     /**
      * @param self<array-key, TValue>|array<array-key, TValue> $items
@@ -100,7 +100,7 @@ final class Collection
      */
     public function toArray(): array
     {
-        return $this->map(fn (mixed $value): mixed => $value instanceof Collection ? $value->toArray() : $value)->all();
+        return $this->map(static fn (mixed $value): mixed => $value instanceof Collection ? $value->toArray() : $value)->all();
     }
 
     /**

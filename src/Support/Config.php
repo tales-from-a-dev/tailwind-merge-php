@@ -6,6 +6,7 @@ namespace TalesFromADev\TailwindMerge\Support;
 
 use TalesFromADev\TailwindMerge\Validators\AnyNonArbitraryValidator;
 use TalesFromADev\TailwindMerge\Validators\AnyValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryValueFamilyNameValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueImageValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueLengthValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueNumberValidator;
@@ -13,6 +14,7 @@ use TalesFromADev\TailwindMerge\Validators\ArbitraryValuePositionValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueShadowValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueSizeValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryValueValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryValueWeightValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableFamilyNameValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableImageValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableLengthValidator;
@@ -20,6 +22,7 @@ use TalesFromADev\TailwindMerge\Validators\ArbitraryVariablePositionValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableShadowValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableSizeValidator;
 use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableValidator;
+use TalesFromADev\TailwindMerge\Validators\ArbitraryVariableWeightValidator;
 use TalesFromADev\TailwindMerge\Validators\FractionValidator;
 use TalesFromADev\TailwindMerge\Validators\IntegerValidator;
 use TalesFromADev\TailwindMerge\Validators\NumberValidator;
@@ -864,8 +867,8 @@ final class Config
                     [
                         'font' => [
                             $themeFontWeight,
-                            ArbitraryVariableValidator::validate(...),
-                            ArbitraryValueNumberValidator::validate(...),
+                            ArbitraryVariableWeightValidator::validate(...),
+                            ArbitraryValueWeightValidator::validate(...),
                         ],
                     ],
                 ],
@@ -900,7 +903,7 @@ final class Config
                     [
                         'font' => [
                             ArbitraryVariableFamilyNameValidator::validate(...),
-                            ArbitraryValueValidator::validate(...),
+                            ArbitraryValueFamilyNameValidator::validate(...),
                             $themeFont,
                         ],
                     ],

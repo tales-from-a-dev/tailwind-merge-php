@@ -26,7 +26,7 @@ final class ArbitraryVariableImageValidatorTest extends TestCase
     }
 
     #[DataProvider('valueProvider')]
-    public function testIsArbitraryValue(string $value, bool $expected): void
+    public function testIsArbitraryVariableImage(string $value, bool $expected): void
     {
         $this->assertSame($expected, ArbitraryVariableImageValidator::validate($value));
     }

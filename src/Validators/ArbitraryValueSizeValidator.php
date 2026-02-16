@@ -13,6 +13,6 @@ final class ArbitraryValueSizeValidator implements ValidatorInterface
 
     public static function validate(string $value): bool
     {
-        return self::getIsArbitraryValue($value, ['length', 'size', 'bg-size'], fn (): bool => false);
+        return self::getIsArbitraryValue($value, ['length', 'size', 'bg-size'], static fn (): bool => false);
     }
 }

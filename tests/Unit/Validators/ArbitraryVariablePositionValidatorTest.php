@@ -26,7 +26,7 @@ final class ArbitraryVariablePositionValidatorTest extends TestCase
     }
 
     #[DataProvider('valueProvider')]
-    public function testIsArbitraryValue(string $value, bool $expected): void
+    public function testIsArbitraryVariablePosition(string $value, bool $expected): void
     {
         $this->assertSame($expected, ArbitraryVariablePositionValidator::validate($value));
     }
