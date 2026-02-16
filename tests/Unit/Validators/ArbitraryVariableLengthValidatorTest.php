@@ -25,7 +25,7 @@ final class ArbitraryVariableLengthValidatorTest extends TestCase
     }
 
     #[DataProvider('valueProvider')]
-    public function testIsArbitraryValue(string $value, bool $expected): void
+    public function testIsArbitraryVariableLength(string $value, bool $expected): void
     {
         $this->assertSame($expected, ArbitraryVariableLengthValidator::validate($value));
     }

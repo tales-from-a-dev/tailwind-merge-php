@@ -83,7 +83,7 @@ final class ClassGroupUtils
             : implode(self::CLASS_PART_SEPARATOR, \array_slice($classParts, $startIndex))
         ;
 
-        return Collection::make($classPartObject->validators)->first(fn (ClassValidatorObject $validator) => ($validator->validator)($classRest))?->classGroupId;
+        return Collection::make($classPartObject->validators)->first(static fn (ClassValidatorObject $validator) => ($validator->validator)($classRest))?->classGroupId;
     }
 
     /**

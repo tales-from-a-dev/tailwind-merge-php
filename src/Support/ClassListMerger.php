@@ -36,7 +36,7 @@ final class ClassListMerger
     {
         $classGroupsInConflict = [];
         $classNames = Collection::make(u($classList)->trim()->split(' '))
-            ->map(fn (AbstractString $className): string => $className->toString())
+            ->map(static fn (AbstractString $className): string => $className->toString())
             ->reverse()
             ->all();
 

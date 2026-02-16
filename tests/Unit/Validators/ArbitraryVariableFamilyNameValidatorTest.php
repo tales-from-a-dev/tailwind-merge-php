@@ -25,7 +25,7 @@ final class ArbitraryVariableFamilyNameValidatorTest extends TestCase
     }
 
     #[DataProvider('valueProvider')]
-    public function testIsArbitraryValue(string $value, bool $expected): void
+    public function testIsArbitraryVariableFamilyName(string $value, bool $expected): void
     {
         $this->assertSame($expected, ArbitraryVariableFamilyNameValidator::validate($value));
     }

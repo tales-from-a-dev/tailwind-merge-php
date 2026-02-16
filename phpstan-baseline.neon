@@ -13,6 +13,12 @@ parameters:
 			path: src/Support/ClassGroupUtils.php
 
 		-
+			message: '#^Possibly invalid array key type string\|null\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 1
+			path: src/Support/ClassGroupUtils.php
+
+		-
 			message: '#^Method TalesFromADev\\TailwindMerge\\Support\\ClassMap\:\:processClassDefinition\(\) has parameter \$classDefinition with no value type specified in iterable type array\.$#'
 			identifier: missingType.iterableValue
 			count: 1
@@ -85,6 +91,12 @@ parameters:
 			path: src/Support/Config.php
 
 		-
+			message: '#^Method TalesFromADev\\TailwindMerge\\Validators\\ArbitraryValueFamilyNameValidator\:\:getIsArbitraryValue\(\) should return bool but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Validators/ArbitraryValueFamilyNameValidator.php
+
+		-
 			message: '#^Method TalesFromADev\\TailwindMerge\\Validators\\ArbitraryValueImageValidator\:\:getIsArbitraryValue\(\) should return bool but returns mixed\.$#'
 			identifier: return.type
 			count: 1
@@ -119,3 +131,9 @@ parameters:
 			identifier: return.type
 			count: 1
 			path: src/Validators/ArbitraryValueSizeValidator.php
+
+		-
+			message: '#^Method TalesFromADev\\TailwindMerge\\Validators\\ArbitraryValueWeightValidator\:\:getIsArbitraryValue\(\) should return bool but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Validators/ArbitraryValueWeightValidator.php
