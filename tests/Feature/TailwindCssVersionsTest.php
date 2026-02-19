@@ -88,6 +88,113 @@ final class TailwindCssVersionsTest extends TestCase
     }
 
     /**
+     * @return list<list<string>>
+     */
+    public static function v42Provider(): array
+    {
+        return [
+            ['inset-s-1 inset-s-2', 'inset-s-2'],
+            ['inset-e-1 inset-e-2', 'inset-e-2'],
+            ['inset-bs-1 inset-bs-2', 'inset-bs-2'],
+            ['inset-be-1 inset-be-2', 'inset-be-2'],
+
+            ['start-1 inset-s-2', 'inset-s-2'],
+            ['inset-s-1 start-2', 'start-2'],
+            ['end-1 inset-e-2', 'inset-e-2'],
+            ['inset-e-1 end-2', 'end-2'],
+
+            ['inset-s-1 inset-e-2 inset-bs-3 inset-be-4 inset-0', 'inset-0'],
+            ['inset-0 inset-s-1 inset-bs-1', 'inset-0 inset-s-1 inset-bs-1'],
+
+            ['inset-y-1 inset-bs-2 inset-be-3', 'inset-y-1 inset-bs-2 inset-be-3'],
+            ['top-1 inset-bs-2 bottom-3 inset-be-4', 'top-1 inset-bs-2 bottom-3 inset-be-4'],
+
+            ['pbs-1 pbs-2', 'pbs-2'],
+            ['pbe-1 pbe-2', 'pbe-2'],
+            ['mbs-1 mbs-2', 'mbs-2'],
+            ['mbe-1 mbe-2', 'mbe-2'],
+
+            ['pt-1 pbs-2', 'pt-1 pbs-2'],
+            ['pb-1 pbe-2', 'pb-1 pbe-2'],
+            ['mt-1 mbs-2', 'mt-1 mbs-2'],
+            ['mb-1 mbe-2', 'mb-1 mbe-2'],
+
+            ['p-0 pbs-1 pbe-1', 'p-0 pbs-1 pbe-1'],
+            ['pbs-1 pbe-1 p-0', 'p-0'],
+            ['m-0 mbs-1 mbe-1', 'm-0 mbs-1 mbe-1'],
+            ['mbs-1 mbe-1 m-0', 'm-0'],
+
+            ['py-1 pbs-2 pbe-3', 'py-1 pbs-2 pbe-3'],
+            ['my-1 mbs-2 mbe-3', 'my-1 mbs-2 mbe-3'],
+
+            // Logical scroll spacing utilities
+
+            ['scroll-pbs-1 scroll-pbs-2', 'scroll-pbs-2'],
+            ['scroll-pbe-1 scroll-pbe-2', 'scroll-pbe-2'],
+            ['scroll-mbs-1 scroll-mbs-2', 'scroll-mbs-2'],
+            ['scroll-mbe-1 scroll-mbe-2', 'scroll-mbe-2'],
+
+            ['scroll-pt-1 scroll-pbs-2', 'scroll-pt-1 scroll-pbs-2'],
+            ['scroll-pb-1 scroll-pbe-2', 'scroll-pb-1 scroll-pbe-2'],
+            ['scroll-mt-1 scroll-mbs-2', 'scroll-mt-1 scroll-mbs-2'],
+            ['scroll-mb-1 scroll-mbe-2', 'scroll-mb-1 scroll-mbe-2'],
+
+            ['scroll-p-0 scroll-pbs-1 scroll-pbe-1', 'scroll-p-0 scroll-pbs-1 scroll-pbe-1'],
+            ['scroll-pbs-1 scroll-pbe-1 scroll-p-0', 'scroll-p-0'],
+            ['scroll-m-0 scroll-mbs-1 scroll-mbe-1', 'scroll-m-0 scroll-mbs-1 scroll-mbe-1'],
+            ['scroll-mbs-1 scroll-mbe-1 scroll-m-0', 'scroll-m-0'],
+
+            ['scroll-py-1 scroll-pbs-2 scroll-pbe-3', 'scroll-py-1 scroll-pbs-2 scroll-pbe-3'],
+            ['scroll-my-1 scroll-mbs-2 scroll-mbe-3', 'scroll-my-1 scroll-mbs-2 scroll-mbe-3'],
+
+            // Logical border block utilities
+
+            ['border-bs-1 border-bs-2', 'border-bs-2'],
+            ['border-be-1 border-be-2', 'border-be-2'],
+            ['border-bs-red border-bs-blue', 'border-bs-blue'],
+            ['border-be-red border-be-blue', 'border-be-blue'],
+
+            ['border-2 border-bs-4 border-be-6', 'border-2 border-bs-4 border-be-6'],
+            ['border-bs-4 border-be-6 border-2', 'border-2'],
+            ['border-red border-bs-blue border-be-green', 'border-red border-bs-blue border-be-green'],
+            ['border-bs-blue border-be-green border-red', 'border-red'],
+
+            ['border-y-2 border-bs-4 border-be-6', 'border-y-2 border-bs-4 border-be-6'],
+            ['border-t-2 border-bs-4 border-b-6 border-be-8', 'border-t-2 border-bs-4 border-b-6 border-be-8'],
+            ['border-y-red border-bs-blue border-be-green', 'border-y-red border-bs-blue border-be-green'],
+
+            // Logical size utilities
+
+            ['inline-1/2 inline-3/4', 'inline-3/4'],
+            ['block-1/2 block-3/4', 'block-3/4'],
+            ['min-inline-auto min-inline-full', 'min-inline-full'],
+            ['max-inline-none max-inline-10', 'max-inline-10'],
+            ['min-block-auto min-block-lh min-block-10', 'min-block-10'],
+            ['max-block-none max-block-lh max-block-10', 'max-block-10'],
+
+            ['w-10 inline-20', 'w-10 inline-20'],
+            ['h-10 block-20', 'h-10 block-20'],
+            ['size-10 inline-20 block-30', 'size-10 inline-20 block-30'],
+            ['min-w-10 min-inline-20', 'min-w-10 min-inline-20'],
+            ['max-h-10 max-block-20', 'max-h-10 max-block-20'],
+
+            // Font feature settings utilities
+
+            ['font-features-["smcp"] font-features-["onum"]', 'font-features-["onum"]'],
+            ['font-features-[var(--font-features)] font-features-["liga","dlig"]', 'font-features-["liga","dlig"]'],
+            ['tabular-nums font-features-["smcp"]', 'tabular-nums font-features-["smcp"]'],
+            ['font-features-["smcp"] normal-nums', 'font-features-["smcp"] normal-nums'],
+            ['font-sans font-features-["smcp"]', 'font-sans font-features-["smcp"]'],
+
+            // Fractions with decimal numerator/denominator
+
+            ['aspect-8/11 aspect-8.5/11', 'aspect-8.5/11'],
+            ['w-8/11 w-8.5/11', 'w-8.5/11'],
+            ['inset-1/2 inset-1.25/2.5', 'inset-1.25/2.5'],
+        ];
+    }
+
+    /**
      * @param string|list<string> $input
      */
     #[DataProvider('v33Provider')]
@@ -110,6 +217,15 @@ final class TailwindCssVersionsTest extends TestCase
      */
     #[DataProvider('v40Provider')]
     public function testItHandlesV40FeaturesCorrectly(string|array $input, string $output): void
+    {
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
+    }
+
+    /**
+     * @param string|list<string> $input
+     */
+    #[DataProvider('v42Provider')]
+    public function testItHandlesV42FeaturesCorrectly(string|array $input, string $output): void
     {
         $this->assertSame($output, (new TailwindMerge())->merge($input));
     }

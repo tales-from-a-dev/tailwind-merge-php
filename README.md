@@ -14,7 +14,7 @@
 
 A PHP port of [tailwind-merge](https://github.com/dcastil/tailwind-merge) by [dcastil](https://github.com/dcastil).
 
-Supports Tailwind **v4.0** up to **v4.1**
+Supports Tailwind **v4.0** up to **v4.2**
 
 ## Documentation
 
