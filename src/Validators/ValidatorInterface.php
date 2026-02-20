@@ -15,7 +15,7 @@ interface ValidatorInterface
 
     final public const ARBITRARY_VARIABLE_REGEX = '/^\((?:(\w[\w-]*):)?(.+)\)$/i';
 
-    final public const FRACTION_REGEX = '/^\d+\/\d+$/';
+    final public const FRACTION_REGEX = '/^\d+(?:\.\d+)?\/\d+(?:\.\d+)?$/';
 
     final public const T_SHIRT_UNIT_REGEX = '/^(\d+(\.\d+)?)?(xs|sm|md|lg|xl)$/';
 

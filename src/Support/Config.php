@@ -311,35 +311,65 @@ final class Config
                  */
                 'position' => ['static', 'fixed', 'absolute', 'relative', 'sticky'],
                 /*
-                 * Top / Right / Bottom / Left
+                 * Inset
                  *
                  * @see https://tailwindcss.com/docs/top-right-bottom-left
                  */
                 'inset' => [['inset' => self::scaleInset($themeSpacing)]],
                 /*
-                 * Right / Left
+                 * Inset Inline
                  *
                  * @see https://tailwindcss.com/docs/top-right-bottom-left
                  */
                 'inset-x' => [['inset-x' => self::scaleInset($themeSpacing)]],
                 /*
-                 * Top / Bottom
+                 * Inset Block
                  *
                  * @see https://tailwindcss.com/docs/top-right-bottom-left
                  */
                 'inset-y' => [['inset-y' => self::scaleInset($themeSpacing)]],
                 /*
-                 * Start
+                 * Inset Inline Start
                  *
                  * @see https://tailwindcss.com/docs/top-right-bottom-left
                  */
-                'start' => [['start' => self::scaleInset($themeSpacing)]],
+                'start' => [
+                    [
+                        'inset-s' => self::scaleInset($themeSpacing),
+                        /*
+                         * @deprecated since Tailwind CSS v4.2.0 in favor of `inset-s-*` utilities.
+                         * @see https://github.com/tailwindlabs/tailwindcss/pull/19613
+                         */
+                        'start' => self::scaleInset($themeSpacing),
+                    ],
+                ],
                 /*
                  * End
                  *
                  * @see https://tailwindcss.com/docs/top-right-bottom-left
                  */
-                'end' => [['end' => self::scaleInset($themeSpacing)]],
+                'end' => [
+                    [
+                        'inset-e' => self::scaleInset($themeSpacing),
+                        /*
+                         * @deprecated since Tailwind CSS v4.2.0 in favor of `inset-e-*` utilities.
+                         * @see https://github.com/tailwindlabs/tailwindcss/pull/19613
+                         */
+                        'end' => self::scaleInset($themeSpacing),
+                    ],
+                ],
+                /*
+                 * Inset Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/top-right-bottom-left
+                 */
+                'inset-bs' => [['inset-bs' => self::scaleInset($themeSpacing)]],
+                /*
+                 * Inset Block End
+                 *
+                 * @see https://tailwindcss.com/docs/top-right-bottom-left
+                 */
+                'inset-be' => [['inset-be' => self::scaleInset($themeSpacing)]],
                 /*
                  * Top
                  *
@@ -628,29 +658,41 @@ final class Config
                  */
                 'p' => [['p' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Padding X
+                 * Padding Inline
                  *
                  * @see https://tailwindcss.com/docs/padding
                  */
                 'px' => [['px' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Padding Y
+                 * Padding Block
                  *
                  * @see https://tailwindcss.com/docs/padding
                  */
                 'py' => [['py' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Padding Start
+                 * Padding Inline Start
                  *
                  * @see https://tailwindcss.com/docs/padding
                  */
                 'ps' => [['ps' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Padding End
+                 * Padding Inline End
                  *
                  * @see https://tailwindcss.com/docs/padding
                  */
                 'pe' => [['pe' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Padding Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/padding
+                 */
+                'pbs' => [['pbs' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Padding Block End
+                 *
+                 * @see https://tailwindcss.com/docs/padding
+                 */
+                'pbe' => [['pbe' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
                  * Padding Top
                  *
@@ -682,29 +724,41 @@ final class Config
                  */
                 'm' => [['m' => self::scaleMargin($themeSpacing)]],
                 /*
-                 * Margin X
+                 * Margin Inline
                  *
                  * @see https://tailwindcss.com/docs/margin
                  */
                 'mx' => [['mx' => self::scaleMargin($themeSpacing)]],
                 /*
-                 * Margin Y
+                 * Margin Block
                  *
                  * @see https://tailwindcss.com/docs/margin
                  */
                 'my' => [['my' => self::scaleMargin($themeSpacing)]],
                 /*
-                 * Margin Start
+                 * Margin Inline Start
                  *
                  * @see https://tailwindcss.com/docs/margin
                  */
                 'ms' => [['ms' => self::scaleMargin($themeSpacing)]],
                 /*
-                 * Margin End
+                 * Margin Inline End
                  *
                  * @see https://tailwindcss.com/docs/margin
                  */
                 'me' => [['me' => self::scaleMargin($themeSpacing)]],
+                /*
+                 * Margin Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/margin
+                 */
+                'mbs' => [['mbs' => self::scaleMargin($themeSpacing)]],
+                /*
+                 * Margin Block End
+                 *
+                 * @see https://tailwindcss.com/docs/margin
+                 */
+                'mbe' => [['mbe' => self::scaleMargin($themeSpacing)]],
                 /*
                  * Margin Top
                  *
@@ -764,6 +818,42 @@ final class Config
                  * @see https://tailwindcss.com/docs/width#setting-both-width-and-height
                  */
                 'size' => [['size' => self::scaleSizing($themeSpacing)]],
+                /*
+                 * Inline Size
+                 *
+                 * @see https://tailwindcss.com/docs/width
+                 */
+                'inline-size' => [['inline' => ['auto', ...self::scaleSizingInline($themeSpacing)]]],
+                /*
+                 * Min-Inline Size
+                 *
+                 * @see https://tailwindcss.com/docs/min-width
+                 */
+                'min-inline-size' => [['min-inline' => ['auto', ...self::scaleSizingInline($themeSpacing)]]],
+                /*
+                 * Max-Inline Size
+                 *
+                 * @see https://tailwindcss.com/docs/max-width
+                 */
+                'max-inline-size' => [['max-inline' => ['none', ...self::scaleSizingInline($themeSpacing)]]],
+                /*
+                 * Block Size
+                 *
+                 * @see https://tailwindcss.com/docs/height
+                 */
+                'block-size' => [['block' => ['auto', ...self::scaleSizingBlock($themeSpacing)]]],
+                /*
+                 * Min-Block Size
+                 *
+                 * @see https://tailwindcss.com/docs/min-height
+                 */
+                'min-block-size' => [['min-block' => ['auto', ...self::scaleSizingBlock($themeSpacing)]]],
+                /*
+                 * Min-Block Size
+                 *
+                 * @see https://tailwindcss.com/docs/max-height
+                 */
+                'max-block-size' => [['max-block' => ['none', ...self::scaleSizingBlock($themeSpacing)]]],
                 /*
                  * Width
                  *
@@ -908,6 +998,12 @@ final class Config
                         ],
                     ],
                 ],
+                /*
+                 * Font Feature Settings
+                 *
+                 * @see https://tailwindcss.com/docs/font-feature-settings
+                 */
+                'font-features' => [['font-features' => [ArbitraryValueValidator::validate(...)]]],
                 /*
                  * Font Variant Numeric
                  *
@@ -1375,29 +1471,41 @@ final class Config
                  */
                 'border-w' => [['border' => self::scaleBorderWidth()]],
                 /*
-                 * Border Width X
+                 * Border Width Inline
                  *
                  * @see https://tailwindcss.com/docs/border-width
                  */
                 'border-w-x' => [['border-x' => self::scaleBorderWidth()]],
                 /*
-                 * Border Width Y
+                 * Border Width Block
                  *
                  * @see https://tailwindcss.com/docs/border-width
                  */
                 'border-w-y' => [['border-y' => self::scaleBorderWidth()]],
                 /*
-                 * Border Width Start
+                 * Border Width Inline Start
                  *
                  * @see https://tailwindcss.com/docs/border-width
                  */
                 'border-w-s' => [['border-s' => self::scaleBorderWidth()]],
                 /*
-                 * Border Width End
+                 * Border Width Inline End
                  *
                  * @see https://tailwindcss.com/docs/border-width
                  */
                 'border-w-e' => [['border-e' => self::scaleBorderWidth()]],
+                /*
+                 * Border Width Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/border-width
+                 */
+                'border-w-bs' => [['border-bs' => self::scaleBorderWidth()]],
+                /*
+                 * Border Width Block End
+                 *
+                 * @see https://tailwindcss.com/docs/border-width
+                 */
+                'border-w-be' => [['border-be' => self::scaleBorderWidth()]],
                 /*
                  * Border Width Top
                  *
@@ -1469,29 +1577,41 @@ final class Config
                     ],
                 ],
                 /*
-                 * Border Color X
+                 * Border Color Inline
                  *
                  * @see https://tailwindcss.com/docs/border-color
                  */
                 'border-color-x' => [['border-x' => self::scaleColor($themeColor)]],
                 /*
-                 * Border Color Y
+                 * Border Color Block
                  *
                  * @see https://tailwindcss.com/docs/border-color
                  */
                 'border-color-y' => [['border-y' => self::scaleColor($themeColor)]],
                 /*
-                 * Border Color S
+                 * Border Color Inline Start
                  *
                  * @see https://tailwindcss.com/docs/border-color
                  */
                 'border-color-s' => [['border-s' => self::scaleColor($themeColor)]],
                 /*
-                 * Border Color E
+                 * Border Color Inline End
                  *
                  * @see https://tailwindcss.com/docs/border-color
                  */
                 'border-color-e' => [['border-e' => self::scaleColor($themeColor)]],
+                /*
+                 * Border Color Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/border-color
+                 */
+                'border-color-bs' => [['border-bs' => self::scaleColor($themeColor)]],
+                /*
+                 * Border Color Block End
+                 *
+                 * @see https://tailwindcss.com/docs/border-color
+                 */
+                'border-color-be' => [['border-be' => self::scaleColor($themeColor)]],
                 /*
                  * Border Color Top
                  *
@@ -2453,29 +2573,41 @@ final class Config
                  */
                 'scroll-m' => [['scroll-m' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Margin X
+                 * Scroll Margin Inline
                  *
                  * @see https://tailwindcss.com/docs/scroll-margin
                  */
                 'scroll-mx' => [['scroll-mx' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Margin Y
+                 * Scroll Margin Block
                  *
                  * @see https://tailwindcss.com/docs/scroll-margin
                  */
                 'scroll-my' => [['scroll-my' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Margin Start
+                 * Scroll Margin Inline Start
                  *
                  * @see https://tailwindcss.com/docs/scroll-margin
                  */
                 'scroll-ms' => [['scroll-ms' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Margin End
+                 * Scroll Margin Inline End
                  *
                  * @see https://tailwindcss.com/docs/scroll-margin
                  */
                 'scroll-me' => [['scroll-me' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Scroll Margin Block Start
+                 *
+                 * @see https://tailwindcss.com/docs/scroll-margin
+                 */
+                'scroll-mbs' => [['scroll-mbs' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Scroll Margin Block End
+                 *
+                 * @see https://tailwindcss.com/docs/scroll-margin
+                 */
+                'scroll-mbe' => [['scroll-mbe' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
                  * Scroll Margin Top
                  *
@@ -2507,29 +2639,39 @@ final class Config
                  */
                 'scroll-p' => [['scroll-p' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Padding X
+                 * Scroll Padding Inline
                  *
                  * @see https://tailwindcss.com/docs/scroll-padding
                  */
                 'scroll-px' => [['scroll-px' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Padding Y
+                 * Scroll Padding Block
                  *
                  * @see https://tailwindcss.com/docs/scroll-padding
                  */
                 'scroll-py' => [['scroll-py' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Padding Start
+                 * Scroll Padding Inline Start
                  *
                  * @see https://tailwindcss.com/docs/scroll-padding
                  */
                 'scroll-ps' => [['scroll-ps' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
-                 * Scroll Padding End
+                 * Scroll Padding Inline End
                  *
                  * @see https://tailwindcss.com/docs/scroll-padding
                  */
                 'scroll-pe' => [['scroll-pe' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Scroll Padding Block Start
+                 * @see https://tailwindcss.com/docs/scroll-padding
+                 */
+                'scroll-pbs' => [['scroll-pbs' => self::scaleUnambiguousSpacing($themeSpacing)]],
+                /*
+                 * Scroll Padding Block End
+                 * @see https://tailwindcss.com/docs/scroll-padding
+                 */
+                'scroll-pbe' => [['scroll-pbe' => self::scaleUnambiguousSpacing($themeSpacing)]],
                 /*
                  * Scroll Padding Top
                  *
@@ -2672,15 +2814,26 @@ final class Config
             'conflictingClassGroups' => [
                 'overflow' => ['overflow-x', 'overflow-y'],
                 'overscroll' => ['overscroll-x', 'overscroll-y'],
-                'inset' => ['inset-x', 'inset-y', 'start', 'end', 'top', 'right', 'bottom', 'left'],
+                'inset' => [
+                    'inset-x',
+                    'inset-y',
+                    'inset-bs',
+                    'inset-be',
+                    'start',
+                    'end',
+                    'top',
+                    'right',
+                    'bottom',
+                    'left',
+                ],
                 'inset-x' => ['right', 'left'],
                 'inset-y' => ['top', 'bottom'],
                 'flex' => ['basis', 'grow', 'shrink'],
                 'gap' => ['gap-x', 'gap-y'],
-                'p' => ['px', 'py', 'ps', 'pe', 'pt', 'pr', 'pb', 'pl'],
+                'p' => ['px', 'py', 'ps', 'pe', 'pbs', 'pbe', 'pt', 'pr', 'pb', 'pl'],
                 'px' => ['pr', 'pl'],
                 'py' => ['pt', 'pb'],
-                'm' => ['mx', 'my', 'ms', 'me', 'mt', 'mr', 'mb', 'ml'],
+                'm' => ['mx', 'my', 'ms', 'me', 'mbs', 'mbe', 'mt', 'mr', 'mb', 'ml'],
                 'mx' => ['mr', 'ml'],
                 'my' => ['mt', 'mb'],
                 'size' => ['w', 'h'],
@@ -2726,6 +2879,8 @@ final class Config
                     'border-w-y',
                     'border-w-s',
                     'border-w-e',
+                    'border-w-bs',
+                    'border-w-be',
                     'border-w-t',
                     'border-w-r',
                     'border-w-b',
@@ -2738,6 +2893,8 @@ final class Config
                     'border-color-y',
                     'border-color-s',
                     'border-color-e',
+                    'border-color-bs',
+                    'border-color-be',
                     'border-color-t',
                     'border-color-r',
                     'border-color-b',
@@ -2752,6 +2909,8 @@ final class Config
                     'scroll-my',
                     'scroll-ms',
                     'scroll-me',
+                    'scroll-mbs',
+                    'scroll-mbe',
                     'scroll-mt',
                     'scroll-mr',
                     'scroll-mb',
@@ -2764,6 +2923,8 @@ final class Config
                     'scroll-py',
                     'scroll-ps',
                     'scroll-pe',
+                    'scroll-pbs',
+                    'scroll-pbe',
                     'scroll-pt',
                     'scroll-pr',
                     'scroll-pb',
@@ -3024,6 +3185,45 @@ final class Config
             'lvw',
             'lvh',
             'svw',
+            'svh',
+            'min',
+            'max',
+            'fit',
+            ...self::scaleUnambiguousSpacing($themeSpacing),
+        ];
+    }
+
+    /**
+     * @return list<string|callable|ThemeGetter>
+     */
+    private static function scaleSizingInline(ThemeGetter $themeSpacing): array
+    {
+        return [
+            FractionValidator::validate(...),
+            'screen',
+            'full',
+            'dvw',
+            'lvw',
+            'svw',
+            'min',
+            'max',
+            'fit',
+            ...self::scaleUnambiguousSpacing($themeSpacing),
+        ];
+    }
+
+    /**
+     * @return list<string|callable|ThemeGetter>
+     */
+    private static function scaleSizingBlock(ThemeGetter $themeSpacing): array
+    {
+        return [
+            FractionValidator::validate(...),
+            'screen',
+            'full',
+            'lh',
+            'dvh',
+            'lvh',
             'svh',
             'min',
             'max',
