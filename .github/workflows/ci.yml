@@ -6,7 +6,7 @@ on:
 
 jobs:
   tests:
-    name: tests (PHP ${{ matrix.php-version }})
+    name: tests (PHP ${{ matrix.php-version }}${{ matrix.dependency-versions == 'lowest' && ', lowest deps' || '' }})
 
     runs-on: ubuntu-latest
 
@@ -15,6 +15,10 @@ jobs:
       fail-fast: false
       matrix:
         php-version: [ '8.1', '8.2', '8.3', '8.4', '8.5' ]
+        dependency-versions: [ 'locked' ]
+        include:
+          - php-version: '8.1'
+            dependency-versions: 'lowest'
 
     steps:
       - uses: actions/checkout@v4
@@ -29,12 +33,15 @@ jobs:
       - name: 'Install Composer dependencies'
         uses: 'ramsey/composer-install@v3'
         with:
+          dependency-versions: ${{ matrix.dependency-versions }}
           composer-options: '--optimize-autoloader'
 
       - name: 'Run PHP-CS-Fixer'
+        if: matrix.dependency-versions == 'locked'
         run: composer test:lint
 
       - name: 'Run PHPStan'
+        if: matrix.dependency-versions == 'locked'
         run: composer test:types
 
       - name: 'Run PHPUnit'
