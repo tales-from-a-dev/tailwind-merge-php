@@ -13,10 +13,11 @@ This repository is `tailwind-merge-php`, a PHP port of [tailwind-merge](https://
 - Source code: `src/`
 - Tests: `tests/`
 - CI workflows: `.github/workflows/`
+- Agent skills: `.agents/skills/` (symlinked as `.claude/skills`)
 
 Deeper implementation notes live in:
 
-- `.agents/tailwind-css-version-update.md` (Tailwind CSS version support workflow)
+- `.agents/skills/tw-version-update/SKILL.md` (Tailwind CSS version support workflow)
 
 `CLAUDE.md` imports this file rather than restating it, so this file stays the single source of truth for agent guidance. Keep repo-wide guidance here.
 
@@ -39,7 +40,7 @@ In `src/Support/Config.php`, a class group entry is a list of strings (literal c
 
 ### Known pitfalls
 
-- **Class-group order in `Config` is semantically significant.** For groups sharing a prefix, the class map tries exact child paths first, then runs validators in registration order, so a broad validator (colors especially) registered before a specific one will claim classes the specific group should own. Sidebar order yields to correctness inside a shared-prefix cluster; see `.agents/tailwind-css-version-update.md`.
+- **Class-group order in `Config` is semantically significant.** For groups sharing a prefix, the class map tries exact child paths first, then runs validators in registration order, so a broad validator (colors especially) registered before a specific one will claim classes the specific group should own. Sidebar order yields to correctness inside a shared-prefix cluster; see `.agents/skills/tw-version-update/SKILL.md`.
 - **`Config` holds static state.** `setAdditionalConfig()` writes to a static property, and `getMergedConfig()` memoizes in statics keyed off it. Constructing a `TailwindMerge` mutates process-global config, so tests passing custom config can affect later ones unless the config is reset.
 - **The class map is built once per `ClassGroupUtils` instance, but validators still run per lookup.** `getClassGroupId()` memoizes the `ClassPartObject`, so the map costs one build per `TailwindMerge` instance rather than one per class. Validators are not memoized: they run on every class that reaches them, so keep them cheap — put prefix or character checks before regexes. Anything that makes the map depend on mutable state would break the memo.
 - **Slash syntax is postfix-first.** The parser assumes the part after `/` is a postfix modifier (`text-lg/7`). When the full slashed class belongs to its own group instead (for example named container queries), express that with `postfixLookupClassGroups` rather than branching in the parser.
@@ -92,11 +93,20 @@ Definition of done for every PR/change:
 1. Code and tests are updated.
 2. Relevant docs are updated in the same change set.
 3. `AGENTS.md` guidance is reviewed and updated if the change affects how agents should work in this repo.
-4. `.agents/*` guidance is reviewed and updated if the change affects the version update workflow.
+4. `.agents/skills/*` guidance is reviewed and updated if the change affects the version update workflow or the pre-PR checklist.
 
 ## Tailwind CSS Version Support
 
-For Tailwind CSS version support work, follow `.agents/tailwind-css-version-update.md`.
+For Tailwind CSS version support work, run the `/tw-version-update` skill (`.agents/skills/tw-version-update/SKILL.md`), which carries the full workflow.
+
+## Agent Skills
+
+Skills live in `.agents/skills/`, alongside the rest of the agent guidance. `.claude/skills` is a symlink to that directory, so Claude Code discovers them without a second copy. Both skills are user-invoked only; neither runs on its own.
+
+- `/tw-version-update <version>` — adds support for a new Tailwind CSS version. Self-contained: it is the source of truth for the research sources, triage questions, config ordering rules, and testing patterns of that workflow. Keep new lessons from a version update in it rather than restating them here.
+- `/pre-pr` — runs the validation set and audits the working diff against the definition of done above, including the docs sync policy and the known pitfalls. Reports only; it does not commit or push.
+
+When the pitfalls, validation commands, or docs sync policy in this file change, review `.agents/skills/pre-pr/SKILL.md` in the same change — it encodes them as a checklist.
 
 ## Quick Validation Matrix
 
