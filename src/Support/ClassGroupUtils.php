@@ -21,6 +21,7 @@ final class ClassGroupUtils
     private const ARBITRARY_PROPERTY_PREFIX = 'arbitrary..';
 
     private ClassMap $classMap;
+    private ?ClassPartObject $classPartObject = null;
 
     /**
      * @param array<string, list<mixed>>        $theme
@@ -46,7 +47,9 @@ final class ClassGroupUtils
         $classParts = explode(self::CLASS_PART_SEPARATOR, $class);
         // Classes like `-inset-1` produce an empty string as first classPart. We assume that classes for negative values are used correctly and skip it.
         $startIndex = '' === $classParts[0] && \count($classParts) > 1 ? 1 : 0;
-        $classPartObject = $this->classMap->processClassGroup($this->classGroups, $this->theme);
+        // The class map only depends on the (immutable) theme and class groups, so build it once
+        // and reuse it: getClassGroupId() is called for every class of every merge.
+        $classPartObject = $this->classPartObject ??= $this->classMap->processClassGroup($this->classGroups, $this->theme);
 
         return $this->getGroupRecursive($classParts, $startIndex, $classPartObject);
     }
