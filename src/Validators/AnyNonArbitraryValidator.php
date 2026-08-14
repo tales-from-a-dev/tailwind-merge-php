@@ -11,8 +11,6 @@ final class AnyNonArbitraryValidator implements ValidatorInterface
 {
     public static function validate(string $value): bool
     {
-        // Both regexes are anchored on a fixed first character, so anything not
-        // starting with `[` or `(` is non-arbitrary without running either.
         $firstCharacter = $value[0] ?? '';
 
         if ('[' === $firstCharacter) {

@@ -18,8 +18,6 @@ trait ValidateArbitraryVariable
             return false;
         }
 
-        // See ValidatesArbitraryValue: PREG_UNMATCHED_AS_NULL distinguishes an
-        // absent label group from an empty one.
         if (1 !== preg_match(self::ARBITRARY_VARIABLE_REGEX, $value, $matches, \PREG_UNMATCHED_AS_NULL)) {
             return false;
         }

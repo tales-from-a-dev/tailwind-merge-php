@@ -32,7 +32,7 @@ The bulk of the documentation is stored in the [`docs`](docs/index.md) directory
 
 * [Sandro Gehri](https://github.com/gehrisandro)
 * [Romain Monteil](https://github.com/ker0x)
-* [All contributors](https://github.com/talesfromadev/twig-tailwind-extra/graphs/contributors)
+* [All contributors](https://github.com/tales-from-a-dev/tailwind-merge-php/graphs/contributors)
 
 ## License
 

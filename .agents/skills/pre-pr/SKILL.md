@@ -57,6 +57,12 @@ Read the actual changed files — do not infer from filenames.
 - Version-update process changed, or the change taught you a new config-ordering
   gotcha → `.agents/skills/tw-version-update/SKILL.md` updated?
 - Breaking change → `UPGRADE.md` updated?
+- Release version bump, or `UPGRADE.md` touched → does the Composer constraint in
+  its migration diff still name the current release line? Composer's caret locks
+  the minor on a `0.x` version, so `^0.3` stops covering the latest release the
+  day `0.4.0` ships and the guide silently installs a version behind. Compare
+  against `git tag --sort=-v:refname | head -1`; the constraint needs bumping at
+  every `0.x` release, not only at a major one.
 
 **Tests**: behavior changed → tests changed in the same diff. `src/Support/Config.php`
 touched → `tests/Unit/ClassMapTest.php` almost certainly needs updating; it

@@ -143,8 +143,6 @@ printf("%-42s %14s %14s %9s\n", 'workload', 'cold (ms/op)', 'cached (ms/op)', 'r
 printf("%s\n", str_repeat('-', 82));
 
 foreach ($workloads as $name => [$callback, $iterations]) {
-    // A fresh instance per column, so neither one inherits a cache warmed by an
-    // earlier workload.
     [, $cold] = measure($callback, new TailwindMerge(['cacheSize' => 0]), $iterations);
     [, $cached] = measure($callback, new TailwindMerge(), $iterations);
 
