@@ -21,8 +21,7 @@
   ],
   "require": {
     "php": ">=8.1",
-    "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
-    "symfony/string": "^6.4 || ^7.0 || ^8.0"
+    "psr/simple-cache": "^1.0 || ^2.0 || ^3.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^3.89",
@@ -47,6 +46,7 @@
     }
   },
   "scripts": {
+    "bench": "php -d xdebug.mode=off bench/merge.php",
     "test:lint": "vendor/bin/php-cs-fixer fix -v --dry-run",
     "test:lint:fix": "vendor/bin/php-cs-fixer fix -v",
     "test:types": "vendor/bin/phpstan analyse --memory-limit 256M --ansi",

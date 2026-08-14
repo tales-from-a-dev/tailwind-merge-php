@@ -23,6 +23,17 @@ $tw = new TailwindMerge();
 $tw->merge('text-red-500', 'text-blue-500'); // 'text-blue-500'
 ```
 
+Classes are separated by any run of whitespace, so a class list written across
+several lines merges exactly like a single-line one:
+
+```php
+$tw->merge('
+    flex p-2
+    md:p-4
+    p-6
+'); // 'flex md:p-4 p-6'
+```
+
 You can adjust the configuration of `TailwindMerge` by passing an array of options:
 
 ```php
@@ -51,8 +62,13 @@ $cache = new Psr16Cache(new FilesystemAdapter());
 $tw = new TailwindMerge(cache: $cache)
 ```
 
+Cache keys embed a fingerprint of the configuration, so several differently
+configured instances can safely share one cache pool.
+
 > [!IMPORTANT]
-> When you are making changes to the configuration, make sure to clear the cache.
+> The fingerprint covers the configuration you pass, not the library version.
+> Clear the cache when upgrading the package, since the default class groups
+> may have changed.
 
 ## Configuration
 
@@ -72,7 +88,7 @@ If some of these points don't apply to you, you need to customize the configurat
 This is an example to add a custom font size of "very-large":
 
 ```php
-new TailwindMerge:([
+new TailwindMerge([
     'classGroups' => [
         'font-size' => [
             ['text' => ['very-large']],

@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-use TalesFromADev\TailwindMerge\Helper\Collection;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
-use TalesFromADev\TailwindMerge\ValueObjects\ClassValidatorObject;
-
-use function Symfony\Component\String\u;
 
 /**
  * @internal
@@ -20,8 +16,24 @@ final class ClassGroupUtils
     // I use two dots here because one dot is used as prefix for class groups in plugins
     private const ARBITRARY_PROPERTY_PREFIX = 'arbitrary..';
 
+    /**
+     * Upper bound for the class-group-id memo. A real application renders a
+     * bounded set of distinct class names, but a long-running worker merging
+     * generated class strings could otherwise grow this without limit.
+     */
+    private const CLASS_GROUP_ID_CACHE_LIMIT = 5000;
+
     private ClassMap $classMap;
     private ?ClassPartObject $classPartObject = null;
+
+    /**
+     * Resolved class name => class group id (null when the class belongs to no
+     * group). Resolving walks the trie and runs validators, so the same class
+     * appearing in many merges would otherwise pay that cost every time.
+     *
+     * @var array<string, ?string>
+     */
+    private array $classGroupIdCache = [];
 
     /**
      * @param array<string, list<mixed>>        $theme
@@ -39,6 +51,23 @@ final class ClassGroupUtils
     }
 
     public function getClassGroupId(string $class): ?string
+    {
+        // array_key_exists, not isset: a null result means "belongs to no class
+        // group", which is worth caching just as much as a hit.
+        if (\array_key_exists($class, $this->classGroupIdCache)) {
+            return $this->classGroupIdCache[$class];
+        }
+
+        $classGroupId = $this->resolveClassGroupId($class);
+
+        if (\count($this->classGroupIdCache) < self::CLASS_GROUP_ID_CACHE_LIMIT) {
+            $this->classGroupIdCache[$class] = $classGroupId;
+        }
+
+        return $classGroupId;
+    }
+
+    private function resolveClassGroupId(string $class): ?string
     {
         if (str_starts_with($class, '[') && str_ends_with($class, ']')) {
             return $this->getGroupIdForArbitraryProperty($class);
@@ -91,7 +120,13 @@ final class ClassGroupUtils
             : implode(self::CLASS_PART_SEPARATOR, \array_slice($classParts, $startIndex))
         ;
 
-        return Collection::make($classPartObject->validators)->first(static fn (ClassValidatorObject $validator, int|string $_key): bool => (bool) ($validator->validator)($classRest))?->classGroupId;
+        foreach ($classPartObject->validators as $validator) {
+            if (($validator->validator)($classRest)) {
+                return $validator->classGroupId;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -99,18 +134,14 @@ final class ClassGroupUtils
      */
     public function getGroupIdForArbitraryProperty(string $className): ?string
     {
-        if (-1 === u($className)->slice(1, -1)->indexOf(':')) {
+        $content = substr($className, 1, -1);
+        $colonIndex = strpos($content, ':');
+
+        if (false === $colonIndex) {
             return null;
         }
 
-        $content = u($className)->slice(1, -1);
-        $colonIndex = $content->indexOf(':');
-
-        if (null === $colonIndex) {
-            return null;
-        }
-
-        $property = $content->slice(0, $colonIndex)->toString();
+        $property = substr($content, 0, $colonIndex);
 
         if ('' !== $property && '0' !== $property) {
             return self::ARBITRARY_PROPERTY_PREFIX.$property;

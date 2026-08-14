@@ -59,7 +59,6 @@ final class TailwindMergeTest extends TestCase
     public function testItHandleBasicMergesWithConfigCorrectly(string $input, string $output): void
     {
         $instance = new TailwindMerge([
-            'cacheSize' => 20,
             'theme' => [],
             'classGroups' => [
                 'fooKey' => [['fooKey' => ['bar', 'baz']]],

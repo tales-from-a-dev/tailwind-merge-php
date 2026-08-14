@@ -23,6 +23,11 @@ final class ArbitraryValueLengthValidatorTest extends TestCase
             ['[56vh]', true],
             ['[length:var(--arbitrary)]', true],
 
+            // "0" is a label like any other, and it is not "length". It must
+            // not be mistaken for an absent label, which would wrongly fall
+            // through to validating "2px" as a bare length.
+            ['[0:2px]', false],
+
             ['1', false],
             ['3px', false],
             ['1d5', false],

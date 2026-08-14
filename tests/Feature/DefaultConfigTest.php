@@ -15,8 +15,9 @@ final class DefaultConfigTest extends TestCase
 
         $this->assertArrayNotHasKey('nonExistent', $defaultConfig);
 
-        $this->assertArrayHasKey('cacheSize', $defaultConfig);
-        $this->assertSame(500, $defaultConfig['cacheSize']);
+        // Caching is delegated to an injected PSR-16 pool, so the config
+        // carries no cache sizing of its own.
+        $this->assertArrayNotHasKey('cacheSize', $defaultConfig);
 
         $this->assertArrayHasKey('prefix', $defaultConfig);
         $this->assertNull($defaultConfig['prefix']);

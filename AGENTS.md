@@ -12,6 +12,7 @@ This repository is `tailwind-merge-php`, a PHP port of [tailwind-merge](https://
 
 - Source code: `src/`
 - Tests: `tests/`
+- Benchmarks: `bench/`
 - CI workflows: `.github/workflows/`
 - Agent skills: `.agents/skills/` (symlinked as `.claude/skills`)
 
@@ -29,8 +30,8 @@ Public API is `TailwindMerge`, `TailwindMergeInterface`, and `Support\Config`. E
 
 Merge pipeline, per `TailwindMerge::merge()`:
 
-1. `TailwindMerge` flattens the variadic string/array arguments into one class list, optionally short-circuiting through the PSR-16 cache (key = `xxh3` of the class list).
-2. `Support\ClassListMerger` walks the class list **in reverse** — that is why the last class wins. Each kept class is prepended to the result, restoring source order.
+1. `TailwindMerge` flattens the variadic string/array arguments into one class list, optionally short-circuiting through the PSR-16 cache (key = `xxh3` of a per-instance configuration fingerprint plus the class list, so instances sharing a pool cannot collide).
+2. `Support\ClassListMerger` splits on any whitespace run and walks the class list **in reverse** — that is why the last class wins. Kept classes are collected into an array and joined once at the end; never build the result by string concatenation inside the loop, which is quadratic.
 3. `Support\ClassNameParser` splits a class into `modifiers`, `baseClassName`, `hasImportantModifier`, and `maybePostfixModifierPosition` (the `/` position), tracking `[]` and `()` depth so separators inside arbitrary values are ignored. Classes not carrying the configured `prefix` are marked `isExternal` and pass through untouched.
 4. `Support\ClassGroupUtils` resolves the base class to a class group id via `Support\ClassMap`, a trie built from `classGroups`: it descends `nextPart` by `-`-separated segments first, and only falls back to the validators registered at that node.
 5. Conflicts: a kept class marks its own `modifierId.classGroupId` plus every id in `conflictingClassGroups` (and `conflictingClassGroupModifiers` when a postfix modifier is present) as seen. Any class encountered later in the reverse walk that hits a seen id is dropped.
@@ -41,16 +42,21 @@ In `src/Support/Config.php`, a class group entry is a list of strings (literal c
 ### Known pitfalls
 
 - **Class-group order in `Config` is semantically significant.** For groups sharing a prefix, the class map tries exact child paths first, then runs validators in registration order, so a broad validator (colors especially) registered before a specific one will claim classes the specific group should own. Sidebar order yields to correctness inside a shared-prefix cluster; see `.agents/skills/tw-version-update/SKILL.md`.
-- **`Config` holds static state.** `setAdditionalConfig()` writes to a static property, and `getMergedConfig()` memoizes in statics keyed off it. Constructing a `TailwindMerge` mutates process-global config, so tests passing custom config can affect later ones unless the config is reset.
-- **The class map is built once per `ClassGroupUtils` instance, but validators still run per lookup.** `getClassGroupId()` memoizes the `ClassPartObject`, so the map costs one build per `TailwindMerge` instance rather than one per class. Validators are not memoized: they run on every class that reaches them, so keep them cheap — put prefix or character checks before regexes. Anything that makes the map depend on mutable state would break the memo.
+- **`Config` holds static state.** `setAdditionalConfig()` writes to a static property, and `getMergedConfig()` memoizes the **merged** result keyed off it. Constructing a `TailwindMerge` mutates process-global config, so tests passing custom config must call `Config::reset()` in `tearDown()`. The memo has to return its stored value untouched on a hit: re-running the merge loop over an already-merged config duplicates list entries, because `mergePropertyRecursively` concatenates lists.
+- **Two memos sit on the class-group lookup, and both assume immutable input.** `getClassGroupId()` memoizes the `ClassPartObject` trie (one build per `TailwindMerge` instance) *and* caches class name → class group id per instance, bounded by `CLASS_GROUP_ID_CACHE_LIMIT`. Validators therefore run once per distinct class name, not once per occurrence — but they still run on the cold path, so keep them cheap and put character or prefix checks before regexes. Anything that makes the map or a validator depend on mutable state would break both memos.
+- **Offsets into a class name are byte offsets.** `ClassNameParser` scans bytes, so `maybePostfixModifierPosition` must be consumed with `substr`, never a code-point-based slice. The parser also shifts that offset when it strips a leading legacy `!`.
 - **Slash syntax is postfix-first.** The parser assumes the part after `/` is a postfix modifier (`text-lg/7`). When the full slashed class belongs to its own group instead (for example named container queries), express that with `postfixLookupClassGroups` rather than branching in the parser.
+- **PHP truthiness is not JS truthiness.** The upstream port tests captured regex groups with `if (match[1])`, where the string `"0"` is truthy; the PHP equivalent `'' !== $x && '0' !== $x` is not, and silently reclassifies a `0` label as an absent one. Check captured groups against `null` only, unless an empty match is genuinely reachable.
 - **PHP 8.1 is the floor** (CI matrix runs 8.1–8.5): no readonly classes, no 8.2+ syntax.
 
 ## Code Conventions
 
 - Validators live in `src/Validators/` as a `final class` implementing `ValidatorInterface` with a static `validate(string): bool`, referenced from `Config` as a first-class callable (`FooValidator::validate(...)`). Shared regexes are `ValidatorInterface` constants; the `ValidatesArbitraryValue` and `ValidateArbitraryVariable` traits carry shared `[...]` and `(...)` matching logic.
+- **The library has no runtime dependency beyond `psr/simple-cache`.** Use native string and `preg_*` functions; do not reintroduce `symfony/string`. The `u` modifier is baked into every `ValidatorInterface` regex constant and is part of the contract — `\w` must match Unicode letters. Where a match result is inspected, pass `PREG_UNMATCHED_AS_NULL` so an absent group stays distinguishable from an empty one.
+- Guard a regex with a cheap character test when the pattern is anchored on a fixed first character; `NamedContainerQueryValidator` is the model.
 - `tests/Feature/` holds behavior tests calling `(new TailwindMerge())->merge(...)` with `#[DataProvider]` arrays of `[input, expectedOutput]`.
-- `tests/Unit/` covers validators, the cache, and `ClassMapTest`, which asserts the entire default class map — expect to update its expectations whenever `Config` gains or moves a class group.
+- `tests/Unit/` covers validators, the cache (`CacheTest`, with the `InMemoryCache` helper pool), `ConfigTest` (static-state and memo behavior), and `ClassMapTest`, which asserts the entire default class map — expect to update its expectations whenever `Config` gains or moves a class group.
+- **PHPUnit only collects files ending in `Test.php`.** A test file named otherwise is silently never executed; match the class name to the file name.
 
 ## Environment and Commands
 
@@ -65,6 +71,7 @@ Core commands:
 - `composer test:lint:fix` — auto-fix code style issues
 - `composer test:types` — run static analysis with PHPStan
 - `composer test:types:baseline` — regenerate the PHPStan baseline
+- `composer bench` — run the merge benchmark (`bench/merge.php`); run it before and after any change to the merge pipeline
 
 Targeted test runs:
 
@@ -114,4 +121,8 @@ When the pitfalls, validation commands, or docs sync policy in this file change,
 - Class groups, conflicts, default config: run `tests/Feature/DefaultConfigTest.php`, `tests/Feature/ClassGroupConflictsTest.php`, `tests/Feature/TailwindCssVersionsTest.php`.
 - Arbitrary values and properties: run `tests/Feature/ArbitraryValuesTest.php`, `tests/Feature/ArbitraryPropertiesTest.php`.
 - Validators: run `tests/Unit/Validators/`.
+- Whitespace or class-list splitting: run `tests/Feature/WhitespaceTest.php`.
+- Important modifier, postfix offsets: run `tests/Feature/ImportantModifierTest.php`.
+- Config static state, cache keys: run `tests/Unit/ConfigTest.php`, `tests/Unit/CacheTest.php`.
+- Merge pipeline performance: run `composer bench` before and after.
 - Full suite: `composer test`.

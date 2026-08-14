@@ -26,6 +26,10 @@ final class ArbitraryValueWeightValidatorTest extends TestCase
             ['[family-name:test]', false],
             ['weight:400', false],
             ['(weight:400)', false],
+            // A "0" label is a label, not an absent one: it matches no entry in
+            // the list, so this is not an arbitrary weight.
+            ['[0:red]', false],
+            ['[0:400]', false],
         ];
     }
 
