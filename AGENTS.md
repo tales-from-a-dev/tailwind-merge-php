@@ -30,7 +30,7 @@ Public API is `TailwindMerge`, `TailwindMergeInterface`, and `Support\Config`. E
 
 Merge pipeline, per `TailwindMerge::merge()`:
 
-1. `TailwindMerge` flattens the variadic string/array arguments into one class list, optionally short-circuiting through the PSR-16 cache (key = `xxh3` of a per-instance configuration fingerprint plus the class list, so instances sharing a pool cannot collide).
+1. `TailwindMerge` flattens the variadic string/array arguments into one class list, optionally short-circuiting through the cache (key = `xxh3` of a per-instance configuration fingerprint plus the class list, so instances sharing a pool cannot collide). Two layers sit behind that key: the built-in `Support\LruCache`, sized by the `cacheSize` config option and enabled by default, and an injected PSR-16 pool. The in-memory one is checked first and a PSR-16 hit is promoted into it, so a repeated class list costs one array lookup rather than a round trip; writes go to both.
 2. `Support\ClassListMerger` splits on any whitespace run and walks the class list **in reverse** — that is why the last class wins. Kept classes are collected into an array and joined once at the end; never build the result by string concatenation inside the loop, which is quadratic.
 3. `Support\ClassNameParser` splits a class into `modifiers`, `baseClassName`, `hasImportantModifier`, and `maybePostfixModifierPosition` (the `/` position), tracking `[]` and `()` depth so separators inside arbitrary values are ignored. Classes not carrying the configured `prefix` are marked `isExternal` and pass through untouched.
 4. `Support\ClassGroupUtils` resolves the base class to a class group id via `Support\ClassMap`, a trie built from `classGroups`: it descends `nextPart` by `-`-separated segments first, and only falls back to the validators registered at that node.
@@ -55,7 +55,7 @@ In `src/Support/Config.php`, a class group entry is a list of strings (literal c
 - **The library has no runtime dependency beyond `psr/simple-cache`.** Use native string and `preg_*` functions; do not reintroduce `symfony/string`. The `u` modifier is baked into every `ValidatorInterface` regex constant and is part of the contract — `\w` must match Unicode letters. Where a match result is inspected, pass `PREG_UNMATCHED_AS_NULL` so an absent group stays distinguishable from an empty one.
 - Guard a regex with a cheap character test when the pattern is anchored on a fixed first character; `NamedContainerQueryValidator` is the model.
 - `tests/Feature/` holds behavior tests calling `(new TailwindMerge())->merge(...)` with `#[DataProvider]` arrays of `[input, expectedOutput]`.
-- `tests/Unit/` covers validators, the cache (`CacheTest`, with the `InMemoryCache` helper pool), `ConfigTest` (static-state and memo behavior), and `ClassMapTest`, which asserts the entire default class map — expect to update its expectations whenever `Config` gains or moves a class group.
+- `tests/Unit/` covers validators, the cache (`CacheTest` for the layering and key scoping, `LruCacheTest` for the in-memory cache in isolation), `ConfigTest` (static-state and memo behavior), and `ClassMapTest`, which asserts the entire default class map — expect to update its expectations whenever `Config` gains or moves a class group.
 - **PHPUnit only collects files ending in `Test.php`.** A test file named otherwise is silently never executed; match the class name to the file name.
 
 ## Environment and Commands
@@ -71,7 +71,7 @@ Core commands:
 - `composer test:lint:fix` — auto-fix code style issues
 - `composer test:types` — run static analysis with PHPStan
 - `composer test:types:baseline` — regenerate the PHPStan baseline
-- `composer bench` — run the merge benchmark (`bench/merge.php`); run it before and after any change to the merge pipeline
+- `composer bench` — run the merge benchmark (`bench/merge.php`); run it before and after any change to the merge pipeline. It reports each workload twice: a **cold** column (`cacheSize => 0`) that walks the full pipeline, and a **cached** column on the default configuration. Compare the cold column across a pipeline change — the cached one measures a hash plus an array lookup and will barely move.
 
 Targeted test runs:
 
@@ -123,6 +123,6 @@ When the pitfalls, validation commands, or docs sync policy in this file change,
 - Validators: run `tests/Unit/Validators/`.
 - Whitespace or class-list splitting: run `tests/Feature/WhitespaceTest.php`.
 - Important modifier, postfix offsets: run `tests/Feature/ImportantModifierTest.php`.
-- Config static state, cache keys: run `tests/Unit/ConfigTest.php`, `tests/Unit/CacheTest.php`.
-- Merge pipeline performance: run `composer bench` before and after.
+- Config static state, cache keys and layering: run `tests/Unit/ConfigTest.php`, `tests/Unit/CacheTest.php`, `tests/Unit/LruCacheTest.php`.
+- Merge pipeline performance: run `composer bench` before and after, and compare the cold column.
 - Full suite: `composer test`.

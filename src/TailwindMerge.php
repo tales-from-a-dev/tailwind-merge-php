@@ -8,10 +8,13 @@ use Psr\SimpleCache\CacheInterface;
 use TalesFromADev\TailwindMerge\Helper\Collection;
 use TalesFromADev\TailwindMerge\Support\ClassListMerger;
 use TalesFromADev\TailwindMerge\Support\Config;
+use TalesFromADev\TailwindMerge\Support\LruCache;
 
 final class TailwindMerge implements TailwindMergeInterface
 {
     private ClassListMerger $merger;
+
+    private ?LruCache $lruCache = null;
 
     /**
      * Prefix for every cache key produced by this instance. It embeds a
@@ -35,6 +38,13 @@ final class TailwindMerge implements TailwindMergeInterface
         // Computed once: the configuration cannot change for the lifetime of
         // this instance, since the merger captured it above.
         $this->cacheKeyPrefix = 'tailwind-merge-'.self::fingerprint($additionalConfiguration).'-';
+
+        // The in-memory cache fronts an injected PSR-16 one rather than
+        // replacing it: a PSR-16 round trip per merge is itself expensive
+        // enough to dominate a request that merges a lot (see #15).
+        if ($configuration['cacheSize'] > 0) {
+            $this->lruCache = new LruCache($configuration['cacheSize']);
+        }
     }
 
     /**
@@ -44,25 +54,52 @@ final class TailwindMerge implements TailwindMergeInterface
     {
         $classList = Collection::make($classLists)->flatten()->join(' ');
 
-        if (!$this->cache instanceof CacheInterface) {
+        if (!$this->cache instanceof CacheInterface && !$this->lruCache instanceof LruCache) {
             return $this->merger->merge($classList);
         }
 
         $key = hash('xxh3', $this->cacheKeyPrefix.$classList);
 
-        // A single get() with a sentinel default, rather than has() then get():
-        // on a file or Redis pool the two-call form doubles the round-trips.
-        $cachedValue = $this->cache->get($key);
+        $cachedValue = $this->getCached($key);
 
-        if (\is_string($cachedValue)) {
+        if (null !== $cachedValue) {
             return $cachedValue;
         }
 
         $mergedClasses = $this->merger->merge($classList);
 
-        $this->cache->set($key, $mergedClasses);
+        $this->setCached($key, $mergedClasses);
 
         return $mergedClasses;
+    }
+
+    private function getCached(string $key): ?string
+    {
+        $cachedValue = $this->lruCache?->get($key);
+
+        if (null !== $cachedValue) {
+            return $cachedValue;
+        }
+
+        // A single get() with a sentinel default, rather than has() then get():
+        // on a file or Redis pool the two-call form doubles the round-trips.
+        $cachedValue = $this->cache?->get($key);
+
+        if (!\is_string($cachedValue)) {
+            return null;
+        }
+
+        // Promote the hit so the next merge of the same class list is served
+        // from memory instead of paying another round trip.
+        $this->lruCache?->set($key, $cachedValue);
+
+        return $cachedValue;
+    }
+
+    private function setCached(string $key, string $value): void
+    {
+        $this->lruCache?->set($key, $value);
+        $this->cache?->set($key, $value);
     }
 
     /**

@@ -37,15 +37,13 @@ final class CacheTest extends TestCase
 
         $cache = $this->createMock(CacheInterface::class);
 
-        // A single get() per merge, not has() + get().
+        // A single get() per pool lookup, not has() + get(). Only one lookup
+        // happens here: the in-memory cache serves the second merge.
         $cache
-            ->expects($this->exactly(2))
+            ->expects($this->once())
             ->method('get')
             ->with($cacheKey)
-            ->willReturn(
-                null,
-                $output,
-            )
+            ->willReturn(null)
         ;
 
         $cache
@@ -66,6 +64,82 @@ final class CacheTest extends TestCase
 
         $this->assertSame($output, $tailwindMerge->merge($input));
         $this->assertSame($output, $tailwindMerge->merge($input));
+    }
+
+    public function testTheInMemoryCacheFrontsTheInjectedOne(): void
+    {
+        $cache = $this->createMock(CacheInterface::class);
+
+        // Both caches miss once, then the result is written to both. The second
+        // merge is served from memory, so the PSR-16 cache is never consulted
+        // again — that round trip is what makes merge-heavy requests slow.
+        $cache->expects($this->once())->method('get')->willReturn(null);
+        $cache->expects($this->once())->method('set');
+
+        $tailwindMerge = new TailwindMerge(['cacheSize' => 10], $cache);
+
+        $first = $tailwindMerge->merge('text-red-500 text-green-500');
+        $second = $tailwindMerge->merge('text-red-500 text-green-500');
+
+        $this->assertSame('text-green-500', $first);
+        $this->assertSame($first, $second);
+    }
+
+    public function testItPromotesAnInjectedCacheHitIntoMemory(): void
+    {
+        $cache = $this->createMock(CacheInterface::class);
+
+        // The value is already in the PSR-16 cache, so it is read once and
+        // promoted; the second merge must not go back to it.
+        $cache->expects($this->once())->method('get')->willReturn('text-green-500');
+        $cache->expects($this->never())->method('set');
+
+        $tailwindMerge = new TailwindMerge(['cacheSize' => 10], $cache);
+
+        $first = $tailwindMerge->merge('text-red-500 text-green-500');
+        $second = $tailwindMerge->merge('text-red-500 text-green-500');
+
+        $this->assertSame('text-green-500', $first);
+        $this->assertSame($first, $second);
+    }
+
+    public function testItUsesTheInjectedCacheAloneWhenTheInMemoryOneIsDisabled(): void
+    {
+        $output = 'text-green-500';
+        $cache = $this->createMock(CacheInterface::class);
+
+        // `cacheSize` disabled, so nothing fronts the PSR-16 cache and every
+        // merge pays a round trip.
+        $cache->expects($this->exactly(2))->method('get')->willReturn(null, $output);
+        $cache->expects($this->once())->method('set');
+        $cache->expects($this->never())->method('has');
+
+        $tailwindMerge = new TailwindMerge(['cacheSize' => 0], $cache);
+
+        $this->assertSame($output, $tailwindMerge->merge('text-red-500 text-green-500'));
+        $this->assertSame($output, $tailwindMerge->merge('text-red-500 text-green-500'));
+    }
+
+    public function testItDoesNotTouchAnInjectedCacheWhenNoneIsGiven(): void
+    {
+        $cache = $this->createMock(CacheInterface::class);
+
+        $cache->expects($this->never())->method('has');
+        $cache->expects($this->never())->method('get');
+        $cache->expects($this->never())->method('set');
+
+        $tailwindMerge = new TailwindMerge(['cacheSize' => 10]);
+
+        $this->assertSame('text-green-500', $tailwindMerge->merge('text-red-500 text-green-500'));
+        $this->assertSame('text-green-500', $tailwindMerge->merge('text-red-500 text-green-500'));
+    }
+
+    public function testItStillMergesWhenCachingIsDisabled(): void
+    {
+        $tailwindMerge = new TailwindMerge(['cacheSize' => 0]);
+
+        $this->assertSame('text-green-500', $tailwindMerge->merge('text-red-500 text-green-500'));
+        $this->assertSame('text-green-500', $tailwindMerge->merge('text-red-500 text-green-500'));
     }
 
     public function testDifferentConfigurationsDoNotShareCacheEntries(): void
