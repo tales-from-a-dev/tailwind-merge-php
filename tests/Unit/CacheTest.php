@@ -12,15 +12,17 @@ use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class CacheTest extends TestCase
 {
-    private CacheInterface&MockObject $cache;
-
-    protected function setUp(): void
-    {
-        $this->cache = $this->createMock(CacheInterface::class);
-    }
+    /**
+     * Backing store for the pools built by createPool().
+     *
+     * @var array<string, mixed>
+     */
+    private array $store = [];
 
     protected function tearDown(): void
     {
+        $this->store = [];
+
         Config::reset();
     }
 
@@ -33,8 +35,10 @@ final class CacheTest extends TestCase
         // fingerprint of an empty configuration.
         $cacheKey = hash('xxh3', 'tailwind-merge-default-'.$input);
 
+        $cache = $this->createMock(CacheInterface::class);
+
         // A single get() per merge, not has() + get().
-        $this->cache
+        $cache
             ->expects($this->exactly(2))
             ->method('get')
             ->with($cacheKey)
@@ -44,7 +48,7 @@ final class CacheTest extends TestCase
             )
         ;
 
-        $this->cache
+        $cache
             ->expects($this->once())
             ->method('set')
             ->with(
@@ -53,12 +57,12 @@ final class CacheTest extends TestCase
             )
         ;
 
-        $this->cache
+        $cache
             ->expects($this->never())
             ->method('has')
         ;
 
-        $tailwindMerge = new TailwindMerge(cache: $this->cache);
+        $tailwindMerge = new TailwindMerge(cache: $cache);
 
         $this->assertSame($output, $tailwindMerge->merge($input));
         $this->assertSame($output, $tailwindMerge->merge($input));
@@ -66,7 +70,7 @@ final class CacheTest extends TestCase
 
     public function testDifferentConfigurationsDoNotShareCacheEntries(): void
     {
-        $pool = new InMemoryCache();
+        $pool = $this->createPool();
 
         $plain = new TailwindMerge([], $pool);
         $prefixed = new TailwindMerge(['prefix' => 'tw'], $pool);
@@ -79,13 +83,49 @@ final class CacheTest extends TestCase
 
     public function testEquivalentConfigurationsShareCacheEntries(): void
     {
-        $pool = new InMemoryCache();
+        $pool = $this->createPool();
 
         (new TailwindMerge(['prefix' => 'tw'], $pool))->merge('tw:p-2 tw:p-4');
-        $entriesAfterFirst = $pool->count();
+        $entriesAfterFirst = \count($this->store);
 
         (new TailwindMerge(['prefix' => 'tw'], $pool))->merge('tw:p-2 tw:p-4');
 
-        $this->assertSame($entriesAfterFirst, $pool->count(), 'An equivalent configuration must not fragment the cache.');
+        $this->assertSame($entriesAfterFirst, \count($this->store), 'An equivalent configuration must not fragment the cache.');
+    }
+
+    /**
+     * A pool that really stores what it is given, for scenarios that need to
+     * observe how many distinct entries a merge produces.
+     *
+     * This has to be a mock rather than a hand-written class: the package
+     * supports psr/simple-cache ^1.0, whose CacheInterface is untyped, so a
+     * concrete implementation with PHP 8 parameter types would be an LSP
+     * violation there. PHPUnit generates signatures matching whichever version
+     * is installed.
+     */
+    private function createPool(): CacheInterface&MockObject
+    {
+        $cache = $this->createMock(CacheInterface::class);
+
+        $cache
+            ->method('get')
+            ->willReturnCallback(fn (string $key, mixed $default = null): mixed => $this->store[$key] ?? $default)
+        ;
+
+        $cache
+            ->method('set')
+            ->willReturnCallback(function (string $key, mixed $value): bool {
+                $this->store[$key] = $value;
+
+                return true;
+            })
+        ;
+
+        $cache
+            ->method('has')
+            ->willReturnCallback(fn (string $key): bool => isset($this->store[$key]))
+        ;
+
+        return $cache;
     }
 }
