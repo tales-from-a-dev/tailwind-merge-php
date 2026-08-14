@@ -28,11 +28,15 @@ previously mistaken for an absent label, so `font-[0:red]` was classified as a
 font weight and could be overridden by `font-bold`. Such classes are now left
 untouched, as they already were for any other unrecognised label.
 
-## The `cacheSize` configuration key was removed
+## The `cacheSize` configuration key is now honoured
 
-It was never read — caching is delegated entirely to the injected PSR-16 pool.
-Passing it was already a no-op, and passing it now is still harmless, but it
-no longer appears in `Config::getDefaultConfig()`.
+It was previously declared but never read, so passing it was a no-op. It now
+sizes the built-in in-memory LRU cache, which is enabled by default with room
+for 500 entries.
+
+The in-memory cache fronts an injected PSR-16 pool rather than replacing it, so
+an existing pool keeps working and is only consulted on an in-memory miss. Pass
+`['cacheSize' => 0]` to opt out of the in-memory cache entirely.
 
 UPGRADE FROM `gehrisandro/tailwind-merge-php`
 =============================================

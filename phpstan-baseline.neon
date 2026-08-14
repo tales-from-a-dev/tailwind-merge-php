@@ -1,13 +1,13 @@
 parameters:
 	ignoreErrors:
 		-
-			message: '#^Method TalesFromADev\\TailwindMerge\\Support\\Config\:\:getMergedConfig\(\) should return array\{prefix\: string\|null, theme\: array\<string, list\<mixed\>\>, classGroups\: array\<string, list\<mixed\>\>, conflictingClassGroups\: array\<string, list\<string\>\>, conflictingClassGroupModifiers\: array\<string, list\<string\>\>, orderSensitiveModifiers\: list\<string\>, postfixLookupClassGroups\: list\<string\>\} but returns non\-empty\-array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\.$#'
+			message: '#^Method TalesFromADev\\TailwindMerge\\Support\\Config\:\:getMergedConfig\(\) should return array\{cacheSize\: int, prefix\: string\|null, theme\: array\<string, list\<mixed\>\>, classGroups\: array\<string, list\<mixed\>\>, conflictingClassGroups\: array\<string, list\<string\>\>, conflictingClassGroupModifiers\: array\<string, list\<string\>\>, orderSensitiveModifiers\: list\<string\>, postfixLookupClassGroups\: list\<string\>\} but returns non\-empty\-array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\.$#'
 			identifier: return.type
 			count: 1
 			path: src/Support/Config.php
 
 		-
-			message: '#^Static property TalesFromADev\\TailwindMerge\\Support\\Config\:\:\$mergedConfig \(array\{prefix\: string\|null, theme\: array\<string, list\<mixed\>\>, classGroups\: array\<string, list\<mixed\>\>, conflictingClassGroups\: array\<string, list\<string\>\>, conflictingClassGroupModifiers\: array\<string, list\<string\>\>, orderSensitiveModifiers\: list\<string\>, postfixLookupClassGroups\: list\<string\>\}\|null\) does not accept non\-empty\-array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\.$#'
+			message: '#^Static property TalesFromADev\\TailwindMerge\\Support\\Config\:\:\$mergedConfig \(array\{cacheSize\: int, prefix\: string\|null, theme\: array\<string, list\<mixed\>\>, classGroups\: array\<string, list\<mixed\>\>, conflictingClassGroups\: array\<string, list\<string\>\>, conflictingClassGroupModifiers\: array\<string, list\<string\>\>, orderSensitiveModifiers\: list\<string\>, postfixLookupClassGroups\: list\<string\>\}\|null\) does not accept non\-empty\-array\<string, array\<mixed\>\|bool\|float\|int\|string\|null\>\.$#'
 			identifier: assign.propertyType
 			count: 1
 			path: src/Support/Config.php

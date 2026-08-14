@@ -33,6 +33,7 @@ use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
 /**
  * @phpstan-type Configuration array{
+ *       cacheSize: int,
  *       prefix: ?string,
  *       theme: array<string, list<mixed>>,
  *       classGroups: array<string, list<mixed>>,
@@ -137,6 +138,7 @@ final class Config
         $themeAnimate = self::fromTheme('animate');
 
         return [
+            'cacheSize' => 500,
             'prefix' => null,
             'theme' => [
                 'animate' => ['spin', 'ping', 'pulse', 'bounce'],

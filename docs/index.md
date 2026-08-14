@@ -48,8 +48,30 @@ $tw->merge('tw:text-red-500', 'tw:text-blue-500'); // 'tw:text-blue-500'
 
 ## Cache
 
-For better performance, `TailwindMerge` can cache the results of the merge operation.
-It accepts any [PSR-16](https://www.php-fig.org/psr/psr-16/) compatible cache implementation.
+`TailwindMerge` includes a built-in LRU (Least Recently Used) cache that requires no external dependencies.
+The cache size is controlled by the `cacheSize` configuration option (default: `500`).
+
+```php
+use TalesFromADev\TailwindMerge\TailwindMerge;
+
+// Default: caches up to 500 unique class list combinations
+$tw = new TailwindMerge();
+
+// Increase cache size for applications with many unique class combinations
+$tw = new TailwindMerge(['cacheSize' => 1000]);
+
+// Disable caching entirely
+$tw = new TailwindMerge(['cacheSize' => 0]);
+```
+
+The built-in cache lives in memory and lasts as long as the `TailwindMerge` instance,
+which under PHP-FPM means a single request. To cache across requests, pass any
+[PSR-16](https://www.php-fig.org/psr/psr-16/) implementation as well.
+
+The two work together: the in-memory cache is checked first, and the PSR-16 cache is
+only consulted on a miss. A value read from it is kept in memory, so merging the same
+class list again costs an array lookup instead of another round trip. Set
+`cacheSize` to `0` to use the PSR-16 cache on its own.
 
 Here is an example using the [Cache component](https://symfony.com/doc/current/components/cache.html) of Symfony:
 
@@ -59,7 +81,7 @@ use Symfony\Component\Cache\Psr16Cache;
 
 $cache = new Psr16Cache(new FilesystemAdapter());
 
-$tw = new TailwindMerge(cache: $cache)
+$tw = new TailwindMerge(cache: $cache);
 ```
 
 Cache keys embed a fingerprint of the configuration, so several differently
