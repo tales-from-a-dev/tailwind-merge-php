@@ -8,7 +8,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use TalesFromADev\TailwindMerge\TailwindMerge;
 
-final class NonConflictingClasses extends TestCase
+final class NonConflictingClassesTest extends TestCase
 {
     /**
      * @return list<list<string>>

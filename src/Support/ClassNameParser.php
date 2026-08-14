@@ -47,7 +47,9 @@ final class ClassNameParser
         $modifierStart = 0;
         $postfixModifierPosition = null;
 
-        for ($index = 0; $index < \strlen($className); ++$index) {
+        $length = \strlen($className);
+
+        for ($index = 0; $index < $length; ++$index) {
             $currentCharacter = $className[$index];
 
             if (0 === $bracketDepth && 0 === $parentDepth) {
@@ -77,11 +79,27 @@ final class ClassNameParser
         }
 
         $baseClassNameWithImportantModifier = [] === $modifiers ? $className : substr($className, $modifierStart);
-        $baseClassName = $this->stripImportantModifier($baseClassNameWithImportantModifier);
-        $hasImportantModifier = $baseClassName !== $baseClassNameWithImportantModifier;
 
+        // Order matters: a trailing `!` is the current syntax and takes priority
+        // over the legacy leading one, so `!p-2!` strips only the suffix.
+        $hasTrailingImportantModifier = str_ends_with($baseClassNameWithImportantModifier, self::IMPORTANT_MODIFIER);
+        $hasLeadingImportantModifier = !$hasTrailingImportantModifier && str_starts_with($baseClassNameWithImportantModifier, self::IMPORTANT_MODIFIER);
+
+        if ($hasTrailingImportantModifier) {
+            $baseClassName = substr($baseClassNameWithImportantModifier, 0, -1);
+        } elseif ($hasLeadingImportantModifier) {
+            $baseClassName = substr($baseClassNameWithImportantModifier, 1);
+        } else {
+            $baseClassName = $baseClassNameWithImportantModifier;
+        }
+
+        $hasImportantModifier = $hasTrailingImportantModifier || $hasLeadingImportantModifier;
+
+        // Stripping a leading `!` shifts every offset into the base class name
+        // left by one. Without this correction `!text-lg/7` reports the postfix
+        // one character too far right and resolves against a corrupt base name.
         $maybePostfixModifierPosition = $postfixModifierPosition && $postfixModifierPosition > $modifierStart
-            ? $postfixModifierPosition - $modifierStart
+            ? $postfixModifierPosition - $modifierStart - ($hasLeadingImportantModifier ? 1 : 0)
             : null
         ;
 
@@ -91,19 +109,5 @@ final class ClassNameParser
             baseClassName: $baseClassName,
             maybePostfixModifierPosition: $maybePostfixModifierPosition,
         );
-    }
-
-    private function stripImportantModifier(string $baseClassName): string
-    {
-        if (str_ends_with($baseClassName, self::IMPORTANT_MODIFIER)) {
-            return substr($baseClassName, 0, -1);
-        }
-
-        // Legacy: important modifier at the start
-        if (str_starts_with($baseClassName, self::IMPORTANT_MODIFIER)) {
-            return substr($baseClassName, 1);
-        }
-
-        return $baseClassName;
     }
 }

@@ -34,6 +34,11 @@ Run all four even if an early one fails — a single report of every problem bea
 serial round-trips. Note that `test:lint:fix` *writes*; if it changed files,
 say which ones so they get committed.
 
+If the diff touches the merge pipeline (`src/Support/`, `src/Validators/`,
+`src/TailwindMerge.php`), also run `composer bench` and compare against the
+numbers in the PR description. Nothing else guards against a performance
+regression.
+
 If PHPStan reports something new, fix it. `phpstan-baseline.neon` is for
 unavoidable suppressions only, per working rule 5.
 
@@ -63,10 +68,18 @@ asserts the whole default class map.
   validators (colors especially) registered before specific ones silently steal
   classes. Confirm the ordering is deliberate.
 - New static state, or anything making the class map depend on mutable state.
-  `ClassGroupUtils` memoizes the map per instance; a mutable dependency breaks
-  that memo.
-- Validator work on the hot path. Validators run per class, uncached — a regex
-  without a cheap prefix or character guard in front of it is a real cost.
+  `ClassGroupUtils` memoizes both the trie and class name → class group id per
+  instance; a mutable dependency breaks both memos. `Config::getMergedConfig()`
+  must return its memo untouched on a hit — re-running the merge loop over an
+  already-merged config duplicates list entries.
+- Validator work on the hot path. Validators run once per *distinct* class name,
+  but still on every cold lookup — a regex without a cheap prefix or character
+  guard in front of it is a real cost.
+- `symfony/string` or any new runtime dependency. The library requires only
+  `psr/simple-cache`; `u()` was removed from the hot path deliberately.
+- Code-point slicing of a class name. `ClassNameParser` produces *byte* offsets;
+  they must be consumed with `substr`.
+- A test file not ending in `Test.php`. PHPUnit silently skips it.
 - PHP 8.2+ syntax. The floor is 8.1, and CI only catches this in the 8.1 leg:
   `readonly` classes, DNF types, trait constants, standalone `null`/`false`/`true`
   types, `#[\Override]`, and 8.2+ stdlib functions.

@@ -33,7 +33,6 @@ use TalesFromADev\TailwindMerge\ValueObjects\ThemeGetter;
 
 /**
  * @phpstan-type Configuration array{
- *       cacheSize: int,
  *       prefix: ?string,
  *       theme: array<string, list<mixed>>,
  *       classGroups: array<string, list<mixed>>,
@@ -51,29 +50,65 @@ final class Config
     private static array $additionalConfig = [];
 
     /**
+     * The fully merged config, memoized. Holding the *merged* result rather
+     * than the default one is what keeps this idempotent: see getMergedConfig().
+     *
+     * @var Configuration|null
+     */
+    private static ?array $mergedConfig = null;
+
+    /**
+     * @var array<string, mixed>|null
+     */
+    private static ?array $lastAdditionalConfig = null;
+
+    /**
      * @return Configuration
      */
     public static function getMergedConfig(): array
     {
-        /** @var Configuration|null $config */
-        static $config = null;
-        static $lastAdditionalConfig = null;
-
-        // Reset default config if additional config has changed
-        if ($lastAdditionalConfig !== self::$additionalConfig) {
-            $config = null;
-            $lastAdditionalConfig = self::$additionalConfig;
+        // The memo must be returned as-is on a hit. Re-entering the merge loop
+        // would fold $additionalConfig into an already-merged config, and
+        // mergePropertyRecursively concatenates lists -- so every call would
+        // duplicate custom entries and grow the config without bound.
+        if (null !== self::$mergedConfig && self::$lastAdditionalConfig === self::$additionalConfig) {
+            return self::$mergedConfig;
         }
 
-        $config ??= self::getDefaultConfig();
+        $config = self::getDefaultConfig();
 
+        // mergePropertyRecursively merges arbitrary user data under an arbitrary
+        // key, so its result cannot be tied back to that key's declared type.
+        // The two PHPStan errors this produces are baselined: narrowing them
+        // away would mean constraining the merge to the Configuration shape,
+        // which would change documented behaviour -- notably that an empty array
+        // *replaces* rather than merges (`['theme' => []]` wipes the theme).
         foreach (self::$additionalConfig as $key => $additionalConfig) {
             if (\is_array($additionalConfig) || \is_scalar($additionalConfig) || null === $additionalConfig) {
                 $config[$key] = self::mergePropertyRecursively($config, $key, $additionalConfig);
             }
         }
 
-        return $config;
+        // Note: comparing additional configs with !== compares any contained
+        // objects (ThemeGetter, validator closures) by identity, so a config
+        // built inline on each construction always misses this memo. That costs
+        // a rebuild, never a wrong result.
+        self::$lastAdditionalConfig = self::$additionalConfig;
+
+        return self::$mergedConfig = $config;
+    }
+
+    /**
+     * Restore the process-global configuration to its default state.
+     *
+     * Constructing a TailwindMerge writes to static config, so a test or a
+     * long-running worker needs a way back to a known baseline.
+     */
+    public static function reset(): void
+    {
+        self::$additionalConfig = [];
+        self::$mergedConfig = null;
+        self::$lastAdditionalConfig = null;
     }
 
     /**
@@ -102,7 +137,6 @@ final class Config
         $themeAnimate = self::fromTheme('animate');
 
         return [
-            'cacheSize' => 500,
             'prefix' => null,
             'theme' => [
                 'animate' => ['spin', 'ping', 'pulse', 'bounce'],

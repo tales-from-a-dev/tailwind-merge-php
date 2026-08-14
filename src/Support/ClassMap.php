@@ -31,22 +31,23 @@ final class ClassMap
     }
 
     /**
-     * @param list<mixed>                $classGroup
+     * @param array<array-key, mixed>    $classGroup
      * @param array<string, list<mixed>> $theme
      */
     public function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classGroup as $classDefinition) {
-            /* @var string|array<string, list<mixed>>|(callable(): mixed)|ThemeGetter $classDefinition */
             $this->processClassDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
         }
     }
 
     /**
-     * @param string|array<string, list<mixed>>|(callable(): mixed)|ThemeGetter $classDefinition
-     * @param array<string, list<mixed>>                                        $theme
+     * A class definition comes from user-supplied configuration, so its shape is
+     * only known at runtime; the branches below are the whole contract.
+     *
+     * @param array<string, list<mixed>> $theme
      */
-    public function processClassDefinition(string|array|callable|ThemeGetter $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    public function processClassDefinition(mixed $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         if (\is_string($classDefinition)) {
             $this->processStringDefinition($classDefinition, $classPartObject, $classGroupId);
@@ -66,8 +67,11 @@ final class ClassMap
             return;
         }
 
-        /* @var array<string, list<mixed>> $classDefinition */
-        $this->processObjectDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
+        if (\is_array($classDefinition)) {
+            $this->processObjectDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
+        }
+
+        // Anything else is a malformed definition and contributes no class part.
     }
 
     public function processStringDefinition(string $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
@@ -85,15 +89,22 @@ final class ClassMap
     }
 
     /**
-     * @param array<string, list<mixed>> $classDefinition
+     * @param array<array-key, mixed>    $classDefinition
      * @param array<string, list<mixed>> $theme
      */
     public function processObjectDefinition(array $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classDefinition as $key => $classGroup) {
+            // A nested definition maps a path segment to a list of definitions.
+            // Anything else is malformed configuration; skip it rather than
+            // building a class part out of it.
+            if (!\is_string($key) || !\is_array($classGroup)) {
+                continue;
+            }
+
             $this->processClassesRecursively(
                 $classGroup,
-                self::getPart($classPartObject, $key),
+                $this->getPart($classPartObject, $key),
                 $classGroupId,
                 $theme,
             );

@@ -23,6 +23,9 @@ final class ArbitraryVariableWeightValidatorTest extends TestCase
             ['(other:test)', false],
             ['weight:test', false],
             ['[weight:test]', false],
+            // A "0" label is a label, not an absent one, so this is not an
+            // unlabelled arbitrary variable either.
+            ['(0:test)', false],
         ];
     }
 

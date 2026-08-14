@@ -67,7 +67,6 @@ final class ModifiersTest extends TestCase
     public function testItHandlesConflictsAcrossPostfixModifiersWithCustomConfigurationCorrectly(string $input, string $output): void
     {
         $instance = new TailwindMerge([
-            'cacheSize' => 10,
             'theme' => [],
             'classGroups' => [
                 'foo' => ['foo-1/2', 'foo-2/3'],

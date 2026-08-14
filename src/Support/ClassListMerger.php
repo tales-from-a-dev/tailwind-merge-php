@@ -4,11 +4,6 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-use Symfony\Component\String\AbstractString;
-use TalesFromADev\TailwindMerge\Helper\Collection;
-
-use function Symfony\Component\String\u;
-
 /**
  * @internal
  *
@@ -39,14 +34,19 @@ final class ClassListMerger
     public function merge(string $classList): string
     {
         $classGroupsInConflict = [];
-        $classNames = Collection::make(u($classList)->trim()->split(' '))
-            ->map(static fn (AbstractString $className): string => $className->toString())
-            ->reverse()
-            ->all();
+        // Split on any whitespace run, not just a literal space, so class lists
+        // written across several lines in a template merge like single-line ones.
+        $classNames = preg_split('/\s+/', trim($classList), -1, \PREG_SPLIT_NO_EMPTY);
 
-        $result = '';
+        if (false === $classNames || [] === $classNames) {
+            return '';
+        }
 
-        foreach ($classNames as $className) {
+        // Kept classes are collected in reverse and joined once at the end;
+        // appending to a string here would re-copy the whole result per class.
+        $keptClassNames = [];
+
+        foreach (array_reverse($classNames) as $className) {
             $originalClassName = $className;
 
             $parsedClassName = $this->parser->parse($className);
@@ -58,7 +58,7 @@ final class ClassListMerger
             $maybePostfixModifierPosition = $parsedClassName->maybePostfixModifierPosition;
 
             if ($isExternal) {
-                $result = $this->formatResult($originalClassName, $result);
+                $keptClassNames[] = $originalClassName;
 
                 continue;
             }
@@ -66,7 +66,10 @@ final class ClassListMerger
             $hasPostfixModifier = null !== $maybePostfixModifierPosition;
 
             if ($hasPostfixModifier) {
-                $baseClassNameWithoutPostfix = u($baseClassName)->slice(0, $maybePostfixModifierPosition)->toString();
+                // The parser reports a byte offset, so this must be a byte-wise
+                // substr: slicing by code points corrupts base names containing
+                // multibyte arbitrary values.
+                $baseClassNameWithoutPostfix = substr($baseClassName, 0, $maybePostfixModifierPosition);
                 $classGroupId = $this->classGroupUtils->getClassGroupId($baseClassNameWithoutPostfix);
 
                 $classGroupIdWithPostfix = null;
@@ -88,7 +91,7 @@ final class ClassListMerger
             }
 
             if (!$classGroupId) {
-                $result = $this->formatResult($originalClassName, $result);
+                $keptClassNames[] = $originalClassName;
 
                 continue;
             }
@@ -112,14 +115,9 @@ final class ClassListMerger
                 $classGroupsInConflict[$modifierId.$group] = true;
             }
 
-            $result = $this->formatResult($originalClassName, $result);
+            $keptClassNames[] = $originalClassName;
         }
 
-        return $result;
-    }
-
-    public function formatResult(string $originalClassName, string $result): string
-    {
-        return u(' ')->join([$originalClassName, $result])->trim()->toString();
+        return implode(' ', array_reverse($keptClassNames));
     }
 }
