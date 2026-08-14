@@ -70,8 +70,6 @@ final class ClassMap
         if (\is_array($classDefinition)) {
             $this->processObjectDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
         }
-
-        // Anything else is a malformed definition and contributes no class part.
     }
 
     public function processStringDefinition(string $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
@@ -95,9 +93,6 @@ final class ClassMap
     public function processObjectDefinition(array $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classDefinition as $key => $classGroup) {
-            // A nested definition maps a path segment to a list of definitions.
-            // Anything else is malformed configuration; skip it rather than
-            // building a class part out of it.
             if (!\is_string($key) || !\is_array($classGroup)) {
                 continue;
             }

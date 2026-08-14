@@ -35,8 +35,6 @@ final class TailwindMerge implements TailwindMergeInterface
         $configuration = Config::getMergedConfig();
 
         $this->merger = new ClassListMerger($configuration);
-        // Computed once: the configuration cannot change for the lifetime of
-        // this instance, since the merger captured it above.
         $this->cacheKeyPrefix = 'tailwind-merge-'.self::fingerprint($additionalConfiguration).'-';
 
         // The in-memory cache fronts an injected PSR-16 one rather than
@@ -81,16 +79,14 @@ final class TailwindMerge implements TailwindMergeInterface
             return $cachedValue;
         }
 
-        // A single get() with a sentinel default, rather than has() then get():
-        // on a file or Redis pool the two-call form doubles the round-trips.
+        // A single get(), rather than has() then get(): on a file or Redis pool
+        // the two-call form doubles the round-trips.
         $cachedValue = $this->cache?->get($key);
 
         if (!\is_string($cachedValue)) {
             return null;
         }
 
-        // Promote the hit so the next merge of the same class list is served
-        // from memory instead of paying another round trip.
         $this->lruCache?->set($key, $cachedValue);
 
         return $cachedValue;

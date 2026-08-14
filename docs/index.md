@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-This package requires **PHP 8.1+** and **Tailwind 4.0+**.
+This package requires **PHP 8.1+** and supports **Tailwind CSS v4.0** up to **v4.3**.
 
 ## Installation
 
@@ -54,15 +54,19 @@ The cache size is controlled by the `cacheSize` configuration option (default: `
 ```php
 use TalesFromADev\TailwindMerge\TailwindMerge;
 
-// Default: caches up to 500 unique class list combinations
+// Default: caches at least 500 unique class list combinations
 $tw = new TailwindMerge();
 
 // Increase cache size for applications with many unique class combinations
 $tw = new TailwindMerge(['cacheSize' => 1000]);
 
-// Disable caching entirely
+// Disable the built-in cache
 $tw = new TailwindMerge(['cacheSize' => 0]);
 ```
+
+Entries are evicted a generation at a time rather than one by one, so up to
+twice `cacheSize` entries may be held at once. Treat the option as a floor on
+what stays cached, not as a hard ceiling on memory.
 
 The built-in cache lives in memory and lasts as long as the `TailwindMerge` instance,
 which under PHP-FPM means a single request. To cache across requests, pass any
@@ -121,3 +125,34 @@ new TailwindMerge([
 
 > [!TIP]
 > For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md).
+
+### Resetting the configuration
+
+Configuration is process-global: constructing a `TailwindMerge` writes the array
+you pass to a static property on `Config`, where the merged result is memoized.
+
+Your instances are unaffected by this. Each one captures its own configuration
+at construction, so building another with a different one cannot change how an
+existing instance merges:
+
+```php
+$prefixed = new TailwindMerge(['prefix' => 'tw']);
+$default = new TailwindMerge();
+
+$prefixed->merge('tw:p-2 tw:p-4'); // still 'tw:p-4'
+```
+
+What does persist is the static state itself: `Config::getMergedConfig()` keeps
+returning the last configuration passed to a constructor. Call `Config::reset()`
+to restore the default baseline. A test suite that passes custom configuration
+should do so in `tearDown()`, so that whichever test runs next starts from a
+known state:
+
+```php
+use TalesFromADev\TailwindMerge\Support\Config;
+
+protected function tearDown(): void
+{
+    Config::reset();
+}
+```

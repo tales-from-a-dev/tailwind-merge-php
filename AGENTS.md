@@ -94,6 +94,7 @@ Required when relevant:
 
 1. Update `README.md` for any user-visible behavior, API, or version support changes.
 2. Update `AGENTS.md` whenever agent workflow, repo conventions, required commands, architecture, or guardrails change. Do not duplicate that guidance into `CLAUDE.md`; it imports this file.
+3. Bump the Composer constraint in the `UPGRADE.md` migration diff when cutting a release. Composer's caret locks the minor on a `0.x` version, so `^0.3` stops covering the latest release once `0.4.0` ships — every `0.x` release needs the bump, not just a major one.
 
 Definition of done for every PR/change:
 

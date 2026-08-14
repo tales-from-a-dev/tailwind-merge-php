@@ -76,8 +76,6 @@ final class ClassGroupUtils
         $classParts = explode(self::CLASS_PART_SEPARATOR, $class);
         // Classes like `-inset-1` produce an empty string as first classPart. We assume that classes for negative values are used correctly and skip it.
         $startIndex = '' === $classParts[0] && \count($classParts) > 1 ? 1 : 0;
-        // The class map only depends on the (immutable) theme and class groups, so build it once
-        // and reuse it: getClassGroupId() is called for every class of every merge.
         $classPartObject = $this->classPartObject ??= $this->classMap->processClassGroup($this->classGroups, $this->theme);
 
         return $this->getGroupRecursive($classParts, $startIndex, $classPartObject);
@@ -129,9 +127,6 @@ final class ClassGroupUtils
         return null;
     }
 
-    /**
-     * Get the class group ID for an arbitrary property.
-     */
     public function getGroupIdForArbitraryProperty(string $className): ?string
     {
         $content = substr($className, 1, -1);

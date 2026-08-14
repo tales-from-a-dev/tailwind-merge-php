@@ -34,8 +34,6 @@ final class ClassListMerger
     public function merge(string $classList): string
     {
         $classGroupsInConflict = [];
-        // Split on any whitespace run, not just a literal space, so class lists
-        // written across several lines in a template merge like single-line ones.
         $classNames = preg_split('/\s+/', trim($classList), -1, \PREG_SPLIT_NO_EMPTY);
 
         if (false === $classNames || [] === $classNames) {
