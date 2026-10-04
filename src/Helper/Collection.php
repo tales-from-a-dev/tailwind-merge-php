@@ -18,14 +18,13 @@ final class Collection
     private array $items = [];
 
     /**
-     * @param self<array-key, TValue>|array<array-key, TValue> $items
+     * @param self<TKey, TValue>|array<TKey, TValue> $items
      *
      * @return void
      */
     public function __construct(self|array $items = [])
     {
         if ($items instanceof self) {
-            /** @var array<TKey, TValue> $items */
             $items = $items->all();
         }
 
@@ -126,18 +125,6 @@ final class Collection
     }
 
     /**
-     * @param TValue $item
-     *
-     * @return $this
-     */
-    public function add(mixed $item): self
-    {
-        $this->items[] = $item;
-
-        return $this;
-    }
-
-    /**
      * @param (callable(TValue, TKey): bool)|null $callback
      *
      * @return ?TValue
@@ -145,40 +132,6 @@ final class Collection
     public function first(?callable $callback = null): mixed
     {
         return Arr::first($this->items, $callback); // @phpstan-ignore-line
-    }
-
-    /**
-     * @param array<array-key, TValue>|self<array-key, TValue> $source
-     *
-     * @return self<array-key, TValue>
-     */
-    public function concat(array|self $source): self
-    {
-        $result = new self($this);
-
-        if ($source instanceof self) {
-            $source = $source->all();
-        }
-
-        foreach ($source as $item) {
-            $result->push($item);
-        }
-
-        return $result;
-    }
-
-    /**
-     * @param TValue ...$values
-     *
-     * @return $this
-     */
-    public function push(mixed ...$values): self
-    {
-        foreach ($values as $value) {
-            $this->items[] = $value;
-        }
-
-        return $this;
     }
 
     /**
