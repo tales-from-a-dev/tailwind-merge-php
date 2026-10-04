@@ -1,0 +1,5436 @@
+{
+  "version": "3.7.0",
+  "literals": {
+    "aspect-auto": "aspect",
+    "aspect-square": "aspect",
+    "aspect-video": "aspect",
+    "container": "container",
+    "@container": "container-type",
+    "@container-normal": "container-type",
+    "@container-size": "container-type",
+    "columns-auto": "columns",
+    "break-after-auto": "break-after",
+    "break-after-avoid": "break-after",
+    "break-after-avoid-page": "break-after",
+    "break-after-all": "break-after",
+    "break-after-page": "break-after",
+    "break-after-left": "break-after",
+    "break-after-right": "break-after",
+    "break-after-column": "break-after",
+    "break-before-auto": "break-before",
+    "break-before-avoid": "break-before",
+    "break-before-avoid-page": "break-before",
+    "break-before-all": "break-before",
+    "break-before-page": "break-before",
+    "break-before-left": "break-before",
+    "break-before-right": "break-before",
+    "break-before-column": "break-before",
+    "break-inside-auto": "break-inside",
+    "break-inside-avoid": "break-inside",
+    "break-inside-avoid-page": "break-inside",
+    "break-inside-avoid-column": "break-inside",
+    "break-normal": "break",
+    "break-words": "break",
+    "break-all": "break",
+    "break-keep": "break",
+    "box-decoration-slice": "box-decoration",
+    "box-decoration-clone": "box-decoration",
+    "box-border": "box",
+    "box-content": "box",
+    "block": "display",
+    "block-auto": "block-size",
+    "block-screen": "block-size",
+    "block-full": "block-size",
+    "block-lh": "block-size",
+    "block-dvh": "block-size",
+    "block-lvh": "block-size",
+    "block-svh": "block-size",
+    "block-min": "block-size",
+    "block-max": "block-size",
+    "block-fit": "block-size",
+    "block-px": "block-size",
+    "inline": "display",
+    "inline-block": "display",
+    "inline-flex": "display",
+    "inline-table": "display",
+    "inline-grid": "display",
+    "inline-auto": "inline-size",
+    "inline-screen": "inline-size",
+    "inline-full": "inline-size",
+    "inline-dvw": "inline-size",
+    "inline-lvw": "inline-size",
+    "inline-svw": "inline-size",
+    "inline-min": "inline-size",
+    "inline-max": "inline-size",
+    "inline-fit": "inline-size",
+    "inline-px": "inline-size",
+    "flex": "display",
+    "flex-row": "flex-direction",
+    "flex-row-reverse": "flex-direction",
+    "flex-col": "flex-direction",
+    "flex-col-reverse": "flex-direction",
+    "flex-nowrap": "flex-wrap",
+    "flex-wrap": "flex-wrap",
+    "flex-wrap-reverse": "flex-wrap",
+    "flex-auto": "flex",
+    "flex-initial": "flex",
+    "flex-none": "flex",
+    "table": "display",
+    "table-caption": "display",
+    "table-cell": "display",
+    "table-column": "display",
+    "table-column-group": "display",
+    "table-footer-group": "display",
+    "table-header-group": "display",
+    "table-row": "display",
+    "table-row-group": "display",
+    "table-auto": "table-layout",
+    "table-fixed": "table-layout",
+    "flow-root": "display",
+    "grid": "display",
+    "grid-cols-none": "grid-cols",
+    "grid-cols-subgrid": "grid-cols",
+    "grid-rows-none": "grid-rows",
+    "grid-rows-subgrid": "grid-rows",
+    "grid-flow-row": "grid-flow",
+    "grid-flow-row-dense": "grid-flow",
+    "grid-flow-col": "grid-flow",
+    "grid-flow-col-dense": "grid-flow",
+    "grid-flow-dense": "grid-flow",
+    "contents": "display",
+    "list-item": "display",
+    "list-image-none": "list-image",
+    "list-inside": "list-style-position",
+    "list-outside": "list-style-position",
+    "list-disc": "list-style-type",
+    "list-decimal": "list-style-type",
+    "list-none": "list-style-type",
+    "hidden": "display",
+    "sr-only": "sr",
+    "not-sr-only": "sr",
+    "not-italic": "font-style",
+    "float-right": "float",
+    "float-left": "float",
+    "float-none": "float",
+    "float-start": "float",
+    "float-end": "float",
+    "clear-left": "clear",
+    "clear-right": "clear",
+    "clear-both": "clear",
+    "clear-none": "clear",
+    "clear-start": "clear",
+    "clear-end": "clear",
+    "isolate": "isolation",
+    "isolation-auto": "isolation",
+    "object-contain": "object-fit",
+    "object-cover": "object-fit",
+    "object-fill": "object-fit",
+    "object-none": "object-fit",
+    "object-scale-down": "object-fit",
+    "object-center": "object-position",
+    "object-top": "object-position",
+    "object-top-left": "object-position",
+    "object-top-right": "object-position",
+    "object-bottom": "object-position",
+    "object-bottom-right": "object-position",
+    "object-bottom-left": "object-position",
+    "object-left": "object-position",
+    "object-left-top": "object-position",
+    "object-left-bottom": "object-position",
+    "object-right": "object-position",
+    "object-right-top": "object-position",
+    "object-right-bottom": "object-position",
+    "overflow-auto": "overflow",
+    "overflow-hidden": "overflow",
+    "overflow-clip": "overflow",
+    "overflow-visible": "overflow",
+    "overflow-scroll": "overflow",
+    "overflow-x-auto": "overflow-x",
+    "overflow-x-hidden": "overflow-x",
+    "overflow-x-clip": "overflow-x",
+    "overflow-x-visible": "overflow-x",
+    "overflow-x-scroll": "overflow-x",
+    "overflow-y-auto": "overflow-y",
+    "overflow-y-hidden": "overflow-y",
+    "overflow-y-clip": "overflow-y",
+    "overflow-y-visible": "overflow-y",
+    "overflow-y-scroll": "overflow-y",
+    "overscroll-auto": "overscroll",
+    "overscroll-contain": "overscroll",
+    "overscroll-none": "overscroll",
+    "overscroll-x-auto": "overscroll-x",
+    "overscroll-x-contain": "overscroll-x",
+    "overscroll-x-none": "overscroll-x",
+    "overscroll-y-auto": "overscroll-y",
+    "overscroll-y-contain": "overscroll-y",
+    "overscroll-y-none": "overscroll-y",
+    "static": "position",
+    "fixed": "position",
+    "absolute": "position",
+    "relative": "position",
+    "sticky": "position",
+    "inset-full": "inset",
+    "inset-auto": "inset",
+    "inset-px": "inset",
+    "inset-x-full": "inset-x",
+    "inset-x-auto": "inset-x",
+    "inset-x-px": "inset-x",
+    "inset-y-full": "inset-y",
+    "inset-y-auto": "inset-y",
+    "inset-y-px": "inset-y",
+    "inset-s-full": "start",
+    "inset-s-auto": "start",
+    "inset-s-px": "start",
+    "inset-e-full": "end",
+    "inset-e-auto": "end",
+    "inset-e-px": "end",
+    "inset-bs-full": "inset-bs",
+    "inset-bs-auto": "inset-bs",
+    "inset-bs-px": "inset-bs",
+    "inset-be-full": "inset-be",
+    "inset-be-auto": "inset-be",
+    "inset-be-px": "inset-be",
+    "inset-shadow-none": "inset-shadow",
+    "inset-ring": "inset-ring-w",
+    "start-full": "start",
+    "start-auto": "start",
+    "start-px": "start",
+    "end-full": "end",
+    "end-auto": "end",
+    "end-px": "end",
+    "top-full": "top",
+    "top-auto": "top",
+    "top-px": "top",
+    "right-full": "right",
+    "right-auto": "right",
+    "right-px": "right",
+    "bottom-full": "bottom",
+    "bottom-auto": "bottom",
+    "bottom-px": "bottom",
+    "left-full": "left",
+    "left-auto": "left",
+    "left-px": "left",
+    "visible": "visibility",
+    "invisible": "visibility",
+    "collapse": "visibility",
+    "z-auto": "z",
+    "basis-full": "basis",
+    "basis-auto": "basis",
+    "basis-px": "basis",
+    "grow": "grow",
+    "shrink": "shrink",
+    "order-first": "order",
+    "order-last": "order",
+    "order-none": "order",
+    "col-auto": "col-start-end",
+    "col-span-full": "col-start-end",
+    "col-start-auto": "col-start",
+    "col-end-auto": "col-end",
+    "row-auto": "row-start-end",
+    "row-span-full": "row-start-end",
+    "row-start-auto": "row-start",
+    "row-end-auto": "row-end",
+    "auto-cols-auto": "auto-cols",
+    "auto-cols-min": "auto-cols",
+    "auto-cols-max": "auto-cols",
+    "auto-cols-fr": "auto-cols",
+    "auto-cols-px": "auto-cols",
+    "auto-rows-auto": "auto-rows",
+    "auto-rows-min": "auto-rows",
+    "auto-rows-max": "auto-rows",
+    "auto-rows-fr": "auto-rows",
+    "auto-rows-px": "auto-rows",
+    "gap-px": "gap",
+    "gap-x-px": "gap-x",
+    "gap-y-px": "gap-y",
+    "justify-start": "justify-content",
+    "justify-end": "justify-content",
+    "justify-end-safe": "justify-content",
+    "justify-center": "justify-content",
+    "justify-center-safe": "justify-content",
+    "justify-between": "justify-content",
+    "justify-around": "justify-content",
+    "justify-evenly": "justify-content",
+    "justify-stretch": "justify-content",
+    "justify-baseline": "justify-content",
+    "justify-normal": "justify-content",
+    "justify-items-start": "justify-items",
+    "justify-items-end": "justify-items",
+    "justify-items-end-safe": "justify-items",
+    "justify-items-center": "justify-items",
+    "justify-items-center-safe": "justify-items",
+    "justify-items-stretch": "justify-items",
+    "justify-items-normal": "justify-items",
+    "justify-self-auto": "justify-self",
+    "justify-self-start": "justify-self",
+    "justify-self-end": "justify-self",
+    "justify-self-end-safe": "justify-self",
+    "justify-self-center": "justify-self",
+    "justify-self-center-safe": "justify-self",
+    "justify-self-stretch": "justify-self",
+    "content-normal": "align-content",
+    "content-start": "align-content",
+    "content-end": "align-content",
+    "content-end-safe": "align-content",
+    "content-center": "align-content",
+    "content-center-safe": "align-content",
+    "content-between": "align-content",
+    "content-around": "align-content",
+    "content-evenly": "align-content",
+    "content-stretch": "align-content",
+    "content-baseline": "align-content",
+    "content-none": "content",
+    "items-start": "align-items",
+    "items-end": "align-items",
+    "items-end-safe": "align-items",
+    "items-center": "align-items",
+    "items-center-safe": "align-items",
+    "items-stretch": "align-items",
+    "items-baseline": "align-items",
+    "items-baseline-last": "align-items",
+    "self-auto": "align-self",
+    "self-start": "align-self",
+    "self-end": "align-self",
+    "self-end-safe": "align-self",
+    "self-center": "align-self",
+    "self-center-safe": "align-self",
+    "self-stretch": "align-self",
+    "self-baseline": "align-self",
+    "self-baseline-last": "align-self",
+    "place-content-start": "place-content",
+    "place-content-end": "place-content",
+    "place-content-end-safe": "place-content",
+    "place-content-center": "place-content",
+    "place-content-center-safe": "place-content",
+    "place-content-between": "place-content",
+    "place-content-around": "place-content",
+    "place-content-evenly": "place-content",
+    "place-content-stretch": "place-content",
+    "place-content-baseline": "place-content",
+    "place-items-start": "place-items",
+    "place-items-end": "place-items",
+    "place-items-end-safe": "place-items",
+    "place-items-center": "place-items",
+    "place-items-center-safe": "place-items",
+    "place-items-stretch": "place-items",
+    "place-items-baseline": "place-items",
+    "place-self-auto": "place-self",
+    "place-self-start": "place-self",
+    "place-self-end": "place-self",
+    "place-self-end-safe": "place-self",
+    "place-self-center": "place-self",
+    "place-self-center-safe": "place-self",
+    "place-self-stretch": "place-self",
+    "p-px": "p",
+    "px-px": "px",
+    "py-px": "py",
+    "ps-px": "ps",
+    "pe-px": "pe",
+    "pbs-px": "pbs",
+    "pbe-px": "pbe",
+    "pt-px": "pt",
+    "pr-px": "pr",
+    "pb-px": "pb",
+    "pl-px": "pl",
+    "m-auto": "m",
+    "m-px": "m",
+    "mx-auto": "mx",
+    "mx-px": "mx",
+    "my-auto": "my",
+    "my-px": "my",
+    "ms-auto": "ms",
+    "ms-px": "ms",
+    "me-auto": "me",
+    "me-px": "me",
+    "mbs-auto": "mbs",
+    "mbs-px": "mbs",
+    "mbe-auto": "mbe",
+    "mbe-px": "mbe",
+    "mt-auto": "mt",
+    "mt-px": "mt",
+    "mr-auto": "mr",
+    "mr-px": "mr",
+    "mb-auto": "mb",
+    "mb-px": "mb",
+    "ml-auto": "ml",
+    "ml-px": "ml",
+    "space-x-px": "space-x",
+    "space-x-reverse": "space-x-reverse",
+    "space-y-px": "space-y",
+    "space-y-reverse": "space-y-reverse",
+    "size-auto": "size",
+    "size-full": "size",
+    "size-dvw": "size",
+    "size-dvh": "size",
+    "size-lvw": "size",
+    "size-lvh": "size",
+    "size-svw": "size",
+    "size-svh": "size",
+    "size-min": "size",
+    "size-max": "size",
+    "size-fit": "size",
+    "size-px": "size",
+    "min-inline-auto": "min-inline-size",
+    "min-inline-screen": "min-inline-size",
+    "min-inline-full": "min-inline-size",
+    "min-inline-dvw": "min-inline-size",
+    "min-inline-lvw": "min-inline-size",
+    "min-inline-svw": "min-inline-size",
+    "min-inline-min": "min-inline-size",
+    "min-inline-max": "min-inline-size",
+    "min-inline-fit": "min-inline-size",
+    "min-inline-px": "min-inline-size",
+    "min-block-auto": "min-block-size",
+    "min-block-screen": "min-block-size",
+    "min-block-full": "min-block-size",
+    "min-block-lh": "min-block-size",
+    "min-block-dvh": "min-block-size",
+    "min-block-lvh": "min-block-size",
+    "min-block-svh": "min-block-size",
+    "min-block-min": "min-block-size",
+    "min-block-max": "min-block-size",
+    "min-block-fit": "min-block-size",
+    "min-block-px": "min-block-size",
+    "min-w-screen": "min-w",
+    "min-w-none": "min-w",
+    "min-w-auto": "min-w",
+    "min-w-full": "min-w",
+    "min-w-dvw": "min-w",
+    "min-w-dvh": "min-w",
+    "min-w-lvw": "min-w",
+    "min-w-lvh": "min-w",
+    "min-w-svw": "min-w",
+    "min-w-svh": "min-w",
+    "min-w-min": "min-w",
+    "min-w-max": "min-w",
+    "min-w-fit": "min-w",
+    "min-w-px": "min-w",
+    "min-h-screen": "min-h",
+    "min-h-lh": "min-h",
+    "min-h-none": "min-h",
+    "min-h-auto": "min-h",
+    "min-h-full": "min-h",
+    "min-h-dvw": "min-h",
+    "min-h-dvh": "min-h",
+    "min-h-lvw": "min-h",
+    "min-h-lvh": "min-h",
+    "min-h-svw": "min-h",
+    "min-h-svh": "min-h",
+    "min-h-min": "min-h",
+    "min-h-max": "min-h",
+    "min-h-fit": "min-h",
+    "min-h-px": "min-h",
+    "max-inline-none": "max-inline-size",
+    "max-inline-screen": "max-inline-size",
+    "max-inline-full": "max-inline-size",
+    "max-inline-dvw": "max-inline-size",
+    "max-inline-lvw": "max-inline-size",
+    "max-inline-svw": "max-inline-size",
+    "max-inline-min": "max-inline-size",
+    "max-inline-max": "max-inline-size",
+    "max-inline-fit": "max-inline-size",
+    "max-inline-px": "max-inline-size",
+    "max-block-none": "max-block-size",
+    "max-block-screen": "max-block-size",
+    "max-block-full": "max-block-size",
+    "max-block-lh": "max-block-size",
+    "max-block-dvh": "max-block-size",
+    "max-block-lvh": "max-block-size",
+    "max-block-svh": "max-block-size",
+    "max-block-min": "max-block-size",
+    "max-block-max": "max-block-size",
+    "max-block-fit": "max-block-size",
+    "max-block-px": "max-block-size",
+    "max-w-screen": "max-w",
+    "max-w-none": "max-w",
+    "max-w-prose": "max-w",
+    "max-w-auto": "max-w",
+    "max-w-full": "max-w",
+    "max-w-dvw": "max-w",
+    "max-w-dvh": "max-w",
+    "max-w-lvw": "max-w",
+    "max-w-lvh": "max-w",
+    "max-w-svw": "max-w",
+    "max-w-svh": "max-w",
+    "max-w-min": "max-w",
+    "max-w-max": "max-w",
+    "max-w-fit": "max-w",
+    "max-w-px": "max-w",
+    "max-h-screen": "max-h",
+    "max-h-lh": "max-h",
+    "max-h-none": "max-h",
+    "max-h-auto": "max-h",
+    "max-h-full": "max-h",
+    "max-h-dvw": "max-h",
+    "max-h-dvh": "max-h",
+    "max-h-lvw": "max-h",
+    "max-h-lvh": "max-h",
+    "max-h-svw": "max-h",
+    "max-h-svh": "max-h",
+    "max-h-min": "max-h",
+    "max-h-max": "max-h",
+    "max-h-fit": "max-h",
+    "max-h-px": "max-h",
+    "w-screen": "w",
+    "w-auto": "w",
+    "w-full": "w",
+    "w-dvw": "w",
+    "w-dvh": "w",
+    "w-lvw": "w",
+    "w-lvh": "w",
+    "w-svw": "w",
+    "w-svh": "w",
+    "w-min": "w",
+    "w-max": "w",
+    "w-fit": "w",
+    "w-px": "w",
+    "h-screen": "h",
+    "h-lh": "h",
+    "h-auto": "h",
+    "h-full": "h",
+    "h-dvw": "h",
+    "h-dvh": "h",
+    "h-lvw": "h",
+    "h-lvh": "h",
+    "h-svw": "h",
+    "h-svh": "h",
+    "h-min": "h",
+    "h-max": "h",
+    "h-fit": "h",
+    "h-px": "h",
+    "text-base": "font-size",
+    "text-left": "text-alignment",
+    "text-center": "text-alignment",
+    "text-right": "text-alignment",
+    "text-justify": "text-alignment",
+    "text-start": "text-alignment",
+    "text-end": "text-alignment",
+    "text-ellipsis": "text-overflow",
+    "text-clip": "text-overflow",
+    "text-wrap": "text-wrap",
+    "text-nowrap": "text-wrap",
+    "text-balance": "text-wrap",
+    "text-pretty": "text-wrap",
+    "text-shadow-none": "text-shadow",
+    "antialiased": "font-smoothing",
+    "subpixel-antialiased": "font-smoothing",
+    "italic": "font-style",
+    "font-thin": "font-weight",
+    "font-extralight": "font-weight",
+    "font-light": "font-weight",
+    "font-normal": "font-weight",
+    "font-medium": "font-weight",
+    "font-semibold": "font-weight",
+    "font-bold": "font-weight",
+    "font-extrabold": "font-weight",
+    "font-black": "font-weight",
+    "font-stretch-ultra-condensed": "font-stretch",
+    "font-stretch-ultra-expanded": "font-stretch",
+    "font-stretch-extra-condensed": "font-stretch",
+    "font-stretch-extra-expanded": "font-stretch",
+    "font-stretch-condensed": "font-stretch",
+    "font-stretch-semi-condensed": "font-stretch",
+    "font-stretch-semi-expanded": "font-stretch",
+    "font-stretch-normal": "font-stretch",
+    "font-stretch-expanded": "font-stretch",
+    "normal-nums": "fvn-normal",
+    "normal-case": "text-transform",
+    "ordinal": "fvn-ordinal",
+    "slashed-zero": "fvn-slashed-zero",
+    "lining-nums": "fvn-figure",
+    "oldstyle-nums": "fvn-figure",
+    "proportional-nums": "fvn-spacing",
+    "tabular-nums": "fvn-spacing",
+    "diagonal-fractions": "fvn-fraction",
+    "stacked-fractions": "fvn-fraction",
+    "tracking-tighter": "tracking",
+    "tracking-tight": "tracking",
+    "tracking-normal": "tracking",
+    "tracking-wide": "tracking",
+    "tracking-wider": "tracking",
+    "tracking-widest": "tracking",
+    "line-clamp-none": "line-clamp",
+    "line-through": "text-decoration",
+    "leading-none": "leading",
+    "leading-tight": "leading",
+    "leading-snug": "leading",
+    "leading-normal": "leading",
+    "leading-relaxed": "leading",
+    "leading-loose": "leading",
+    "leading-px": "leading",
+    "underline": "text-decoration",
+    "underline-offset-auto": "underline-offset",
+    "overline": "text-decoration",
+    "no-underline": "text-decoration",
+    "decoration-solid": "text-decoration-style",
+    "decoration-dashed": "text-decoration-style",
+    "decoration-dotted": "text-decoration-style",
+    "decoration-double": "text-decoration-style",
+    "decoration-wavy": "text-decoration-style",
+    "decoration-from-font": "text-decoration-thickness",
+    "decoration-auto": "text-decoration-thickness",
+    "uppercase": "text-transform",
+    "lowercase": "text-transform",
+    "capitalize": "text-transform",
+    "truncate": "text-overflow",
+    "indent-px": "indent",
+    "align-baseline": "vertical-align",
+    "align-top": "vertical-align",
+    "align-middle": "vertical-align",
+    "align-bottom": "vertical-align",
+    "align-text-top": "vertical-align",
+    "align-text-bottom": "vertical-align",
+    "align-sub": "vertical-align",
+    "align-super": "vertical-align",
+    "whitespace-normal": "whitespace",
+    "whitespace-nowrap": "whitespace",
+    "whitespace-pre": "whitespace",
+    "whitespace-pre-line": "whitespace",
+    "whitespace-pre-wrap": "whitespace",
+    "whitespace-break-spaces": "whitespace",
+    "wrap-break-word": "wrap",
+    "wrap-anywhere": "wrap",
+    "wrap-normal": "wrap",
+    "hyphens-none": "hyphens",
+    "hyphens-manual": "hyphens",
+    "hyphens-auto": "hyphens",
+    "bg-fixed": "bg-attachment",
+    "bg-local": "bg-attachment",
+    "bg-scroll": "bg-attachment",
+    "bg-clip-border": "bg-clip",
+    "bg-clip-padding": "bg-clip",
+    "bg-clip-content": "bg-clip",
+    "bg-clip-text": "bg-clip",
+    "bg-origin-border": "bg-origin",
+    "bg-origin-padding": "bg-origin",
+    "bg-origin-content": "bg-origin",
+    "bg-center": "bg-position",
+    "bg-top": "bg-position",
+    "bg-top-left": "bg-position",
+    "bg-top-right": "bg-position",
+    "bg-bottom": "bg-position",
+    "bg-bottom-right": "bg-position",
+    "bg-bottom-left": "bg-position",
+    "bg-left": "bg-position",
+    "bg-left-top": "bg-position",
+    "bg-left-bottom": "bg-position",
+    "bg-right": "bg-position",
+    "bg-right-top": "bg-position",
+    "bg-right-bottom": "bg-position",
+    "bg-no-repeat": "bg-repeat",
+    "bg-repeat": "bg-repeat",
+    "bg-repeat-x": "bg-repeat",
+    "bg-repeat-y": "bg-repeat",
+    "bg-repeat-space": "bg-repeat",
+    "bg-repeat-round": "bg-repeat",
+    "bg-auto": "bg-size",
+    "bg-cover": "bg-size",
+    "bg-contain": "bg-size",
+    "bg-none": "bg-image",
+    "bg-linear-to-t": "bg-image",
+    "bg-linear-to-tr": "bg-image",
+    "bg-linear-to-r": "bg-image",
+    "bg-linear-to-br": "bg-image",
+    "bg-linear-to-b": "bg-image",
+    "bg-linear-to-bl": "bg-image",
+    "bg-linear-to-l": "bg-image",
+    "bg-linear-to-tl": "bg-image",
+    "bg-radial": "bg-image",
+    "bg-conic": "bg-image",
+    "bg-gradient-to-t": "bg-image",
+    "bg-gradient-to-tr": "bg-image",
+    "bg-gradient-to-r": "bg-image",
+    "bg-gradient-to-br": "bg-image",
+    "bg-gradient-to-b": "bg-image",
+    "bg-gradient-to-bl": "bg-image",
+    "bg-gradient-to-l": "bg-image",
+    "bg-gradient-to-tl": "bg-image",
+    "bg-blend-normal": "bg-blend",
+    "bg-blend-multiply": "bg-blend",
+    "bg-blend-screen": "bg-blend",
+    "bg-blend-overlay": "bg-blend",
+    "bg-blend-darken": "bg-blend",
+    "bg-blend-lighten": "bg-blend",
+    "bg-blend-color": "bg-blend",
+    "bg-blend-color-dodge": "bg-blend",
+    "bg-blend-color-burn": "bg-blend",
+    "bg-blend-hard-light": "bg-blend",
+    "bg-blend-soft-light": "bg-blend",
+    "bg-blend-difference": "bg-blend",
+    "bg-blend-exclusion": "bg-blend",
+    "bg-blend-hue": "bg-blend",
+    "bg-blend-saturation": "bg-blend",
+    "bg-blend-luminosity": "bg-blend",
+    "rounded": "rounded",
+    "rounded-none": "rounded",
+    "rounded-full": "rounded",
+    "rounded-s": "rounded-s",
+    "rounded-s-none": "rounded-s",
+    "rounded-s-full": "rounded-s",
+    "rounded-e": "rounded-e",
+    "rounded-e-none": "rounded-e",
+    "rounded-e-full": "rounded-e",
+    "rounded-t": "rounded-t",
+    "rounded-t-none": "rounded-t",
+    "rounded-t-full": "rounded-t",
+    "rounded-r": "rounded-r",
+    "rounded-r-none": "rounded-r",
+    "rounded-r-full": "rounded-r",
+    "rounded-b": "rounded-b",
+    "rounded-b-none": "rounded-b",
+    "rounded-b-full": "rounded-b",
+    "rounded-l": "rounded-l",
+    "rounded-l-none": "rounded-l",
+    "rounded-l-full": "rounded-l",
+    "rounded-ss": "rounded-ss",
+    "rounded-ss-none": "rounded-ss",
+    "rounded-ss-full": "rounded-ss",
+    "rounded-se": "rounded-se",
+    "rounded-se-none": "rounded-se",
+    "rounded-se-full": "rounded-se",
+    "rounded-ee": "rounded-ee",
+    "rounded-ee-none": "rounded-ee",
+    "rounded-ee-full": "rounded-ee",
+    "rounded-es": "rounded-es",
+    "rounded-es-none": "rounded-es",
+    "rounded-es-full": "rounded-es",
+    "rounded-tl": "rounded-tl",
+    "rounded-tl-none": "rounded-tl",
+    "rounded-tl-full": "rounded-tl",
+    "rounded-tr": "rounded-tr",
+    "rounded-tr-none": "rounded-tr",
+    "rounded-tr-full": "rounded-tr",
+    "rounded-br": "rounded-br",
+    "rounded-br-none": "rounded-br",
+    "rounded-br-full": "rounded-br",
+    "rounded-bl": "rounded-bl",
+    "rounded-bl-none": "rounded-bl",
+    "rounded-bl-full": "rounded-bl",
+    "border": "border-w",
+    "border-x": "border-w-x",
+    "border-y": "border-w-y",
+    "border-s": "border-w-s",
+    "border-e": "border-w-e",
+    "border-bs": "border-w-bs",
+    "border-be": "border-w-be",
+    "border-t": "border-w-t",
+    "border-r": "border-w-r",
+    "border-b": "border-w-b",
+    "border-l": "border-w-l",
+    "border-solid": "border-style",
+    "border-dashed": "border-style",
+    "border-dotted": "border-style",
+    "border-double": "border-style",
+    "border-hidden": "border-style",
+    "border-none": "border-style",
+    "border-collapse": "border-collapse",
+    "border-separate": "border-collapse",
+    "border-spacing-px": "border-spacing",
+    "border-spacing-x-px": "border-spacing-x",
+    "border-spacing-y-px": "border-spacing-y",
+    "divide-x": "divide-x",
+    "divide-x-reverse": "divide-x-reverse",
+    "divide-y": "divide-y",
+    "divide-y-reverse": "divide-y-reverse",
+    "divide-solid": "divide-style",
+    "divide-dashed": "divide-style",
+    "divide-dotted": "divide-style",
+    "divide-double": "divide-style",
+    "divide-hidden": "divide-style",
+    "divide-none": "divide-style",
+    "outline": "outline-w",
+    "outline-solid": "outline-style",
+    "outline-dashed": "outline-style",
+    "outline-dotted": "outline-style",
+    "outline-double": "outline-style",
+    "outline-none": "outline-style",
+    "outline-hidden": "outline-style",
+    "shadow": "shadow",
+    "shadow-inner": "shadow",
+    "shadow-none": "shadow",
+    "ring": "ring-w",
+    "ring-inset": "ring-w-inset",
+    "mix-blend-normal": "mix-blend",
+    "mix-blend-multiply": "mix-blend",
+    "mix-blend-screen": "mix-blend",
+    "mix-blend-overlay": "mix-blend",
+    "mix-blend-darken": "mix-blend",
+    "mix-blend-lighten": "mix-blend",
+    "mix-blend-color": "mix-blend",
+    "mix-blend-color-dodge": "mix-blend",
+    "mix-blend-color-burn": "mix-blend",
+    "mix-blend-hard-light": "mix-blend",
+    "mix-blend-soft-light": "mix-blend",
+    "mix-blend-difference": "mix-blend",
+    "mix-blend-exclusion": "mix-blend",
+    "mix-blend-hue": "mix-blend",
+    "mix-blend-saturation": "mix-blend",
+    "mix-blend-luminosity": "mix-blend",
+    "mix-blend-plus-darker": "mix-blend",
+    "mix-blend-plus-lighter": "mix-blend",
+    "mask-clip-border": "mask-clip",
+    "mask-clip-padding": "mask-clip",
+    "mask-clip-content": "mask-clip",
+    "mask-clip-fill": "mask-clip",
+    "mask-clip-stroke": "mask-clip",
+    "mask-clip-view": "mask-clip",
+    "mask-no-clip": "mask-clip",
+    "mask-no-repeat": "mask-repeat",
+    "mask-add": "mask-composite",
+    "mask-subtract": "mask-composite",
+    "mask-intersect": "mask-composite",
+    "mask-exclude": "mask-composite",
+    "mask-radial-circle": "mask-image-radial-shape",
+    "mask-radial-ellipse": "mask-image-radial-shape",
+    "mask-radial-closest-side": "mask-image-radial-size",
+    "mask-radial-closest-corner": "mask-image-radial-size",
+    "mask-radial-farthest-side": "mask-image-radial-size",
+    "mask-radial-farthest-corner": "mask-image-radial-size",
+    "mask-radial-at-center": "mask-image-radial-pos",
+    "mask-radial-at-top": "mask-image-radial-pos",
+    "mask-radial-at-top-left": "mask-image-radial-pos",
+    "mask-radial-at-top-right": "mask-image-radial-pos",
+    "mask-radial-at-bottom": "mask-image-radial-pos",
+    "mask-radial-at-bottom-right": "mask-image-radial-pos",
+    "mask-radial-at-bottom-left": "mask-image-radial-pos",
+    "mask-radial-at-left": "mask-image-radial-pos",
+    "mask-radial-at-left-top": "mask-image-radial-pos",
+    "mask-radial-at-left-bottom": "mask-image-radial-pos",
+    "mask-radial-at-right": "mask-image-radial-pos",
+    "mask-radial-at-right-top": "mask-image-radial-pos",
+    "mask-radial-at-right-bottom": "mask-image-radial-pos",
+    "mask-alpha": "mask-mode",
+    "mask-luminance": "mask-mode",
+    "mask-match": "mask-mode",
+    "mask-origin-border": "mask-origin",
+    "mask-origin-padding": "mask-origin",
+    "mask-origin-content": "mask-origin",
+    "mask-origin-fill": "mask-origin",
+    "mask-origin-stroke": "mask-origin",
+    "mask-origin-view": "mask-origin",
+    "mask-center": "mask-position",
+    "mask-top": "mask-position",
+    "mask-top-left": "mask-position",
+    "mask-top-right": "mask-position",
+    "mask-bottom": "mask-position",
+    "mask-bottom-right": "mask-position",
+    "mask-bottom-left": "mask-position",
+    "mask-left": "mask-position",
+    "mask-left-top": "mask-position",
+    "mask-left-bottom": "mask-position",
+    "mask-right": "mask-position",
+    "mask-right-top": "mask-position",
+    "mask-right-bottom": "mask-position",
+    "mask-repeat": "mask-repeat",
+    "mask-repeat-x": "mask-repeat",
+    "mask-repeat-y": "mask-repeat",
+    "mask-repeat-space": "mask-repeat",
+    "mask-repeat-round": "mask-repeat",
+    "mask-auto": "mask-size",
+    "mask-cover": "mask-size",
+    "mask-contain": "mask-size",
+    "mask-type-alpha": "mask-type",
+    "mask-type-luminance": "mask-type",
+    "mask-none": "mask-image",
+    "filter": "filter",
+    "filter-none": "filter",
+    "blur": "blur",
+    "blur-none": "blur",
+    "drop-shadow": "drop-shadow",
+    "drop-shadow-none": "drop-shadow",
+    "grayscale": "grayscale",
+    "invert": "invert",
+    "sepia": "sepia",
+    "backdrop-filter": "backdrop-filter",
+    "backdrop-filter-none": "backdrop-filter",
+    "backdrop-blur": "backdrop-blur",
+    "backdrop-blur-none": "backdrop-blur",
+    "backdrop-grayscale": "backdrop-grayscale",
+    "backdrop-invert": "backdrop-invert",
+    "backdrop-sepia": "backdrop-sepia",
+    "caption-top": "caption",
+    "caption-bottom": "caption",
+    "transition": "transition",
+    "transition-all": "transition",
+    "transition-colors": "transition",
+    "transition-opacity": "transition",
+    "transition-shadow": "transition",
+    "transition-transform": "transition",
+    "transition-none": "transition",
+    "transition-normal": "transition-behavior",
+    "transition-discrete": "transition-behavior",
+    "duration-initial": "duration",
+    "ease-linear": "ease",
+    "ease-initial": "ease",
+    "ease-in": "ease",
+    "ease-in-out": "ease",
+    "ease-out": "ease",
+    "animate-none": "animate",
+    "animate-spin": "animate",
+    "animate-ping": "animate",
+    "animate-pulse": "animate",
+    "animate-bounce": "animate",
+    "backface-hidden": "backface",
+    "backface-visible": "backface",
+    "perspective-dramatic": "perspective",
+    "perspective-near": "perspective",
+    "perspective-normal": "perspective",
+    "perspective-midrange": "perspective",
+    "perspective-distant": "perspective",
+    "perspective-none": "perspective",
+    "perspective-origin-center": "perspective-origin",
+    "perspective-origin-top": "perspective-origin",
+    "perspective-origin-top-left": "perspective-origin",
+    "perspective-origin-top-right": "perspective-origin",
+    "perspective-origin-bottom": "perspective-origin",
+    "perspective-origin-bottom-right": "perspective-origin",
+    "perspective-origin-bottom-left": "perspective-origin",
+    "perspective-origin-left": "perspective-origin",
+    "perspective-origin-left-top": "perspective-origin",
+    "perspective-origin-left-bottom": "perspective-origin",
+    "perspective-origin-right": "perspective-origin",
+    "perspective-origin-right-top": "perspective-origin",
+    "perspective-origin-right-bottom": "perspective-origin",
+    "rotate-none": "rotate",
+    "rotate-x-none": "rotate-x",
+    "rotate-y-none": "rotate-y",
+    "rotate-z-none": "rotate-z",
+    "scale-none": "scale",
+    "scale-x-none": "scale-x",
+    "scale-y-none": "scale-y",
+    "scale-z-none": "scale-z",
+    "scale-3d": "scale-3d",
+    "transform": "transform",
+    "transform-none": "transform",
+    "transform-gpu": "transform",
+    "transform-cpu": "transform",
+    "transform-3d": "transform-style",
+    "transform-flat": "transform-style",
+    "origin-center": "transform-origin",
+    "origin-top": "transform-origin",
+    "origin-top-left": "transform-origin",
+    "origin-top-right": "transform-origin",
+    "origin-bottom": "transform-origin",
+    "origin-bottom-right": "transform-origin",
+    "origin-bottom-left": "transform-origin",
+    "origin-left": "transform-origin",
+    "origin-left-top": "transform-origin",
+    "origin-left-bottom": "transform-origin",
+    "origin-right": "transform-origin",
+    "origin-right-top": "transform-origin",
+    "origin-right-bottom": "transform-origin",
+    "translate-full": "translate",
+    "translate-px": "translate",
+    "translate-x-full": "translate-x",
+    "translate-x-px": "translate-x",
+    "translate-y-full": "translate-y",
+    "translate-y-px": "translate-y",
+    "translate-z-full": "translate-z",
+    "translate-z-px": "translate-z",
+    "translate-none": "translate-none",
+    "appearance-none": "appearance",
+    "appearance-auto": "appearance",
+    "scheme-normal": "color-scheme",
+    "scheme-dark": "color-scheme",
+    "scheme-light": "color-scheme",
+    "scheme-light-dark": "color-scheme",
+    "scheme-only-dark": "color-scheme",
+    "scheme-only-light": "color-scheme",
+    "cursor-auto": "cursor",
+    "cursor-default": "cursor",
+    "cursor-pointer": "cursor",
+    "cursor-wait": "cursor",
+    "cursor-text": "cursor",
+    "cursor-move": "cursor",
+    "cursor-help": "cursor",
+    "cursor-not-allowed": "cursor",
+    "cursor-none": "cursor",
+    "cursor-context-menu": "cursor",
+    "cursor-progress": "cursor",
+    "cursor-cell": "cursor",
+    "cursor-crosshair": "cursor",
+    "cursor-vertical-text": "cursor",
+    "cursor-alias": "cursor",
+    "cursor-copy": "cursor",
+    "cursor-no-drop": "cursor",
+    "cursor-grab": "cursor",
+    "cursor-grabbing": "cursor",
+    "cursor-all-scroll": "cursor",
+    "cursor-col-resize": "cursor",
+    "cursor-row-resize": "cursor",
+    "cursor-n-resize": "cursor",
+    "cursor-e-resize": "cursor",
+    "cursor-s-resize": "cursor",
+    "cursor-w-resize": "cursor",
+    "cursor-ne-resize": "cursor",
+    "cursor-nw-resize": "cursor",
+    "cursor-se-resize": "cursor",
+    "cursor-sw-resize": "cursor",
+    "cursor-ew-resize": "cursor",
+    "cursor-ns-resize": "cursor",
+    "cursor-nesw-resize": "cursor",
+    "cursor-nwse-resize": "cursor",
+    "cursor-zoom-in": "cursor",
+    "cursor-zoom-out": "cursor",
+    "field-sizing-fixed": "field-sizing",
+    "field-sizing-content": "field-sizing",
+    "pointer-events-auto": "pointer-events",
+    "pointer-events-none": "pointer-events",
+    "resize": "resize",
+    "resize-none": "resize",
+    "resize-y": "resize",
+    "resize-x": "resize",
+    "scroll-auto": "scroll-behavior",
+    "scroll-smooth": "scroll-behavior",
+    "scroll-m-px": "scroll-m",
+    "scroll-mx-px": "scroll-mx",
+    "scroll-my-px": "scroll-my",
+    "scroll-ms-px": "scroll-ms",
+    "scroll-me-px": "scroll-me",
+    "scroll-mbs-px": "scroll-mbs",
+    "scroll-mbe-px": "scroll-mbe",
+    "scroll-mt-px": "scroll-mt",
+    "scroll-mr-px": "scroll-mr",
+    "scroll-mb-px": "scroll-mb",
+    "scroll-ml-px": "scroll-ml",
+    "scroll-p-px": "scroll-p",
+    "scroll-px-px": "scroll-px",
+    "scroll-py-px": "scroll-py",
+    "scroll-ps-px": "scroll-ps",
+    "scroll-pe-px": "scroll-pe",
+    "scroll-pbs-px": "scroll-pbs",
+    "scroll-pbe-px": "scroll-pbe",
+    "scroll-pt-px": "scroll-pt",
+    "scroll-pr-px": "scroll-pr",
+    "scroll-pb-px": "scroll-pb",
+    "scroll-pl-px": "scroll-pl",
+    "scrollbar-gutter-auto": "scrollbar-gutter",
+    "scrollbar-gutter-stable": "scrollbar-gutter",
+    "scrollbar-gutter-both": "scrollbar-gutter",
+    "scrollbar-auto": "scrollbar-w",
+    "scrollbar-thin": "scrollbar-w",
+    "scrollbar-none": "scrollbar-w",
+    "snap-start": "snap-align",
+    "snap-end": "snap-align",
+    "snap-center": "snap-align",
+    "snap-align-none": "snap-align",
+    "snap-normal": "snap-stop",
+    "snap-always": "snap-stop",
+    "snap-none": "snap-type",
+    "snap-x": "snap-type",
+    "snap-y": "snap-type",
+    "snap-both": "snap-type",
+    "snap-mandatory": "snap-strictness",
+    "snap-proximity": "snap-strictness",
+    "touch-auto": "touch",
+    "touch-none": "touch",
+    "touch-manipulation": "touch",
+    "touch-pan-x": "touch-x",
+    "touch-pan-left": "touch-x",
+    "touch-pan-right": "touch-x",
+    "touch-pan-y": "touch-y",
+    "touch-pan-up": "touch-y",
+    "touch-pan-down": "touch-y",
+    "touch-pinch-zoom": "touch-pz",
+    "select-none": "select",
+    "select-text": "select",
+    "select-all": "select",
+    "select-auto": "select",
+    "will-change-auto": "will-change",
+    "will-change-scroll": "will-change",
+    "will-change-contents": "will-change",
+    "will-change-transform": "will-change",
+    "fill-none": "fill",
+    "stroke-none": "stroke",
+    "forced-color-adjust-auto": "forced-color-adjust",
+    "forced-color-adjust-none": "forced-color-adjust",
+    "contain-none": "contain",
+    "contain-content": "contain",
+    "contain-strict": "contain",
+    "contain-size": "contain-size",
+    "contain-inline-size": "contain-size",
+    "contain-layout": "contain-layout",
+    "contain-paint": "contain-paint",
+    "contain-style": "contain-style"
+  },
+  "validators": {
+    "": [
+      [
+        "isNamedContainerQuery",
+        "container-named"
+      ]
+    ],
+    "aspect-": [
+      [
+        "isFraction",
+        "aspect"
+      ],
+      [
+        "isArbitraryValue",
+        "aspect"
+      ],
+      [
+        "isArbitraryVariable",
+        "aspect"
+      ]
+    ],
+    "@container-": [
+      [
+        "isArbitraryVariable",
+        "container-type"
+      ],
+      [
+        "isArbitraryValue",
+        "container-type"
+      ]
+    ],
+    "columns-": [
+      [
+        "isNumber",
+        "columns"
+      ],
+      [
+        "isArbitraryValue",
+        "columns"
+      ],
+      [
+        "isArbitraryVariable",
+        "columns"
+      ],
+      [
+        "isTshirtSize",
+        "columns"
+      ]
+    ],
+    "block-": [
+      [
+        "isFraction",
+        "block-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "block-size"
+      ],
+      [
+        "isArbitraryValue",
+        "block-size"
+      ],
+      [
+        "isNumber",
+        "block-size"
+      ]
+    ],
+    "inline-": [
+      [
+        "isTshirtSize",
+        "inline-size"
+      ],
+      [
+        "isFraction",
+        "inline-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "inline-size"
+      ],
+      [
+        "isArbitraryValue",
+        "inline-size"
+      ],
+      [
+        "isNumber",
+        "inline-size"
+      ]
+    ],
+    "flex-": [
+      [
+        "isNumber",
+        "flex"
+      ],
+      [
+        "isFraction",
+        "flex"
+      ],
+      [
+        "isArbitraryValue",
+        "flex"
+      ]
+    ],
+    "grid-cols-": [
+      [
+        "isInteger",
+        "grid-cols"
+      ],
+      [
+        "isArbitraryVariable",
+        "grid-cols"
+      ],
+      [
+        "isArbitraryValue",
+        "grid-cols"
+      ]
+    ],
+    "grid-rows-": [
+      [
+        "isInteger",
+        "grid-rows"
+      ],
+      [
+        "isArbitraryVariable",
+        "grid-rows"
+      ],
+      [
+        "isArbitraryValue",
+        "grid-rows"
+      ]
+    ],
+    "list-": [
+      [
+        "isArbitraryVariable",
+        "list-style-type"
+      ],
+      [
+        "isArbitraryValue",
+        "list-style-type"
+      ]
+    ],
+    "list-image-": [
+      [
+        "isArbitraryVariable",
+        "list-image"
+      ],
+      [
+        "isArbitraryValue",
+        "list-image"
+      ]
+    ],
+    "object-": [
+      [
+        "isArbitraryVariable",
+        "object-position"
+      ],
+      [
+        "isArbitraryValue",
+        "object-position"
+      ]
+    ],
+    "inset-": [
+      [
+        "isFraction",
+        "inset"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset"
+      ],
+      [
+        "isArbitraryValue",
+        "inset"
+      ],
+      [
+        "isNumber",
+        "inset"
+      ]
+    ],
+    "inset-x-": [
+      [
+        "isFraction",
+        "inset-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-x"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-x"
+      ],
+      [
+        "isNumber",
+        "inset-x"
+      ]
+    ],
+    "inset-y-": [
+      [
+        "isFraction",
+        "inset-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-y"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-y"
+      ],
+      [
+        "isNumber",
+        "inset-y"
+      ]
+    ],
+    "inset-s-": [
+      [
+        "isFraction",
+        "start"
+      ],
+      [
+        "isArbitraryVariable",
+        "start"
+      ],
+      [
+        "isArbitraryValue",
+        "start"
+      ],
+      [
+        "isNumber",
+        "start"
+      ]
+    ],
+    "inset-e-": [
+      [
+        "isFraction",
+        "end"
+      ],
+      [
+        "isArbitraryVariable",
+        "end"
+      ],
+      [
+        "isArbitraryValue",
+        "end"
+      ],
+      [
+        "isNumber",
+        "end"
+      ]
+    ],
+    "inset-bs-": [
+      [
+        "isFraction",
+        "inset-bs"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-bs"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-bs"
+      ],
+      [
+        "isNumber",
+        "inset-bs"
+      ]
+    ],
+    "inset-be-": [
+      [
+        "isFraction",
+        "inset-be"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-be"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-be"
+      ],
+      [
+        "isNumber",
+        "inset-be"
+      ]
+    ],
+    "inset-shadow-": [
+      [
+        "isTshirtSize",
+        "inset-shadow"
+      ],
+      [
+        "isArbitraryVariableShadow",
+        "inset-shadow"
+      ],
+      [
+        "isArbitraryShadow",
+        "inset-shadow"
+      ],
+      [
+        "isAny",
+        "inset-shadow-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-shadow-color"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-shadow-color"
+      ]
+    ],
+    "inset-ring-": [
+      [
+        "isNumber",
+        "inset-ring-w"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "inset-ring-w"
+      ],
+      [
+        "isArbitraryLength",
+        "inset-ring-w"
+      ],
+      [
+        "isAny",
+        "inset-ring-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "inset-ring-color"
+      ],
+      [
+        "isArbitraryValue",
+        "inset-ring-color"
+      ]
+    ],
+    "start-": [
+      [
+        "isFraction",
+        "start"
+      ],
+      [
+        "isArbitraryVariable",
+        "start"
+      ],
+      [
+        "isArbitraryValue",
+        "start"
+      ],
+      [
+        "isNumber",
+        "start"
+      ]
+    ],
+    "end-": [
+      [
+        "isFraction",
+        "end"
+      ],
+      [
+        "isArbitraryVariable",
+        "end"
+      ],
+      [
+        "isArbitraryValue",
+        "end"
+      ],
+      [
+        "isNumber",
+        "end"
+      ]
+    ],
+    "top-": [
+      [
+        "isFraction",
+        "top"
+      ],
+      [
+        "isArbitraryVariable",
+        "top"
+      ],
+      [
+        "isArbitraryValue",
+        "top"
+      ],
+      [
+        "isNumber",
+        "top"
+      ]
+    ],
+    "right-": [
+      [
+        "isFraction",
+        "right"
+      ],
+      [
+        "isArbitraryVariable",
+        "right"
+      ],
+      [
+        "isArbitraryValue",
+        "right"
+      ],
+      [
+        "isNumber",
+        "right"
+      ]
+    ],
+    "bottom-": [
+      [
+        "isFraction",
+        "bottom"
+      ],
+      [
+        "isArbitraryVariable",
+        "bottom"
+      ],
+      [
+        "isArbitraryValue",
+        "bottom"
+      ],
+      [
+        "isNumber",
+        "bottom"
+      ]
+    ],
+    "left-": [
+      [
+        "isFraction",
+        "left"
+      ],
+      [
+        "isArbitraryVariable",
+        "left"
+      ],
+      [
+        "isArbitraryValue",
+        "left"
+      ],
+      [
+        "isNumber",
+        "left"
+      ]
+    ],
+    "z-": [
+      [
+        "isInteger",
+        "z"
+      ],
+      [
+        "isArbitraryVariable",
+        "z"
+      ],
+      [
+        "isArbitraryValue",
+        "z"
+      ]
+    ],
+    "basis-": [
+      [
+        "isFraction",
+        "basis"
+      ],
+      [
+        "isTshirtSize",
+        "basis"
+      ],
+      [
+        "isArbitraryVariable",
+        "basis"
+      ],
+      [
+        "isArbitraryValue",
+        "basis"
+      ],
+      [
+        "isNumber",
+        "basis"
+      ]
+    ],
+    "grow-": [
+      [
+        "isNumber",
+        "grow"
+      ],
+      [
+        "isArbitraryVariable",
+        "grow"
+      ],
+      [
+        "isArbitraryValue",
+        "grow"
+      ]
+    ],
+    "shrink-": [
+      [
+        "isNumber",
+        "shrink"
+      ],
+      [
+        "isArbitraryVariable",
+        "shrink"
+      ],
+      [
+        "isArbitraryValue",
+        "shrink"
+      ]
+    ],
+    "order-": [
+      [
+        "isInteger",
+        "order"
+      ],
+      [
+        "isArbitraryVariable",
+        "order"
+      ],
+      [
+        "isArbitraryValue",
+        "order"
+      ]
+    ],
+    "col-": [
+      [
+        "isInteger",
+        "col-start-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "col-start-end"
+      ],
+      [
+        "isArbitraryValue",
+        "col-start-end"
+      ]
+    ],
+    "col-span-": [
+      [
+        "isInteger",
+        "col-start-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "col-start-end"
+      ],
+      [
+        "isArbitraryValue",
+        "col-start-end"
+      ]
+    ],
+    "col-start-": [
+      [
+        "isInteger",
+        "col-start"
+      ],
+      [
+        "isArbitraryVariable",
+        "col-start"
+      ],
+      [
+        "isArbitraryValue",
+        "col-start"
+      ]
+    ],
+    "col-end-": [
+      [
+        "isInteger",
+        "col-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "col-end"
+      ],
+      [
+        "isArbitraryValue",
+        "col-end"
+      ]
+    ],
+    "row-": [
+      [
+        "isInteger",
+        "row-start-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "row-start-end"
+      ],
+      [
+        "isArbitraryValue",
+        "row-start-end"
+      ]
+    ],
+    "row-span-": [
+      [
+        "isInteger",
+        "row-start-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "row-start-end"
+      ],
+      [
+        "isArbitraryValue",
+        "row-start-end"
+      ]
+    ],
+    "row-start-": [
+      [
+        "isInteger",
+        "row-start"
+      ],
+      [
+        "isArbitraryVariable",
+        "row-start"
+      ],
+      [
+        "isArbitraryValue",
+        "row-start"
+      ]
+    ],
+    "row-end-": [
+      [
+        "isInteger",
+        "row-end"
+      ],
+      [
+        "isArbitraryVariable",
+        "row-end"
+      ],
+      [
+        "isArbitraryValue",
+        "row-end"
+      ]
+    ],
+    "auto-cols-": [
+      [
+        "isArbitraryVariable",
+        "auto-cols"
+      ],
+      [
+        "isArbitraryValue",
+        "auto-cols"
+      ],
+      [
+        "isNumber",
+        "auto-cols"
+      ]
+    ],
+    "auto-rows-": [
+      [
+        "isArbitraryVariable",
+        "auto-rows"
+      ],
+      [
+        "isArbitraryValue",
+        "auto-rows"
+      ],
+      [
+        "isNumber",
+        "auto-rows"
+      ]
+    ],
+    "gap-": [
+      [
+        "isArbitraryVariable",
+        "gap"
+      ],
+      [
+        "isArbitraryValue",
+        "gap"
+      ],
+      [
+        "isNumber",
+        "gap"
+      ]
+    ],
+    "gap-x-": [
+      [
+        "isArbitraryVariable",
+        "gap-x"
+      ],
+      [
+        "isArbitraryValue",
+        "gap-x"
+      ],
+      [
+        "isNumber",
+        "gap-x"
+      ]
+    ],
+    "gap-y-": [
+      [
+        "isArbitraryVariable",
+        "gap-y"
+      ],
+      [
+        "isArbitraryValue",
+        "gap-y"
+      ],
+      [
+        "isNumber",
+        "gap-y"
+      ]
+    ],
+    "content-": [
+      [
+        "isArbitraryVariable",
+        "content"
+      ],
+      [
+        "isArbitraryValue",
+        "content"
+      ]
+    ],
+    "p-": [
+      [
+        "isArbitraryVariable",
+        "p"
+      ],
+      [
+        "isArbitraryValue",
+        "p"
+      ],
+      [
+        "isNumber",
+        "p"
+      ]
+    ],
+    "px-": [
+      [
+        "isArbitraryVariable",
+        "px"
+      ],
+      [
+        "isArbitraryValue",
+        "px"
+      ],
+      [
+        "isNumber",
+        "px"
+      ]
+    ],
+    "py-": [
+      [
+        "isArbitraryVariable",
+        "py"
+      ],
+      [
+        "isArbitraryValue",
+        "py"
+      ],
+      [
+        "isNumber",
+        "py"
+      ]
+    ],
+    "ps-": [
+      [
+        "isArbitraryVariable",
+        "ps"
+      ],
+      [
+        "isArbitraryValue",
+        "ps"
+      ],
+      [
+        "isNumber",
+        "ps"
+      ]
+    ],
+    "pe-": [
+      [
+        "isArbitraryVariable",
+        "pe"
+      ],
+      [
+        "isArbitraryValue",
+        "pe"
+      ],
+      [
+        "isNumber",
+        "pe"
+      ]
+    ],
+    "pbs-": [
+      [
+        "isArbitraryVariable",
+        "pbs"
+      ],
+      [
+        "isArbitraryValue",
+        "pbs"
+      ],
+      [
+        "isNumber",
+        "pbs"
+      ]
+    ],
+    "pbe-": [
+      [
+        "isArbitraryVariable",
+        "pbe"
+      ],
+      [
+        "isArbitraryValue",
+        "pbe"
+      ],
+      [
+        "isNumber",
+        "pbe"
+      ]
+    ],
+    "pt-": [
+      [
+        "isArbitraryVariable",
+        "pt"
+      ],
+      [
+        "isArbitraryValue",
+        "pt"
+      ],
+      [
+        "isNumber",
+        "pt"
+      ]
+    ],
+    "pr-": [
+      [
+        "isArbitraryVariable",
+        "pr"
+      ],
+      [
+        "isArbitraryValue",
+        "pr"
+      ],
+      [
+        "isNumber",
+        "pr"
+      ]
+    ],
+    "pb-": [
+      [
+        "isArbitraryVariable",
+        "pb"
+      ],
+      [
+        "isArbitraryValue",
+        "pb"
+      ],
+      [
+        "isNumber",
+        "pb"
+      ]
+    ],
+    "pl-": [
+      [
+        "isArbitraryVariable",
+        "pl"
+      ],
+      [
+        "isArbitraryValue",
+        "pl"
+      ],
+      [
+        "isNumber",
+        "pl"
+      ]
+    ],
+    "m-": [
+      [
+        "isArbitraryVariable",
+        "m"
+      ],
+      [
+        "isArbitraryValue",
+        "m"
+      ],
+      [
+        "isNumber",
+        "m"
+      ]
+    ],
+    "mx-": [
+      [
+        "isArbitraryVariable",
+        "mx"
+      ],
+      [
+        "isArbitraryValue",
+        "mx"
+      ],
+      [
+        "isNumber",
+        "mx"
+      ]
+    ],
+    "my-": [
+      [
+        "isArbitraryVariable",
+        "my"
+      ],
+      [
+        "isArbitraryValue",
+        "my"
+      ],
+      [
+        "isNumber",
+        "my"
+      ]
+    ],
+    "ms-": [
+      [
+        "isArbitraryVariable",
+        "ms"
+      ],
+      [
+        "isArbitraryValue",
+        "ms"
+      ],
+      [
+        "isNumber",
+        "ms"
+      ]
+    ],
+    "me-": [
+      [
+        "isArbitraryVariable",
+        "me"
+      ],
+      [
+        "isArbitraryValue",
+        "me"
+      ],
+      [
+        "isNumber",
+        "me"
+      ]
+    ],
+    "mbs-": [
+      [
+        "isArbitraryVariable",
+        "mbs"
+      ],
+      [
+        "isArbitraryValue",
+        "mbs"
+      ],
+      [
+        "isNumber",
+        "mbs"
+      ]
+    ],
+    "mbe-": [
+      [
+        "isArbitraryVariable",
+        "mbe"
+      ],
+      [
+        "isArbitraryValue",
+        "mbe"
+      ],
+      [
+        "isNumber",
+        "mbe"
+      ]
+    ],
+    "mt-": [
+      [
+        "isArbitraryVariable",
+        "mt"
+      ],
+      [
+        "isArbitraryValue",
+        "mt"
+      ],
+      [
+        "isNumber",
+        "mt"
+      ]
+    ],
+    "mr-": [
+      [
+        "isArbitraryVariable",
+        "mr"
+      ],
+      [
+        "isArbitraryValue",
+        "mr"
+      ],
+      [
+        "isNumber",
+        "mr"
+      ]
+    ],
+    "mb-": [
+      [
+        "isArbitraryVariable",
+        "mb"
+      ],
+      [
+        "isArbitraryValue",
+        "mb"
+      ],
+      [
+        "isNumber",
+        "mb"
+      ]
+    ],
+    "ml-": [
+      [
+        "isArbitraryVariable",
+        "ml"
+      ],
+      [
+        "isArbitraryValue",
+        "ml"
+      ],
+      [
+        "isNumber",
+        "ml"
+      ]
+    ],
+    "space-x-": [
+      [
+        "isArbitraryVariable",
+        "space-x"
+      ],
+      [
+        "isArbitraryValue",
+        "space-x"
+      ],
+      [
+        "isNumber",
+        "space-x"
+      ]
+    ],
+    "space-y-": [
+      [
+        "isArbitraryVariable",
+        "space-y"
+      ],
+      [
+        "isArbitraryValue",
+        "space-y"
+      ],
+      [
+        "isNumber",
+        "space-y"
+      ]
+    ],
+    "size-": [
+      [
+        "isFraction",
+        "size"
+      ],
+      [
+        "isArbitraryVariable",
+        "size"
+      ],
+      [
+        "isArbitraryValue",
+        "size"
+      ],
+      [
+        "isNumber",
+        "size"
+      ]
+    ],
+    "min-inline-": [
+      [
+        "isTshirtSize",
+        "min-inline-size"
+      ],
+      [
+        "isFraction",
+        "min-inline-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "min-inline-size"
+      ],
+      [
+        "isArbitraryValue",
+        "min-inline-size"
+      ],
+      [
+        "isNumber",
+        "min-inline-size"
+      ]
+    ],
+    "min-block-": [
+      [
+        "isFraction",
+        "min-block-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "min-block-size"
+      ],
+      [
+        "isArbitraryValue",
+        "min-block-size"
+      ],
+      [
+        "isNumber",
+        "min-block-size"
+      ]
+    ],
+    "min-w-": [
+      [
+        "isTshirtSize",
+        "min-w"
+      ],
+      [
+        "isFraction",
+        "min-w"
+      ],
+      [
+        "isArbitraryVariable",
+        "min-w"
+      ],
+      [
+        "isArbitraryValue",
+        "min-w"
+      ],
+      [
+        "isNumber",
+        "min-w"
+      ]
+    ],
+    "min-h-": [
+      [
+        "isFraction",
+        "min-h"
+      ],
+      [
+        "isArbitraryVariable",
+        "min-h"
+      ],
+      [
+        "isArbitraryValue",
+        "min-h"
+      ],
+      [
+        "isNumber",
+        "min-h"
+      ]
+    ],
+    "max-inline-": [
+      [
+        "isTshirtSize",
+        "max-inline-size"
+      ],
+      [
+        "isFraction",
+        "max-inline-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "max-inline-size"
+      ],
+      [
+        "isArbitraryValue",
+        "max-inline-size"
+      ],
+      [
+        "isNumber",
+        "max-inline-size"
+      ]
+    ],
+    "max-block-": [
+      [
+        "isFraction",
+        "max-block-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "max-block-size"
+      ],
+      [
+        "isArbitraryValue",
+        "max-block-size"
+      ],
+      [
+        "isNumber",
+        "max-block-size"
+      ]
+    ],
+    "max-w-": [
+      [
+        "isTshirtSize",
+        "max-w"
+      ],
+      [
+        "isFraction",
+        "max-w"
+      ],
+      [
+        "isArbitraryVariable",
+        "max-w"
+      ],
+      [
+        "isArbitraryValue",
+        "max-w"
+      ],
+      [
+        "isNumber",
+        "max-w"
+      ]
+    ],
+    "max-w-screen-": [
+      [
+        "isTshirtSize",
+        "max-w"
+      ]
+    ],
+    "max-h-": [
+      [
+        "isFraction",
+        "max-h"
+      ],
+      [
+        "isArbitraryVariable",
+        "max-h"
+      ],
+      [
+        "isArbitraryValue",
+        "max-h"
+      ],
+      [
+        "isNumber",
+        "max-h"
+      ]
+    ],
+    "w-": [
+      [
+        "isTshirtSize",
+        "w"
+      ],
+      [
+        "isFraction",
+        "w"
+      ],
+      [
+        "isArbitraryVariable",
+        "w"
+      ],
+      [
+        "isArbitraryValue",
+        "w"
+      ],
+      [
+        "isNumber",
+        "w"
+      ]
+    ],
+    "h-": [
+      [
+        "isFraction",
+        "h"
+      ],
+      [
+        "isArbitraryVariable",
+        "h"
+      ],
+      [
+        "isArbitraryValue",
+        "h"
+      ],
+      [
+        "isNumber",
+        "h"
+      ]
+    ],
+    "text-": [
+      [
+        "isTshirtSize",
+        "font-size"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "font-size"
+      ],
+      [
+        "isArbitraryLength",
+        "font-size"
+      ],
+      [
+        "isAny",
+        "text-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "text-color"
+      ],
+      [
+        "isArbitraryValue",
+        "text-color"
+      ]
+    ],
+    "text-shadow-": [
+      [
+        "isTshirtSize",
+        "text-shadow"
+      ],
+      [
+        "isArbitraryVariableShadow",
+        "text-shadow"
+      ],
+      [
+        "isArbitraryShadow",
+        "text-shadow"
+      ],
+      [
+        "isAny",
+        "text-shadow-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "text-shadow-color"
+      ],
+      [
+        "isArbitraryValue",
+        "text-shadow-color"
+      ]
+    ],
+    "font-": [
+      [
+        "isArbitraryVariableWeight",
+        "font-weight"
+      ],
+      [
+        "isArbitraryWeight",
+        "font-weight"
+      ],
+      [
+        "isArbitraryVariableFamilyName",
+        "font-family"
+      ],
+      [
+        "isArbitraryFamilyName",
+        "font-family"
+      ],
+      [
+        "isAnyNonArbitrary",
+        "font-family"
+      ]
+    ],
+    "font-stretch-": [
+      [
+        "isPercent",
+        "font-stretch"
+      ],
+      [
+        "isArbitraryValue",
+        "font-stretch"
+      ]
+    ],
+    "font-features-": [
+      [
+        "isArbitraryValue",
+        "font-features"
+      ]
+    ],
+    "tracking-": [
+      [
+        "isArbitraryVariable",
+        "tracking"
+      ],
+      [
+        "isArbitraryValue",
+        "tracking"
+      ]
+    ],
+    "line-clamp-": [
+      [
+        "isNumber",
+        "line-clamp"
+      ],
+      [
+        "isArbitraryVariable",
+        "line-clamp"
+      ],
+      [
+        "isArbitraryNumber",
+        "line-clamp"
+      ]
+    ],
+    "leading-": [
+      [
+        "isArbitraryVariable",
+        "leading"
+      ],
+      [
+        "isArbitraryValue",
+        "leading"
+      ],
+      [
+        "isNumber",
+        "leading"
+      ]
+    ],
+    "placeholder-": [
+      [
+        "isAny",
+        "placeholder-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "placeholder-color"
+      ],
+      [
+        "isArbitraryValue",
+        "placeholder-color"
+      ]
+    ],
+    "underline-offset-": [
+      [
+        "isNumber",
+        "underline-offset"
+      ],
+      [
+        "isArbitraryVariable",
+        "underline-offset"
+      ],
+      [
+        "isArbitraryValue",
+        "underline-offset"
+      ]
+    ],
+    "decoration-": [
+      [
+        "isNumber",
+        "text-decoration-thickness"
+      ],
+      [
+        "isArbitraryVariable",
+        "text-decoration-thickness"
+      ],
+      [
+        "isArbitraryLength",
+        "text-decoration-thickness"
+      ],
+      [
+        "isAny",
+        "text-decoration-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "text-decoration-color"
+      ],
+      [
+        "isArbitraryValue",
+        "text-decoration-color"
+      ]
+    ],
+    "indent-": [
+      [
+        "isArbitraryVariable",
+        "indent"
+      ],
+      [
+        "isArbitraryValue",
+        "indent"
+      ],
+      [
+        "isNumber",
+        "indent"
+      ]
+    ],
+    "tab-": [
+      [
+        "isInteger",
+        "tab-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "tab-size"
+      ],
+      [
+        "isArbitraryValue",
+        "tab-size"
+      ]
+    ],
+    "align-": [
+      [
+        "isArbitraryVariable",
+        "vertical-align"
+      ],
+      [
+        "isArbitraryValue",
+        "vertical-align"
+      ]
+    ],
+    "bg-": [
+      [
+        "isArbitraryVariablePosition",
+        "bg-position"
+      ],
+      [
+        "isArbitraryPosition",
+        "bg-position"
+      ],
+      [
+        "isArbitraryVariableSize",
+        "bg-size"
+      ],
+      [
+        "isArbitrarySize",
+        "bg-size"
+      ],
+      [
+        "isArbitraryVariableImage",
+        "bg-image"
+      ],
+      [
+        "isArbitraryImage",
+        "bg-image"
+      ],
+      [
+        "isAny",
+        "bg-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "bg-color"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-color"
+      ]
+    ],
+    "bg-position-": [
+      [
+        "isArbitraryVariable",
+        "bg-position"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-position"
+      ]
+    ],
+    "bg-size-": [
+      [
+        "isArbitraryVariable",
+        "bg-size"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-size"
+      ]
+    ],
+    "bg-linear-": [
+      [
+        "isInteger",
+        "bg-image"
+      ],
+      [
+        "isArbitraryVariable",
+        "bg-image"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-image"
+      ]
+    ],
+    "bg-radial-": [
+      [
+        "isArbitraryVariable",
+        "bg-image"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-image"
+      ]
+    ],
+    "bg-conic-": [
+      [
+        "isInteger",
+        "bg-image"
+      ],
+      [
+        "isArbitraryVariable",
+        "bg-image"
+      ],
+      [
+        "isArbitraryValue",
+        "bg-image"
+      ]
+    ],
+    "from-": [
+      [
+        "isPercent",
+        "gradient-from-pos"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "gradient-from-pos"
+      ],
+      [
+        "isArbitraryLength",
+        "gradient-from-pos"
+      ],
+      [
+        "isAny",
+        "gradient-from"
+      ],
+      [
+        "isArbitraryVariable",
+        "gradient-from"
+      ],
+      [
+        "isArbitraryValue",
+        "gradient-from"
+      ]
+    ],
+    "via-": [
+      [
+        "isPercent",
+        "gradient-via-pos"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "gradient-via-pos"
+      ],
+      [
+        "isArbitraryLength",
+        "gradient-via-pos"
+      ],
+      [
+        "isAny",
+        "gradient-via"
+      ],
+      [
+        "isArbitraryVariable",
+        "gradient-via"
+      ],
+      [
+        "isArbitraryValue",
+        "gradient-via"
+      ]
+    ],
+    "to-": [
+      [
+        "isPercent",
+        "gradient-to-pos"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "gradient-to-pos"
+      ],
+      [
+        "isArbitraryLength",
+        "gradient-to-pos"
+      ],
+      [
+        "isAny",
+        "gradient-to"
+      ],
+      [
+        "isArbitraryVariable",
+        "gradient-to"
+      ],
+      [
+        "isArbitraryValue",
+        "gradient-to"
+      ]
+    ],
+    "rounded-": [
+      [
+        "isTshirtSize",
+        "rounded"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded"
+      ]
+    ],
+    "rounded-s-": [
+      [
+        "isTshirtSize",
+        "rounded-s"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-s"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-s"
+      ]
+    ],
+    "rounded-e-": [
+      [
+        "isTshirtSize",
+        "rounded-e"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-e"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-e"
+      ]
+    ],
+    "rounded-t-": [
+      [
+        "isTshirtSize",
+        "rounded-t"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-t"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-t"
+      ]
+    ],
+    "rounded-r-": [
+      [
+        "isTshirtSize",
+        "rounded-r"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-r"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-r"
+      ]
+    ],
+    "rounded-b-": [
+      [
+        "isTshirtSize",
+        "rounded-b"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-b"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-b"
+      ]
+    ],
+    "rounded-l-": [
+      [
+        "isTshirtSize",
+        "rounded-l"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-l"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-l"
+      ]
+    ],
+    "rounded-ss-": [
+      [
+        "isTshirtSize",
+        "rounded-ss"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-ss"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-ss"
+      ]
+    ],
+    "rounded-se-": [
+      [
+        "isTshirtSize",
+        "rounded-se"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-se"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-se"
+      ]
+    ],
+    "rounded-ee-": [
+      [
+        "isTshirtSize",
+        "rounded-ee"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-ee"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-ee"
+      ]
+    ],
+    "rounded-es-": [
+      [
+        "isTshirtSize",
+        "rounded-es"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-es"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-es"
+      ]
+    ],
+    "rounded-tl-": [
+      [
+        "isTshirtSize",
+        "rounded-tl"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-tl"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-tl"
+      ]
+    ],
+    "rounded-tr-": [
+      [
+        "isTshirtSize",
+        "rounded-tr"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-tr"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-tr"
+      ]
+    ],
+    "rounded-br-": [
+      [
+        "isTshirtSize",
+        "rounded-br"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-br"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-br"
+      ]
+    ],
+    "rounded-bl-": [
+      [
+        "isTshirtSize",
+        "rounded-bl"
+      ],
+      [
+        "isArbitraryVariable",
+        "rounded-bl"
+      ],
+      [
+        "isArbitraryValue",
+        "rounded-bl"
+      ]
+    ],
+    "border-": [
+      [
+        "isNumber",
+        "border-w"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w"
+      ],
+      [
+        "isAny",
+        "border-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color"
+      ]
+    ],
+    "border-x-": [
+      [
+        "isNumber",
+        "border-w-x"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-x"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-x"
+      ],
+      [
+        "isAny",
+        "border-color-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-x"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-x"
+      ]
+    ],
+    "border-y-": [
+      [
+        "isNumber",
+        "border-w-y"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-y"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-y"
+      ],
+      [
+        "isAny",
+        "border-color-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-y"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-y"
+      ]
+    ],
+    "border-s-": [
+      [
+        "isNumber",
+        "border-w-s"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-s"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-s"
+      ],
+      [
+        "isAny",
+        "border-color-s"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-s"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-s"
+      ]
+    ],
+    "border-e-": [
+      [
+        "isNumber",
+        "border-w-e"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-e"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-e"
+      ],
+      [
+        "isAny",
+        "border-color-e"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-e"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-e"
+      ]
+    ],
+    "border-bs-": [
+      [
+        "isNumber",
+        "border-w-bs"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-bs"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-bs"
+      ],
+      [
+        "isAny",
+        "border-color-bs"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-bs"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-bs"
+      ]
+    ],
+    "border-be-": [
+      [
+        "isNumber",
+        "border-w-be"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-be"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-be"
+      ],
+      [
+        "isAny",
+        "border-color-be"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-be"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-be"
+      ]
+    ],
+    "border-t-": [
+      [
+        "isNumber",
+        "border-w-t"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-t"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-t"
+      ],
+      [
+        "isAny",
+        "border-color-t"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-t"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-t"
+      ]
+    ],
+    "border-r-": [
+      [
+        "isNumber",
+        "border-w-r"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-r"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-r"
+      ],
+      [
+        "isAny",
+        "border-color-r"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-r"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-r"
+      ]
+    ],
+    "border-b-": [
+      [
+        "isNumber",
+        "border-w-b"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-b"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-b"
+      ],
+      [
+        "isAny",
+        "border-color-b"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-b"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-b"
+      ]
+    ],
+    "border-l-": [
+      [
+        "isNumber",
+        "border-w-l"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "border-w-l"
+      ],
+      [
+        "isArbitraryLength",
+        "border-w-l"
+      ],
+      [
+        "isAny",
+        "border-color-l"
+      ],
+      [
+        "isArbitraryVariable",
+        "border-color-l"
+      ],
+      [
+        "isArbitraryValue",
+        "border-color-l"
+      ]
+    ],
+    "border-spacing-": [
+      [
+        "isArbitraryVariable",
+        "border-spacing"
+      ],
+      [
+        "isArbitraryValue",
+        "border-spacing"
+      ],
+      [
+        "isNumber",
+        "border-spacing"
+      ]
+    ],
+    "border-spacing-x-": [
+      [
+        "isArbitraryVariable",
+        "border-spacing-x"
+      ],
+      [
+        "isArbitraryValue",
+        "border-spacing-x"
+      ],
+      [
+        "isNumber",
+        "border-spacing-x"
+      ]
+    ],
+    "border-spacing-y-": [
+      [
+        "isArbitraryVariable",
+        "border-spacing-y"
+      ],
+      [
+        "isArbitraryValue",
+        "border-spacing-y"
+      ],
+      [
+        "isNumber",
+        "border-spacing-y"
+      ]
+    ],
+    "divide-": [
+      [
+        "isAny",
+        "divide-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "divide-color"
+      ],
+      [
+        "isArbitraryValue",
+        "divide-color"
+      ]
+    ],
+    "divide-x-": [
+      [
+        "isNumber",
+        "divide-x"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "divide-x"
+      ],
+      [
+        "isArbitraryLength",
+        "divide-x"
+      ]
+    ],
+    "divide-y-": [
+      [
+        "isNumber",
+        "divide-y"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "divide-y"
+      ],
+      [
+        "isArbitraryLength",
+        "divide-y"
+      ]
+    ],
+    "outline-": [
+      [
+        "isNumber",
+        "outline-w"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "outline-w"
+      ],
+      [
+        "isArbitraryLength",
+        "outline-w"
+      ],
+      [
+        "isAny",
+        "outline-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "outline-color"
+      ],
+      [
+        "isArbitraryValue",
+        "outline-color"
+      ]
+    ],
+    "outline-offset-": [
+      [
+        "isNumber",
+        "outline-offset"
+      ],
+      [
+        "isArbitraryVariable",
+        "outline-offset"
+      ],
+      [
+        "isArbitraryValue",
+        "outline-offset"
+      ]
+    ],
+    "shadow-": [
+      [
+        "isTshirtSize",
+        "shadow"
+      ],
+      [
+        "isArbitraryVariableShadow",
+        "shadow"
+      ],
+      [
+        "isArbitraryShadow",
+        "shadow"
+      ],
+      [
+        "isAny",
+        "shadow-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "shadow-color"
+      ],
+      [
+        "isArbitraryValue",
+        "shadow-color"
+      ]
+    ],
+    "ring-": [
+      [
+        "isNumber",
+        "ring-w"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "ring-w"
+      ],
+      [
+        "isArbitraryLength",
+        "ring-w"
+      ],
+      [
+        "isAny",
+        "ring-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "ring-color"
+      ],
+      [
+        "isArbitraryValue",
+        "ring-color"
+      ]
+    ],
+    "ring-offset-": [
+      [
+        "isNumber",
+        "ring-offset-w"
+      ],
+      [
+        "isArbitraryLength",
+        "ring-offset-w"
+      ],
+      [
+        "isAny",
+        "ring-offset-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "ring-offset-color"
+      ],
+      [
+        "isArbitraryValue",
+        "ring-offset-color"
+      ]
+    ],
+    "opacity-": [
+      [
+        "isNumber",
+        "opacity"
+      ],
+      [
+        "isArbitraryVariable",
+        "opacity"
+      ],
+      [
+        "isArbitraryValue",
+        "opacity"
+      ]
+    ],
+    "mask-": [
+      [
+        "isArbitraryVariablePosition",
+        "mask-position"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-position"
+      ],
+      [
+        "isArbitraryVariableSize",
+        "mask-size"
+      ],
+      [
+        "isArbitrarySize",
+        "mask-size"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image"
+      ]
+    ],
+    "mask-linear-": [
+      [
+        "isNumber",
+        "mask-image-linear-pos"
+      ]
+    ],
+    "mask-linear-from-": [
+      [
+        "isNumber",
+        "mask-image-linear-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-linear-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-linear-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-linear-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-linear-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-linear-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-linear-from-color"
+      ]
+    ],
+    "mask-linear-to-": [
+      [
+        "isNumber",
+        "mask-image-linear-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-linear-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-linear-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-linear-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-linear-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-linear-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-linear-to-color"
+      ]
+    ],
+    "mask-t-from-": [
+      [
+        "isNumber",
+        "mask-image-t-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-t-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-t-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-t-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-t-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-t-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-t-from-color"
+      ]
+    ],
+    "mask-t-to-": [
+      [
+        "isNumber",
+        "mask-image-t-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-t-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-t-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-t-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-t-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-t-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-t-to-color"
+      ]
+    ],
+    "mask-r-from-": [
+      [
+        "isNumber",
+        "mask-image-r-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-r-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-r-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-r-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-r-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-r-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-r-from-color"
+      ]
+    ],
+    "mask-r-to-": [
+      [
+        "isNumber",
+        "mask-image-r-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-r-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-r-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-r-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-r-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-r-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-r-to-color"
+      ]
+    ],
+    "mask-b-from-": [
+      [
+        "isNumber",
+        "mask-image-b-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-b-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-b-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-b-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-b-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-b-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-b-from-color"
+      ]
+    ],
+    "mask-b-to-": [
+      [
+        "isNumber",
+        "mask-image-b-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-b-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-b-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-b-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-b-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-b-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-b-to-color"
+      ]
+    ],
+    "mask-l-from-": [
+      [
+        "isNumber",
+        "mask-image-l-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-l-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-l-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-l-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-l-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-l-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-l-from-color"
+      ]
+    ],
+    "mask-l-to-": [
+      [
+        "isNumber",
+        "mask-image-l-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-l-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-l-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-l-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-l-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-l-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-l-to-color"
+      ]
+    ],
+    "mask-x-from-": [
+      [
+        "isNumber",
+        "mask-image-x-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-x-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-x-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-x-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-x-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-x-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-x-from-color"
+      ]
+    ],
+    "mask-x-to-": [
+      [
+        "isNumber",
+        "mask-image-x-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-x-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-x-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-x-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-x-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-x-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-x-to-color"
+      ]
+    ],
+    "mask-y-from-": [
+      [
+        "isNumber",
+        "mask-image-y-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-y-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-y-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-y-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-y-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-y-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-y-from-color"
+      ]
+    ],
+    "mask-y-to-": [
+      [
+        "isNumber",
+        "mask-image-y-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-y-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-y-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-y-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-y-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-y-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-y-to-color"
+      ]
+    ],
+    "mask-radial-": [
+      [
+        "isArbitraryVariable",
+        "mask-image-radial"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-radial"
+      ]
+    ],
+    "mask-radial-from-": [
+      [
+        "isNumber",
+        "mask-image-radial-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-radial-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-radial-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-radial-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-radial-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-radial-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-radial-from-color"
+      ]
+    ],
+    "mask-radial-to-": [
+      [
+        "isNumber",
+        "mask-image-radial-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-radial-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-radial-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-radial-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-radial-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-radial-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-radial-to-color"
+      ]
+    ],
+    "mask-conic-": [
+      [
+        "isNumber",
+        "mask-image-conic-pos"
+      ]
+    ],
+    "mask-conic-from-": [
+      [
+        "isNumber",
+        "mask-image-conic-from-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-conic-from-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-conic-from-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-conic-from-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-conic-from-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-conic-from-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-conic-from-color"
+      ]
+    ],
+    "mask-conic-to-": [
+      [
+        "isNumber",
+        "mask-image-conic-to-pos"
+      ],
+      [
+        "isPercent",
+        "mask-image-conic-to-pos"
+      ],
+      [
+        "isArbitraryVariablePosition",
+        "mask-image-conic-to-pos"
+      ],
+      [
+        "isArbitraryPosition",
+        "mask-image-conic-to-pos"
+      ],
+      [
+        "isAny",
+        "mask-image-conic-to-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "mask-image-conic-to-color"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-image-conic-to-color"
+      ]
+    ],
+    "mask-position-": [
+      [
+        "isArbitraryVariable",
+        "mask-position"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-position"
+      ]
+    ],
+    "mask-size-": [
+      [
+        "isArbitraryVariable",
+        "mask-size"
+      ],
+      [
+        "isArbitraryValue",
+        "mask-size"
+      ]
+    ],
+    "filter-": [
+      [
+        "isArbitraryVariable",
+        "filter"
+      ],
+      [
+        "isArbitraryValue",
+        "filter"
+      ]
+    ],
+    "blur-": [
+      [
+        "isTshirtSize",
+        "blur"
+      ],
+      [
+        "isArbitraryVariable",
+        "blur"
+      ],
+      [
+        "isArbitraryValue",
+        "blur"
+      ]
+    ],
+    "brightness-": [
+      [
+        "isNumber",
+        "brightness"
+      ],
+      [
+        "isArbitraryVariable",
+        "brightness"
+      ],
+      [
+        "isArbitraryValue",
+        "brightness"
+      ]
+    ],
+    "contrast-": [
+      [
+        "isNumber",
+        "contrast"
+      ],
+      [
+        "isArbitraryVariable",
+        "contrast"
+      ],
+      [
+        "isArbitraryValue",
+        "contrast"
+      ]
+    ],
+    "drop-shadow-": [
+      [
+        "isTshirtSize",
+        "drop-shadow"
+      ],
+      [
+        "isArbitraryVariableShadow",
+        "drop-shadow"
+      ],
+      [
+        "isArbitraryShadow",
+        "drop-shadow"
+      ],
+      [
+        "isAny",
+        "drop-shadow-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "drop-shadow-color"
+      ],
+      [
+        "isArbitraryValue",
+        "drop-shadow-color"
+      ]
+    ],
+    "grayscale-": [
+      [
+        "isNumber",
+        "grayscale"
+      ],
+      [
+        "isArbitraryVariable",
+        "grayscale"
+      ],
+      [
+        "isArbitraryValue",
+        "grayscale"
+      ]
+    ],
+    "hue-rotate-": [
+      [
+        "isNumber",
+        "hue-rotate"
+      ],
+      [
+        "isArbitraryVariable",
+        "hue-rotate"
+      ],
+      [
+        "isArbitraryValue",
+        "hue-rotate"
+      ]
+    ],
+    "invert-": [
+      [
+        "isNumber",
+        "invert"
+      ],
+      [
+        "isArbitraryVariable",
+        "invert"
+      ],
+      [
+        "isArbitraryValue",
+        "invert"
+      ]
+    ],
+    "saturate-": [
+      [
+        "isNumber",
+        "saturate"
+      ],
+      [
+        "isArbitraryVariable",
+        "saturate"
+      ],
+      [
+        "isArbitraryValue",
+        "saturate"
+      ]
+    ],
+    "sepia-": [
+      [
+        "isNumber",
+        "sepia"
+      ],
+      [
+        "isArbitraryVariable",
+        "sepia"
+      ],
+      [
+        "isArbitraryValue",
+        "sepia"
+      ]
+    ],
+    "backdrop-filter-": [
+      [
+        "isArbitraryVariable",
+        "backdrop-filter"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-filter"
+      ]
+    ],
+    "backdrop-blur-": [
+      [
+        "isTshirtSize",
+        "backdrop-blur"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-blur"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-blur"
+      ]
+    ],
+    "backdrop-brightness-": [
+      [
+        "isNumber",
+        "backdrop-brightness"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-brightness"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-brightness"
+      ]
+    ],
+    "backdrop-contrast-": [
+      [
+        "isNumber",
+        "backdrop-contrast"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-contrast"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-contrast"
+      ]
+    ],
+    "backdrop-grayscale-": [
+      [
+        "isNumber",
+        "backdrop-grayscale"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-grayscale"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-grayscale"
+      ]
+    ],
+    "backdrop-hue-rotate-": [
+      [
+        "isNumber",
+        "backdrop-hue-rotate"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-hue-rotate"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-hue-rotate"
+      ]
+    ],
+    "backdrop-invert-": [
+      [
+        "isNumber",
+        "backdrop-invert"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-invert"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-invert"
+      ]
+    ],
+    "backdrop-opacity-": [
+      [
+        "isNumber",
+        "backdrop-opacity"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-opacity"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-opacity"
+      ]
+    ],
+    "backdrop-saturate-": [
+      [
+        "isNumber",
+        "backdrop-saturate"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-saturate"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-saturate"
+      ]
+    ],
+    "backdrop-sepia-": [
+      [
+        "isNumber",
+        "backdrop-sepia"
+      ],
+      [
+        "isArbitraryVariable",
+        "backdrop-sepia"
+      ],
+      [
+        "isArbitraryValue",
+        "backdrop-sepia"
+      ]
+    ],
+    "transition-": [
+      [
+        "isArbitraryVariable",
+        "transition"
+      ],
+      [
+        "isArbitraryValue",
+        "transition"
+      ]
+    ],
+    "duration-": [
+      [
+        "isNumber",
+        "duration"
+      ],
+      [
+        "isArbitraryVariable",
+        "duration"
+      ],
+      [
+        "isArbitraryValue",
+        "duration"
+      ]
+    ],
+    "ease-": [
+      [
+        "isArbitraryVariable",
+        "ease"
+      ],
+      [
+        "isArbitraryValue",
+        "ease"
+      ]
+    ],
+    "delay-": [
+      [
+        "isNumber",
+        "delay"
+      ],
+      [
+        "isArbitraryVariable",
+        "delay"
+      ],
+      [
+        "isArbitraryValue",
+        "delay"
+      ]
+    ],
+    "animate-": [
+      [
+        "isArbitraryVariable",
+        "animate"
+      ],
+      [
+        "isArbitraryValue",
+        "animate"
+      ]
+    ],
+    "perspective-": [
+      [
+        "isArbitraryVariable",
+        "perspective"
+      ],
+      [
+        "isArbitraryValue",
+        "perspective"
+      ]
+    ],
+    "perspective-origin-": [
+      [
+        "isArbitraryVariable",
+        "perspective-origin"
+      ],
+      [
+        "isArbitraryValue",
+        "perspective-origin"
+      ]
+    ],
+    "rotate-": [
+      [
+        "isNumber",
+        "rotate"
+      ],
+      [
+        "isArbitraryVariable",
+        "rotate"
+      ],
+      [
+        "isArbitraryValue",
+        "rotate"
+      ]
+    ],
+    "rotate-x-": [
+      [
+        "isNumber",
+        "rotate-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "rotate-x"
+      ],
+      [
+        "isArbitraryValue",
+        "rotate-x"
+      ]
+    ],
+    "rotate-y-": [
+      [
+        "isNumber",
+        "rotate-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "rotate-y"
+      ],
+      [
+        "isArbitraryValue",
+        "rotate-y"
+      ]
+    ],
+    "rotate-z-": [
+      [
+        "isNumber",
+        "rotate-z"
+      ],
+      [
+        "isArbitraryVariable",
+        "rotate-z"
+      ],
+      [
+        "isArbitraryValue",
+        "rotate-z"
+      ]
+    ],
+    "scale-": [
+      [
+        "isNumber",
+        "scale"
+      ],
+      [
+        "isArbitraryVariable",
+        "scale"
+      ],
+      [
+        "isArbitraryValue",
+        "scale"
+      ]
+    ],
+    "scale-x-": [
+      [
+        "isNumber",
+        "scale-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "scale-x"
+      ],
+      [
+        "isArbitraryValue",
+        "scale-x"
+      ]
+    ],
+    "scale-y-": [
+      [
+        "isNumber",
+        "scale-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "scale-y"
+      ],
+      [
+        "isArbitraryValue",
+        "scale-y"
+      ]
+    ],
+    "scale-z-": [
+      [
+        "isNumber",
+        "scale-z"
+      ],
+      [
+        "isArbitraryVariable",
+        "scale-z"
+      ],
+      [
+        "isArbitraryValue",
+        "scale-z"
+      ]
+    ],
+    "skew-": [
+      [
+        "isNumber",
+        "skew"
+      ],
+      [
+        "isArbitraryVariable",
+        "skew"
+      ],
+      [
+        "isArbitraryValue",
+        "skew"
+      ]
+    ],
+    "skew-x-": [
+      [
+        "isNumber",
+        "skew-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "skew-x"
+      ],
+      [
+        "isArbitraryValue",
+        "skew-x"
+      ]
+    ],
+    "skew-y-": [
+      [
+        "isNumber",
+        "skew-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "skew-y"
+      ],
+      [
+        "isArbitraryValue",
+        "skew-y"
+      ]
+    ],
+    "transform-": [
+      [
+        "isArbitraryVariable",
+        "transform"
+      ],
+      [
+        "isArbitraryValue",
+        "transform"
+      ]
+    ],
+    "origin-": [
+      [
+        "isArbitraryVariable",
+        "transform-origin"
+      ],
+      [
+        "isArbitraryValue",
+        "transform-origin"
+      ]
+    ],
+    "translate-": [
+      [
+        "isFraction",
+        "translate"
+      ],
+      [
+        "isArbitraryVariable",
+        "translate"
+      ],
+      [
+        "isArbitraryValue",
+        "translate"
+      ],
+      [
+        "isNumber",
+        "translate"
+      ]
+    ],
+    "translate-x-": [
+      [
+        "isFraction",
+        "translate-x"
+      ],
+      [
+        "isArbitraryVariable",
+        "translate-x"
+      ],
+      [
+        "isArbitraryValue",
+        "translate-x"
+      ],
+      [
+        "isNumber",
+        "translate-x"
+      ]
+    ],
+    "translate-y-": [
+      [
+        "isFraction",
+        "translate-y"
+      ],
+      [
+        "isArbitraryVariable",
+        "translate-y"
+      ],
+      [
+        "isArbitraryValue",
+        "translate-y"
+      ],
+      [
+        "isNumber",
+        "translate-y"
+      ]
+    ],
+    "translate-z-": [
+      [
+        "isFraction",
+        "translate-z"
+      ],
+      [
+        "isArbitraryVariable",
+        "translate-z"
+      ],
+      [
+        "isArbitraryValue",
+        "translate-z"
+      ],
+      [
+        "isNumber",
+        "translate-z"
+      ]
+    ],
+    "zoom-": [
+      [
+        "isInteger",
+        "zoom"
+      ],
+      [
+        "isArbitraryVariable",
+        "zoom"
+      ],
+      [
+        "isArbitraryValue",
+        "zoom"
+      ]
+    ],
+    "accent-": [
+      [
+        "isAny",
+        "accent"
+      ],
+      [
+        "isArbitraryVariable",
+        "accent"
+      ],
+      [
+        "isArbitraryValue",
+        "accent"
+      ]
+    ],
+    "caret-": [
+      [
+        "isAny",
+        "caret-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "caret-color"
+      ],
+      [
+        "isArbitraryValue",
+        "caret-color"
+      ]
+    ],
+    "cursor-": [
+      [
+        "isArbitraryVariable",
+        "cursor"
+      ],
+      [
+        "isArbitraryValue",
+        "cursor"
+      ]
+    ],
+    "scroll-m-": [
+      [
+        "isArbitraryVariable",
+        "scroll-m"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-m"
+      ],
+      [
+        "isNumber",
+        "scroll-m"
+      ]
+    ],
+    "scroll-mx-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mx"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mx"
+      ],
+      [
+        "isNumber",
+        "scroll-mx"
+      ]
+    ],
+    "scroll-my-": [
+      [
+        "isArbitraryVariable",
+        "scroll-my"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-my"
+      ],
+      [
+        "isNumber",
+        "scroll-my"
+      ]
+    ],
+    "scroll-ms-": [
+      [
+        "isArbitraryVariable",
+        "scroll-ms"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-ms"
+      ],
+      [
+        "isNumber",
+        "scroll-ms"
+      ]
+    ],
+    "scroll-me-": [
+      [
+        "isArbitraryVariable",
+        "scroll-me"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-me"
+      ],
+      [
+        "isNumber",
+        "scroll-me"
+      ]
+    ],
+    "scroll-mbs-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mbs"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mbs"
+      ],
+      [
+        "isNumber",
+        "scroll-mbs"
+      ]
+    ],
+    "scroll-mbe-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mbe"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mbe"
+      ],
+      [
+        "isNumber",
+        "scroll-mbe"
+      ]
+    ],
+    "scroll-mt-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mt"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mt"
+      ],
+      [
+        "isNumber",
+        "scroll-mt"
+      ]
+    ],
+    "scroll-mr-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mr"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mr"
+      ],
+      [
+        "isNumber",
+        "scroll-mr"
+      ]
+    ],
+    "scroll-mb-": [
+      [
+        "isArbitraryVariable",
+        "scroll-mb"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-mb"
+      ],
+      [
+        "isNumber",
+        "scroll-mb"
+      ]
+    ],
+    "scroll-ml-": [
+      [
+        "isArbitraryVariable",
+        "scroll-ml"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-ml"
+      ],
+      [
+        "isNumber",
+        "scroll-ml"
+      ]
+    ],
+    "scroll-p-": [
+      [
+        "isArbitraryVariable",
+        "scroll-p"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-p"
+      ],
+      [
+        "isNumber",
+        "scroll-p"
+      ]
+    ],
+    "scroll-px-": [
+      [
+        "isArbitraryVariable",
+        "scroll-px"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-px"
+      ],
+      [
+        "isNumber",
+        "scroll-px"
+      ]
+    ],
+    "scroll-py-": [
+      [
+        "isArbitraryVariable",
+        "scroll-py"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-py"
+      ],
+      [
+        "isNumber",
+        "scroll-py"
+      ]
+    ],
+    "scroll-ps-": [
+      [
+        "isArbitraryVariable",
+        "scroll-ps"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-ps"
+      ],
+      [
+        "isNumber",
+        "scroll-ps"
+      ]
+    ],
+    "scroll-pe-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pe"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pe"
+      ],
+      [
+        "isNumber",
+        "scroll-pe"
+      ]
+    ],
+    "scroll-pbs-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pbs"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pbs"
+      ],
+      [
+        "isNumber",
+        "scroll-pbs"
+      ]
+    ],
+    "scroll-pbe-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pbe"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pbe"
+      ],
+      [
+        "isNumber",
+        "scroll-pbe"
+      ]
+    ],
+    "scroll-pt-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pt"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pt"
+      ],
+      [
+        "isNumber",
+        "scroll-pt"
+      ]
+    ],
+    "scroll-pr-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pr"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pr"
+      ],
+      [
+        "isNumber",
+        "scroll-pr"
+      ]
+    ],
+    "scroll-pb-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pb"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pb"
+      ],
+      [
+        "isNumber",
+        "scroll-pb"
+      ]
+    ],
+    "scroll-pl-": [
+      [
+        "isArbitraryVariable",
+        "scroll-pl"
+      ],
+      [
+        "isArbitraryValue",
+        "scroll-pl"
+      ],
+      [
+        "isNumber",
+        "scroll-pl"
+      ]
+    ],
+    "scrollbar-thumb-": [
+      [
+        "isAny",
+        "scrollbar-thumb-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "scrollbar-thumb-color"
+      ],
+      [
+        "isArbitraryValue",
+        "scrollbar-thumb-color"
+      ]
+    ],
+    "scrollbar-track-": [
+      [
+        "isAny",
+        "scrollbar-track-color"
+      ],
+      [
+        "isArbitraryVariable",
+        "scrollbar-track-color"
+      ],
+      [
+        "isArbitraryValue",
+        "scrollbar-track-color"
+      ]
+    ],
+    "will-change-": [
+      [
+        "isArbitraryVariable",
+        "will-change"
+      ],
+      [
+        "isArbitraryValue",
+        "will-change"
+      ]
+    ],
+    "fill-": [
+      [
+        "isAny",
+        "fill"
+      ],
+      [
+        "isArbitraryVariable",
+        "fill"
+      ],
+      [
+        "isArbitraryValue",
+        "fill"
+      ]
+    ],
+    "stroke-": [
+      [
+        "isNumber",
+        "stroke-w"
+      ],
+      [
+        "isArbitraryVariableLength",
+        "stroke-w"
+      ],
+      [
+        "isArbitraryLength",
+        "stroke-w"
+      ],
+      [
+        "isArbitraryNumber",
+        "stroke-w"
+      ],
+      [
+        "isAny",
+        "stroke"
+      ],
+      [
+        "isArbitraryVariable",
+        "stroke"
+      ],
+      [
+        "isArbitraryValue",
+        "stroke"
+      ]
+    ],
+    "contain-": [
+      [
+        "isArbitraryVariable",
+        "contain"
+      ],
+      [
+        "isArbitraryValue",
+        "contain"
+      ]
+    ]
+  },
+  "conflictingClassGroups": {
+    "container-named": [
+      "container-type"
+    ],
+    "overflow": [
+      "overflow-x",
+      "overflow-y"
+    ],
+    "overscroll": [
+      "overscroll-x",
+      "overscroll-y"
+    ],
+    "inset": [
+      "inset-x",
+      "inset-y",
+      "inset-bs",
+      "inset-be",
+      "start",
+      "end",
+      "top",
+      "right",
+      "bottom",
+      "left"
+    ],
+    "inset-x": [
+      "start",
+      "end",
+      "right",
+      "left"
+    ],
+    "inset-y": [
+      "inset-bs",
+      "inset-be",
+      "top",
+      "bottom"
+    ],
+    "flex": [
+      "basis",
+      "grow",
+      "shrink"
+    ],
+    "gap": [
+      "gap-x",
+      "gap-y"
+    ],
+    "p": [
+      "px",
+      "py",
+      "ps",
+      "pe",
+      "pbs",
+      "pbe",
+      "pt",
+      "pr",
+      "pb",
+      "pl"
+    ],
+    "px": [
+      "ps",
+      "pe",
+      "pr",
+      "pl"
+    ],
+    "py": [
+      "pbs",
+      "pbe",
+      "pt",
+      "pb"
+    ],
+    "m": [
+      "mx",
+      "my",
+      "ms",
+      "me",
+      "mbs",
+      "mbe",
+      "mt",
+      "mr",
+      "mb",
+      "ml"
+    ],
+    "mx": [
+      "ms",
+      "me",
+      "mr",
+      "ml"
+    ],
+    "my": [
+      "mbs",
+      "mbe",
+      "mt",
+      "mb"
+    ],
+    "size": [
+      "w",
+      "h"
+    ],
+    "font-size": [
+      "leading"
+    ],
+    "fvn-normal": [
+      "fvn-ordinal",
+      "fvn-slashed-zero",
+      "fvn-figure",
+      "fvn-spacing",
+      "fvn-fraction"
+    ],
+    "fvn-ordinal": [
+      "fvn-normal"
+    ],
+    "fvn-slashed-zero": [
+      "fvn-normal"
+    ],
+    "fvn-figure": [
+      "fvn-normal"
+    ],
+    "fvn-spacing": [
+      "fvn-normal"
+    ],
+    "fvn-fraction": [
+      "fvn-normal"
+    ],
+    "line-clamp": [
+      "display",
+      "overflow"
+    ],
+    "rounded": [
+      "rounded-s",
+      "rounded-e",
+      "rounded-t",
+      "rounded-r",
+      "rounded-b",
+      "rounded-l",
+      "rounded-ss",
+      "rounded-se",
+      "rounded-ee",
+      "rounded-es",
+      "rounded-tl",
+      "rounded-tr",
+      "rounded-br",
+      "rounded-bl"
+    ],
+    "rounded-s": [
+      "rounded-ss",
+      "rounded-es"
+    ],
+    "rounded-e": [
+      "rounded-se",
+      "rounded-ee"
+    ],
+    "rounded-t": [
+      "rounded-tl",
+      "rounded-tr"
+    ],
+    "rounded-r": [
+      "rounded-tr",
+      "rounded-br"
+    ],
+    "rounded-b": [
+      "rounded-br",
+      "rounded-bl"
+    ],
+    "rounded-l": [
+      "rounded-tl",
+      "rounded-bl"
+    ],
+    "border-spacing": [
+      "border-spacing-x",
+      "border-spacing-y"
+    ],
+    "border-w": [
+      "border-w-x",
+      "border-w-y",
+      "border-w-s",
+      "border-w-e",
+      "border-w-bs",
+      "border-w-be",
+      "border-w-t",
+      "border-w-r",
+      "border-w-b",
+      "border-w-l"
+    ],
+    "border-w-x": [
+      "border-w-s",
+      "border-w-e",
+      "border-w-r",
+      "border-w-l"
+    ],
+    "border-w-y": [
+      "border-w-bs",
+      "border-w-be",
+      "border-w-t",
+      "border-w-b"
+    ],
+    "border-color": [
+      "border-color-x",
+      "border-color-y",
+      "border-color-s",
+      "border-color-e",
+      "border-color-bs",
+      "border-color-be",
+      "border-color-t",
+      "border-color-r",
+      "border-color-b",
+      "border-color-l"
+    ],
+    "border-color-x": [
+      "border-color-s",
+      "border-color-e",
+      "border-color-r",
+      "border-color-l"
+    ],
+    "border-color-y": [
+      "border-color-bs",
+      "border-color-be",
+      "border-color-t",
+      "border-color-b"
+    ],
+    "translate": [
+      "translate-x",
+      "translate-y",
+      "translate-none"
+    ],
+    "translate-none": [
+      "translate",
+      "translate-x",
+      "translate-y",
+      "translate-z"
+    ],
+    "scroll-m": [
+      "scroll-mx",
+      "scroll-my",
+      "scroll-ms",
+      "scroll-me",
+      "scroll-mbs",
+      "scroll-mbe",
+      "scroll-mt",
+      "scroll-mr",
+      "scroll-mb",
+      "scroll-ml"
+    ],
+    "scroll-mx": [
+      "scroll-ms",
+      "scroll-me",
+      "scroll-mr",
+      "scroll-ml"
+    ],
+    "scroll-my": [
+      "scroll-mbs",
+      "scroll-mbe",
+      "scroll-mt",
+      "scroll-mb"
+    ],
+    "scroll-p": [
+      "scroll-px",
+      "scroll-py",
+      "scroll-ps",
+      "scroll-pe",
+      "scroll-pbs",
+      "scroll-pbe",
+      "scroll-pt",
+      "scroll-pr",
+      "scroll-pb",
+      "scroll-pl"
+    ],
+    "scroll-px": [
+      "scroll-ps",
+      "scroll-pe",
+      "scroll-pr",
+      "scroll-pl"
+    ],
+    "scroll-py": [
+      "scroll-pbs",
+      "scroll-pbe",
+      "scroll-pt",
+      "scroll-pb"
+    ],
+    "touch": [
+      "touch-x",
+      "touch-y",
+      "touch-pz"
+    ],
+    "touch-x": [
+      "touch"
+    ],
+    "touch-y": [
+      "touch"
+    ],
+    "touch-pz": [
+      "touch"
+    ],
+    "contain": [
+      "contain-size",
+      "contain-layout",
+      "contain-paint",
+      "contain-style"
+    ],
+    "contain-size": [
+      "contain"
+    ],
+    "contain-layout": [
+      "contain"
+    ],
+    "contain-paint": [
+      "contain"
+    ],
+    "contain-style": [
+      "contain"
+    ]
+  },
+  "conflictingClassGroupModifiers": {
+    "font-size": [
+      "leading"
+    ]
+  },
+  "orderSensitiveModifiers": [
+    "*",
+    "**",
+    "after",
+    "backdrop",
+    "before",
+    "details-content",
+    "file",
+    "first-letter",
+    "first-line",
+    "marker",
+    "placeholder",
+    "selection"
+  ],
+  "postfixLookupClassGroups": [
+    "container-type"
+  ]
+}

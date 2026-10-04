@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
-use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
-
 /**
  * @internal
+ *
+ * @phpstan-import-type CompiledClassMap from ClassMapCompiler
  */
 final class ClassGroupUtils
 {
@@ -19,8 +19,10 @@ final class ClassGroupUtils
      */
     private const CLASS_GROUP_ID_CACHE_LIMIT = 5000;
 
-    private ClassMap $classMap;
-    private ?ClassPartObject $classPartObject = null;
+    /**
+     * @var CompiledClassMap|null
+     */
+    private ?array $compiledClassMap = null;
 
     /**
      * @var array<string, ?string>
@@ -28,18 +30,30 @@ final class ClassGroupUtils
     private array $classGroupIdCache = [];
 
     /**
+     * Rotated out when the memo filled up, as in ClassListMerger.
+     *
+     * @var array<string, ?string>
+     */
+    private array $previousClassGroupIdCache = [];
+
+    /**
      * @param array<string, list<mixed>>        $theme
      * @param array<string, list<mixed>>        $classGroups
      * @param array<string, array<int, string>> $conflictingClassGroups
      * @param array<string, array<int, string>> $conflictingClassGroupModifiers
+     * @param bool                              $useDefaultClassMap             Only when `theme` and `classGroups` are the defaults
      */
     public function __construct(
         private readonly array $theme,
         private readonly array $classGroups,
         private readonly array $conflictingClassGroups,
         private readonly array $conflictingClassGroupModifiers,
+        bool $useDefaultClassMap = false,
     ) {
-        $this->classMap = new ClassMap();
+        if ($useDefaultClassMap) {
+            // Constant arrays: opcache serves them from shared memory, nothing is built.
+            $this->compiledClassMap = ['literals' => DefaultClassMap::LITERALS, 'validators' => DefaultClassMap::VALIDATORS];
+        }
     }
 
     public function getClassGroupId(string $class): ?string
@@ -49,11 +63,16 @@ final class ClassGroupUtils
             return $this->classGroupIdCache[$class];
         }
 
-        $classGroupId = $this->resolveClassGroupId($class);
+        $classGroupId = \array_key_exists($class, $this->previousClassGroupIdCache)
+            ? $this->previousClassGroupIdCache[$class]
+            : $this->resolveClassGroupId($class);
 
-        if (\count($this->classGroupIdCache) < self::CLASS_GROUP_ID_CACHE_LIMIT) {
-            $this->classGroupIdCache[$class] = $classGroupId;
+        if (\count($this->classGroupIdCache) >= self::CLASS_GROUP_ID_CACHE_LIMIT) {
+            $this->previousClassGroupIdCache = $this->classGroupIdCache;
+            $this->classGroupIdCache = [];
         }
+
+        $this->classGroupIdCache[$class] = $classGroupId;
 
         return $classGroupId;
     }
@@ -64,54 +83,37 @@ final class ClassGroupUtils
             return $this->getGroupIdForArbitraryProperty($class);
         }
 
-        $classParts = explode(ClassMap::CLASS_PART_SEPARATOR, $class);
         // Negative values like `-inset-1` start with an empty part.
-        $startIndex = '' === $classParts[0] && \count($classParts) > 1 ? 1 : 0;
-        $classPartObject = $this->classPartObject ??= $this->classMap->processClassGroup($this->classGroups, $this->theme);
-
-        return $this->getGroupRecursive($classParts, $startIndex, $classPartObject);
-    }
-
-    /**
-     * @param array<array-key, string> $classParts
-     */
-    private function getGroupRecursive(array $classParts, int $startIndex, ClassPartObject $classPartObject): ?string
-    {
-        $classPathsLength = \count($classParts) - $startIndex;
-
-        if (0 === $classPathsLength) {
-            return $classPartObject->classGroupId;
+        if (str_starts_with($class, ClassMap::CLASS_PART_SEPARATOR)) {
+            $class = substr($class, 1);
         }
 
-        $currentClassPart = $classParts[$startIndex] ?? null;
+        $compiledClassMap = $this->compiledClassMap ??= ClassMapCompiler::compile($this->classGroups, $this->theme);
 
-        if (null === $currentClassPart) {
-            return null;
+        if (isset($compiledClassMap['literals'][$class])) {
+            return $compiledClassMap['literals'][$class];
         }
 
-        $nextClassPartObject = $classPartObject->nextPart[$currentClassPart] ?? null;
-
-        $classGroupFromNextClassPart = null !== $nextClassPartObject
-            ? $this->getGroupRecursive($classParts, $startIndex + 1, $nextClassPartObject)
-            : null
-        ;
-
-        if (null !== $classGroupFromNextClassPart) {
-            return $classGroupFromNextClassPart;
+        // Validators of the deepest matching trie node first, as upstream's walk.
+        $separatorPositions = [];
+        for ($position = strpos($class, ClassMap::CLASS_PART_SEPARATOR); false !== $position; $position = strpos($class, ClassMap::CLASS_PART_SEPARATOR, $position + 1)) {
+            $separatorPositions[] = $position;
         }
 
-        if ([] === $classPartObject->validators) {
-            return null;
-        }
+        for ($index = \count($separatorPositions) - 1; $index >= -1; --$index) {
+            $restStart = $index >= 0 ? $separatorPositions[$index] + 1 : 0;
+            $validators = $compiledClassMap['validators'][substr($class, 0, $restStart)] ?? null;
 
-        $classRest = 0 === $startIndex
-            ? implode(ClassMap::CLASS_PART_SEPARATOR, $classParts)
-            : implode(ClassMap::CLASS_PART_SEPARATOR, \array_slice($classParts, $startIndex))
-        ;
+            if (null === $validators) {
+                continue;
+            }
 
-        foreach ($classPartObject->validators as $validator) {
-            if (($validator->validator)($classRest)) {
-                return $validator->classGroupId;
+            $classRest = substr($class, $restStart);
+
+            foreach ($validators as [$validator, $classGroupId]) {
+                if (\is_string($validator) ? $validator::validate($classRest) : $validator($classRest)) {
+                    return $classGroupId;
+                }
             }
         }
 

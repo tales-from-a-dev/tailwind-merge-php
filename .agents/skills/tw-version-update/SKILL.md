@@ -48,6 +48,12 @@ order, and link targets.
    behind the release.
 5. Compare against the corresponding tailwind-merge (JS) Tailwind-support PR to
    reuse the same structure and testing style.
+6. Check the utilities this port carries beyond upstream
+   (`tests/Feature/GrammarAdditionsTest.php`: `contain-*`, `bg-gradient-to-*`,
+   numeric `auto-cols`/`auto-rows`, ported from shadcn-ui/cn). If the
+   tailwind-merge release you are tracking now covers one, switch to upstream's
+   form and drop it from the additions in
+   `tests/Fixtures/tailwind-merge/generate.mjs` and the test.
 
 ### Triage questions for each Tailwind change
 
@@ -213,13 +219,24 @@ For each new class group, include tests for:
   behavior is involved.
 - Unknown or invalid classes remaining untouched.
 
-After updating `src/Support/Config.php`, run
+After updating `src/Support/Config.php`, run `composer compile:class-map` to
+regenerate `src/Support/DefaultClassMap.php` (the precompiled class map; never
+edit it by hand — `ClassMapCompilerTest` fails while it is stale), then run
 `vendor/bin/phpunit tests/Unit/ClassMapTest.php`. It asserts the entire default
 class map, so any addition or reorder will fail it. The test reports which
 expected class group entries are missing or wrong — update the assertions to
 match. Verify each reported change is one you intended before accepting it: a
 surprise entry in that diff usually means a validator claimed a class from the
 group that should own it.
+
+When the change tracks a new tailwind-merge (JS) release, regenerate the parity
+fixtures against it — the command is in the header of
+`tests/Fixtures/tailwind-merge/generate.mjs` — and run
+`tests/Unit/UpstreamClassMapTest.php` and `tests/Feature/CorpusParityTest.php`.
+`UpstreamClassMapTest` names every class, validator or conflict entry that
+differs from upstream; it is the fastest way to find a group you missed or
+ordered differently. A difference you keep on purpose belongs in the additions
+of `generate.mjs`, never as an exception in the test.
 
 ## Phase 4 — Document
 

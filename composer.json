@@ -47,6 +47,7 @@
   },
   "scripts": {
     "bench": "php -d xdebug.mode=off bench/merge.php",
+    "compile:class-map": "php bin/compile-class-map.php",
     "test:lint": "vendor/bin/php-cs-fixer fix -v --dry-run",
     "test:lint:fix": "vendor/bin/php-cs-fixer fix -v",
     "test:types": "vendor/bin/phpstan analyse --memory-limit 256M --ansi",

@@ -126,6 +126,13 @@ new TailwindMerge([
 > [!TIP]
 > For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md).
 
+> [!NOTE]
+> The default class groups ship precompiled, so with opcache an instance costs
+> nothing to build, even on the first merge of a request. Passing `theme` or
+> `classGroups` opts out: that instance compiles its own class map on its first
+> merge, which takes about a millisecond. Other options, such as `prefix` or
+> `cacheSize`, keep the precompiled one.
+
 ### Resetting the configuration
 
 Configuration is process-global: constructing a `TailwindMerge` writes the array
