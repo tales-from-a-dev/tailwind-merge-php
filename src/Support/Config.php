@@ -230,6 +230,7 @@ final class Config
                     [
                         'columns' => [
                             NumberValidator::validate(...),
+                            'auto',
                             ArbitraryValueValidator::validate(...),
                             ArbitraryVariableValidator::validate(...),
                             $themeContainer,
@@ -883,37 +884,37 @@ final class Config
                 /*
                  * Inline Size
                  *
-                 * @see https://tailwindcss.com/docs/width
+                 * @see https://tailwindcss.com/docs/inline-size
                  */
-                'inline-size' => [['inline' => ['auto', ...self::scaleSizingInline($themeSpacing)]]],
+                'inline-size' => [['inline' => ['auto', ...self::scaleSizingInline($themeSpacing, $themeContainer)]]],
                 /*
                  * Min-Inline Size
                  *
-                 * @see https://tailwindcss.com/docs/min-width
+                 * @see https://tailwindcss.com/docs/min-inline-size
                  */
-                'min-inline-size' => [['min-inline' => ['auto', ...self::scaleSizingInline($themeSpacing)]]],
+                'min-inline-size' => [['min-inline' => ['auto', ...self::scaleSizingInline($themeSpacing, $themeContainer)]]],
                 /*
                  * Max-Inline Size
                  *
-                 * @see https://tailwindcss.com/docs/max-width
+                 * @see https://tailwindcss.com/docs/max-inline-size
                  */
-                'max-inline-size' => [['max-inline' => ['none', ...self::scaleSizingInline($themeSpacing)]]],
+                'max-inline-size' => [['max-inline' => ['none', ...self::scaleSizingInline($themeSpacing, $themeContainer)]]],
                 /*
                  * Block Size
                  *
-                 * @see https://tailwindcss.com/docs/height
+                 * @see https://tailwindcss.com/docs/block-size
                  */
                 'block-size' => [['block' => ['auto', ...self::scaleSizingBlock($themeSpacing)]]],
                 /*
                  * Min-Block Size
                  *
-                 * @see https://tailwindcss.com/docs/min-height
+                 * @see https://tailwindcss.com/docs/min-block-size
                  */
                 'min-block-size' => [['min-block' => ['auto', ...self::scaleSizingBlock($themeSpacing)]]],
                 /*
                  * Min-Block Size
                  *
-                 * @see https://tailwindcss.com/docs/max-height
+                 * @see https://tailwindcss.com/docs/max-block-size
                  */
                 'max-block-size' => [['max-block' => ['none', ...self::scaleSizingBlock($themeSpacing)]]],
                 /*
@@ -977,7 +978,7 @@ final class Config
                  * @see https://tailwindcss.com/docs/max-height
                  */
                 'max-h' => [
-                    ['max-h' => ['screen', 'lh', ...self::scaleSizing($themeSpacing)]],
+                    ['max-h' => ['screen', 'lh', 'none', ...self::scaleSizing($themeSpacing)]],
                 ],
                 // ------------------
                 // --- Typography ---
@@ -1139,6 +1140,7 @@ final class Config
                 'leading' => [
                     [
                         'leading' => [
+                            'none',
                             /* Deprecated since Tailwind CSS v4.0.0. @see https://github.com/tailwindlabs/tailwindcss.com/issues/2027#issuecomment-2620152757 */
                             $themeLeading,
                             ...self::scaleUnambiguousSpacing($themeSpacing),
@@ -1396,7 +1398,7 @@ final class Config
                                     ArbitraryValueValidator::validate(...),
                                 ],
                                 'radial' => ['', ArbitraryVariableValidator::validate(...), ArbitraryValueValidator::validate(...)],
-                                'conic' => [IntegerValidator::validate(...), ArbitraryVariableValidator::validate(...), ArbitraryValueValidator::validate(...)],
+                                'conic' => ['', IntegerValidator::validate(...), ArbitraryVariableValidator::validate(...), ArbitraryValueValidator::validate(...)],
                             ],
                             ArbitraryVariableImageValidator::validate(...),
                             ArbitraryValueImageValidator::validate(...),
@@ -1757,6 +1759,8 @@ final class Config
                         'shadow' => [
                             // Deprecated since Tailwind CSS v4.0.0
                             '',
+                            // Deprecated since Tailwind CSS v4.0.0
+                            'inner',
                             'none',
                             $themeShadow,
                             ArbitraryVariableShadowValidator::validate(...),
@@ -2946,16 +2950,16 @@ final class Config
                     'bottom',
                     'left',
                 ],
-                'inset-x' => ['right', 'left'],
-                'inset-y' => ['top', 'bottom'],
+                'inset-x' => ['start', 'end', 'right', 'left'],
+                'inset-y' => ['inset-bs', 'inset-be', 'top', 'bottom'],
                 'flex' => ['basis', 'grow', 'shrink'],
                 'gap' => ['gap-x', 'gap-y'],
                 'p' => ['px', 'py', 'ps', 'pe', 'pbs', 'pbe', 'pt', 'pr', 'pb', 'pl'],
-                'px' => ['pr', 'pl'],
-                'py' => ['pt', 'pb'],
+                'px' => ['ps', 'pe', 'pr', 'pl'],
+                'py' => ['pbs', 'pbe', 'pt', 'pb'],
                 'm' => ['mx', 'my', 'ms', 'me', 'mbs', 'mbe', 'mt', 'mr', 'mb', 'ml'],
-                'mx' => ['mr', 'ml'],
-                'my' => ['mt', 'mb'],
+                'mx' => ['ms', 'me', 'mr', 'ml'],
+                'my' => ['mbs', 'mbe', 'mt', 'mb'],
                 'size' => ['w', 'h'],
                 'font-size' => ['leading'],
                 'fvn-normal' => [
@@ -3006,8 +3010,8 @@ final class Config
                     'border-w-b',
                     'border-w-l',
                 ],
-                'border-w-x' => ['border-w-r', 'border-w-l'],
-                'border-w-y' => ['border-w-t', 'border-w-b'],
+                'border-w-x' => ['border-w-s', 'border-w-e', 'border-w-r', 'border-w-l'],
+                'border-w-y' => ['border-w-bs', 'border-w-be', 'border-w-t', 'border-w-b'],
                 'border-color' => [
                     'border-color-x',
                     'border-color-y',
@@ -3020,8 +3024,8 @@ final class Config
                     'border-color-b',
                     'border-color-l',
                 ],
-                'border-color-x' => ['border-color-r', 'border-color-l'],
-                'border-color-y' => ['border-color-t', 'border-color-b'],
+                'border-color-x' => ['border-color-s', 'border-color-e', 'border-color-r', 'border-color-l'],
+                'border-color-y' => ['border-color-bs', 'border-color-be', 'border-color-t', 'border-color-b'],
                 'translate' => ['translate-x', 'translate-y', 'translate-none'],
                 'translate-none' => ['translate', 'translate-x', 'translate-y', 'translate-z'],
                 'scroll-m' => [
@@ -3036,8 +3040,8 @@ final class Config
                     'scroll-mb',
                     'scroll-ml',
                 ],
-                'scroll-mx' => ['scroll-mr', 'scroll-ml'],
-                'scroll-my' => ['scroll-mt', 'scroll-mb'],
+                'scroll-mx' => ['scroll-ms', 'scroll-me', 'scroll-mr', 'scroll-ml'],
+                'scroll-my' => ['scroll-mbs', 'scroll-mbe', 'scroll-mt', 'scroll-mb'],
                 'scroll-p' => [
                     'scroll-px',
                     'scroll-py',
@@ -3050,8 +3054,8 @@ final class Config
                     'scroll-pb',
                     'scroll-pl',
                 ],
-                'scroll-px' => ['scroll-pr', 'scroll-pl'],
-                'scroll-py' => ['scroll-pt', 'scroll-pb'],
+                'scroll-px' => ['scroll-ps', 'scroll-pe', 'scroll-pr', 'scroll-pl'],
+                'scroll-py' => ['scroll-pbs', 'scroll-pbe', 'scroll-pt', 'scroll-pb'],
                 'touch' => ['touch-x', 'touch-y', 'touch-pz'],
                 'touch-x' => ['touch'],
                 'touch-y' => ['touch'],
@@ -3317,9 +3321,10 @@ final class Config
     /**
      * @return list<string|callable|ThemeGetter>
      */
-    private static function scaleSizingInline(ThemeGetter $themeSpacing): array
+    private static function scaleSizingInline(ThemeGetter $themeSpacing, ThemeGetter $themeContainer): array
     {
         return [
+            $themeContainer,
             FractionValidator::validate(...),
             'screen',
             'full',
