@@ -38,9 +38,12 @@ final class TailwindMerge implements TailwindMergeInterface
 
         $configuration = Config::getMergedConfig();
 
+        // The class map depends on nothing else, so other options keep the precompiled one.
+        $useDefaultClassMap = !\array_key_exists('theme', $additionalConfiguration) && !\array_key_exists('classGroups', $additionalConfiguration);
+
         $this->merger = [] === $additionalConfiguration
-            ? self::$defaultMerger ??= new ClassListMerger($configuration)
-            : new ClassListMerger($configuration);
+            ? self::$defaultMerger ??= new ClassListMerger($configuration, true)
+            : new ClassListMerger($configuration, $useDefaultClassMap);
         $this->cacheKeyPrefix = 'tailwind-merge-'.self::fingerprint($additionalConfiguration).'-';
 
         // Fronts an injected PSR-16 pool: a round trip per merge is too costly (see #15).

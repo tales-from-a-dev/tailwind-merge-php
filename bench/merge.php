@@ -80,7 +80,25 @@ function measure(callable $callback, TailwindMerge $tailwindMerge, int $iteratio
     return [$elapsed, $elapsed / $iterations];
 }
 
+/**
+ * Class lists harvested from real codebases, see tests/Fixtures/tailwind-merge/corpus.
+ *
+ * @return list<string>
+ */
+function corpusClassLists(): array
+{
+    $classLists = [];
+    foreach (glob(__DIR__.'/../tests/Fixtures/tailwind-merge/corpus/*.json') ?: [] as $fixture) {
+        foreach (json_decode((string) file_get_contents($fixture), true, flags: \JSON_THROW_ON_ERROR) as [$classList]) {
+            $classLists[] = $classList;
+        }
+    }
+
+    return $classLists;
+}
+
 $longList = implode(' ', nonConflictingClasses(320));
+$corpus = corpusClassLists();
 $fitsCache = highCardinalityLists(400);
 $exceedsCache = highCardinalityLists(4 * CACHE_SIZE);
 
@@ -111,6 +129,15 @@ $workloads = [
         },
         5,
     ],
+    'real codebases, every class list once' => [
+        // Skewed like real traffic: the per-class memos amortise, the cache rarely hits.
+        static function (TailwindMerge $tw) use ($corpus): void {
+            foreach ($corpus as $classList) {
+                $tw->merge($classList);
+            }
+        },
+        3,
+    ],
     'repeated identical merge' => [
         static fn (TailwindMerge $tw): string => $tw->merge('flex p-4 text-sm hover:bg-gray-50 p-6'),
         5000,
@@ -135,5 +162,14 @@ for ($i = 0; $i < 20; ++$i) {
 }
 
 printf("\ninstance construction + first merge: %.4f ms\n", (hrtime(true) - $constructionStart) / 1e6 / 20);
+
+// A non-empty configuration gets its own merger, so this pays what every
+// PHP-FPM request pays: loading the class map and resolving each class cold.
+$freshStart = hrtime(true);
+for ($i = 0; $i < 20; ++$i) {
+    (new TailwindMerge(['cacheSize' => 0]))->merge(REALISTIC);
+}
+
+printf("fresh merger + first merge (per request): %.4f ms\n", (hrtime(true) - $freshStart) / 1e6 / 20);
 
 printf("peak memory: %.1f MB\n", memory_get_peak_usage(true) / 1048576);

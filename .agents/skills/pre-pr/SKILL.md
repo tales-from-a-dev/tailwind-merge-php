@@ -66,7 +66,11 @@ Read the actual changed files — do not infer from filenames.
 
 **Tests**: behavior changed → tests changed in the same diff. `src/Support/Config.php`
 touched → `tests/Unit/ClassMapTest.php` almost certainly needs updating; it
-asserts the whole default class map.
+asserts the whole default class map. Class groups or theme touched →
+`src/Support/DefaultClassMap.php` regenerated with `composer compile:class-map`
+in the same diff (`ClassMapCompilerTest` fails otherwise), and a deliberate
+departure from tailwind-merge mirrored in the additions of
+`tests/Fixtures/tailwind-merge/generate.mjs` with the fixtures regenerated.
 
 **Known pitfalls** — flag any of these the diff walks into:
 
@@ -75,7 +79,8 @@ asserts the whole default class map.
   classes. Confirm the ordering is deliberate.
 - New static state, or anything making the class map depend on mutable state.
   `ClassListMerger` memoizes class name → resolved class id and conflicts, and
-  `ClassGroupUtils` memoizes both the trie and class name → class group id;
+  `ClassGroupUtils` holds the compiled class map and memoizes class name → class
+  group id;
   default-config instances share one static merger, so these memos are
   process-wide. A mutable dependency breaks all of them. `Config::getMergedConfig()`
   must return its memo untouched on a hit — re-running the merge loop over an
@@ -91,7 +96,8 @@ asserts the whole default class map.
 - PHP 8.2+ syntax. The floor is 8.1, and CI only catches this in the 8.1 leg:
   `readonly` classes, DNF types, trait constants, standalone `null`/`false`/`true`
   types, `#[\Override]`, and 8.2+ stdlib functions.
-- `vendor/` edits. It is generated; never hand-edit.
+- `vendor/` or `src/Support/DefaultClassMap.php` edits. Both are generated;
+  never hand-edit.
 
 ## 4. Report
 

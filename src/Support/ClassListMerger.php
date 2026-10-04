@@ -31,12 +31,27 @@ final class ClassListMerger
     private array $resolvedClassCache = [];
 
     /**
-     * @param Configuration $configuration
+     * The generation rotated out of the memo, still answering hits.
+     *
+     * A full memo stops admitting names, so a scan over more names than it
+     * holds cannot churn it, and only rotates once as many misses again have
+     * gone by: the working set has moved, and a long-running worker then
+     * memoizes the class names it sees now, not the first ones it ever saw.
+     *
+     * @var array<string, array{string, list<string>}|null>
      */
-    public function __construct(array $configuration)
+    private array $previousResolvedClassCache = [];
+
+    private int $missesSinceFull = 0;
+
+    /**
+     * @param Configuration $configuration
+     * @param bool          $useDefaultClassMap Only when `theme` and `classGroups` are the defaults
+     */
+    public function __construct(array $configuration, bool $useDefaultClassMap = false)
     {
         $this->parser = new ClassNameParser($configuration['prefix']);
-        $this->classGroupUtils = new ClassGroupUtils($configuration['theme'], $configuration['classGroups'], $configuration['conflictingClassGroups'], $configuration['conflictingClassGroupModifiers']);
+        $this->classGroupUtils = new ClassGroupUtils($configuration['theme'], $configuration['classGroups'], $configuration['conflictingClassGroups'], $configuration['conflictingClassGroupModifiers'], $useDefaultClassMap);
         $this->sortModifiers = new SortModifiers($configuration['orderSensitiveModifiers']);
         $this->postfixLookupClassGroupIds = array_fill_keys($configuration['postfixLookupClassGroups'], true);
     }
@@ -58,10 +73,16 @@ final class ClassListMerger
             if (\array_key_exists($className, $this->resolvedClassCache)) {
                 $resolvedClass = $this->resolvedClassCache[$className];
             } else {
-                $resolvedClass = $this->resolve($className);
+                $resolvedClass = \array_key_exists($className, $this->previousResolvedClassCache)
+                    ? $this->previousResolvedClassCache[$className]
+                    : $this->resolve($className);
 
                 if (\count($this->resolvedClassCache) < self::RESOLVED_CLASS_CACHE_LIMIT) {
                     $this->resolvedClassCache[$className] = $resolvedClass;
+                } elseif (++$this->missesSinceFull >= self::RESOLVED_CLASS_CACHE_LIMIT) {
+                    $this->previousResolvedClassCache = $this->resolvedClassCache;
+                    $this->resolvedClassCache = [$className => $resolvedClass];
+                    $this->missesSinceFull = 0;
                 }
             }
 

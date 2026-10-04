@@ -106,6 +106,7 @@ final class ClassMapTest extends TestCase
                 'col' => ['col-end', 'col-start', 'col-start-end'],
                 'collapse' => ['visibility'],
                 'columns' => ['columns'],
+                'contain' => ['contain', 'contain-layout', 'contain-paint', 'contain-size', 'contain-style'],
                 'container' => ['container'],
                 'content' => ['align-content', 'content'],
                 'contents' => ['display'],
