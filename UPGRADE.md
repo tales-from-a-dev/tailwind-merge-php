@@ -1,3 +1,90 @@
+UPGRADE FROM `0.4` to `0.5`
+===========================
+
+The default configuration now matches [tailwind-merge](https://github.com/dcastil/tailwind-merge)
+3.7.0 class group by class group, and the test suite checks it against ~13,600
+class lists from real codebases. Fixing the places where it drifted changes the
+output of `merge()` for some inputs. None of the public API has changed.
+
+## Utilities that now merge
+
+These were not recognised, so they passed through untouched and never
+conflicted with anything.
+
+```php
+$tw->merge('diagonal-fractions stacked-fractions');      // was both, now "stacked-fractions" (the group listed "stacked-fractons")
+$tw->merge('mask-conic-45 mask-conic-90');               // was both, now "mask-conic-90" (the group expected "mask-conic-at-*")
+$tw->merge('outline-2 outline');                         // was both, now "outline"
+$tw->merge('backdrop-invert-50 backdrop-invert');        // was both, now "backdrop-invert"
+$tw->merge('opacity-50 opacity-(--o)');                  // was both, now "opacity-(--o)"
+$tw->merge('mask-radial-[circle] mask-radial-(--m)');    // was both, now "mask-radial-(--m)"
+$tw->merge('perspective-origin-top perspective-origin-left-top'); // was both, now "perspective-origin-left-top"
+```
+
+`perspective-origin-*` now takes the same position scale as `bg-*` and
+`object-*`, so the reversed names (`left-top`, …) and labelled arbitrary
+positions are recognised.
+
+## Utilities that no longer merge
+
+These were matched by a group Tailwind CSS does not generate them for. They are
+now unrecognised and pass through untouched.
+
+```php
+$tw->merge('delay-100 delay-initial'); // was "delay-initial", now "delay-100 delay-initial"
+$tw->merge('skew-3 skew-px');          // was "skew-px", now "skew-3 skew-px" (skew no longer reads the spacing theme)
+```
+
+If you extended the `spacing` theme, its keys no longer produce `skew-*`,
+`skew-x-*` or `skew-y-*` classes either.
+
+## Arbitrary variables on `outline` and `inset-shadow`
+
+Arbitrary variables are now classified the way tailwind-merge classifies them.
+On `outline-*`, an unlabelled one is a color, not a width. On `inset-shadow-*`,
+one labelled `color:` is a color, not a shadow. Label the variable for the group
+you mean.
+
+```php
+$tw->merge('outline-2 outline-(--w)');                   // was "outline-(--w)", now both: "--w" is a color
+$tw->merge('outline-2 outline-(length:--w)');            // "outline-(length:--w)"
+$tw->merge('inset-shadow-sm inset-shadow-(color:--x)');  // was "inset-shadow-(color:--x)", now both: it sets the color
+```
+
+## New utilities
+
+A few utilities that tailwind-merge 3.7.0 does not know have been ported from
+[shadcn-ui/cn](https://github.com/shadcn-ui/cn):
+
+- `contain-*`. The flags (`contain-size`, `contain-inline-size`,
+  `contain-layout`, `contain-paint`, `contain-style`) set independent
+  variables, so they compose with each other and only conflict with the
+  shorthands (`contain-none`, `contain-content`, `contain-strict` and
+  arbitrary values).
+- The Tailwind CSS v3 name `bg-gradient-to-*`, which v4 still generates. It now
+  conflicts with `bg-linear-*` and the other background images.
+- Spacing-scale values for `auto-cols-*` and `auto-rows-*` (Tailwind CSS 4.3.2).
+
+```php
+$tw->merge('contain-none contain-layout');        // was both, now "contain-layout"
+$tw->merge('contain-layout contain-paint');       // unchanged: both
+$tw->merge('bg-linear-to-r bg-gradient-to-b');    // was both, now "bg-gradient-to-b"
+$tw->merge('auto-cols-auto auto-cols-4');         // was both, now "auto-cols-4"
+```
+
+## `text-shadow` theme key
+
+The default theme declares a `text-shadow` key, as tailwind-merge does, so a
+custom theme can extend the `text-shadow-*` scale. The default output is
+unchanged.
+
+## Precompiled class map
+
+The default class groups now ship precompiled. Passing `theme` or
+`classGroups` in the additional configuration opts out: that instance compiles
+its own class map on its first merge, which takes about a millisecond. Other
+options, such as `prefix` or `cacheSize`, keep the precompiled one.
+
 UPGRADE FROM `0.3` to `0.4`
 ===========================
 
@@ -90,7 +177,7 @@ Update your `composer.json`:
 ```diff
 "require": {
 -  "gehrisandro/tailwind-merge-php": "^1.0",
-+  "tales-from-a-dev/tailwind-merge-php": "^0.4",
++  "tales-from-a-dev/tailwind-merge-php": "^0.5",
 }
 ```
 
