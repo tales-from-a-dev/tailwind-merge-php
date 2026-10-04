@@ -16,10 +16,6 @@ A PHP port of [tailwind-merge](https://github.com/dcastil/tailwind-merge) by [dc
 
 Supports Tailwind **v4.0** up to **v4.3**
 
-Merges exactly like [tailwind-merge](https://github.com/dcastil/tailwind-merge) 3.7.0, which the test suite checks against
-~13,600 class lists from real codebases. It also knows a few utilities tailwind-merge 3.7.0 does not, ported from
-[shadcn-ui/cn](https://github.com/shadcn-ui/cn): `contain-*`, the legacy `bg-gradient-to-*` and numeric `auto-cols-*`/`auto-rows-*`.
-
 ## Documentation
 
 The bulk of the documentation is stored in the [`docs`](docs/index.md) directory of this bundle:
