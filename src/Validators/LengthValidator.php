@@ -9,10 +9,6 @@ namespace TalesFromADev\TailwindMerge\Validators;
  */
 final class LengthValidator implements ValidatorInterface
 {
-    /**
-     * Keyed rather than a list so membership is an isset() rather than a linear
-     * scan: this runs on every class that reaches it.
-     */
     private const STRING_LENGTHS = ['px' => true, 'full' => true, 'screen' => true];
 
     public static function validate(string $value): bool

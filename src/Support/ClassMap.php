@@ -34,7 +34,7 @@ final class ClassMap
      * @param array<array-key, mixed>    $classGroup
      * @param array<string, list<mixed>> $theme
      */
-    public function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    private function processClassesRecursively(array $classGroup, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classGroup as $classDefinition) {
             $this->processClassDefinition($classDefinition, $classPartObject, $classGroupId, $theme);
@@ -42,12 +42,9 @@ final class ClassMap
     }
 
     /**
-     * A class definition comes from user-supplied configuration, so its shape is
-     * only known at runtime; the branches below are the whole contract.
-     *
      * @param array<string, list<mixed>> $theme
      */
-    public function processClassDefinition(mixed $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    private function processClassDefinition(mixed $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         if (\is_string($classDefinition)) {
             $this->processStringDefinition($classDefinition, $classPartObject, $classGroupId);
@@ -72,13 +69,13 @@ final class ClassMap
         }
     }
 
-    public function processStringDefinition(string $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
+    private function processStringDefinition(string $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
     {
         $classPartObjectToEdit = '' === $classDefinition ? $classPartObject : $this->getPart($classPartObject, $classDefinition);
         $classPartObjectToEdit->classGroupId = $classGroupId;
     }
 
-    public function processFunctionDefinition(callable $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
+    private function processFunctionDefinition(callable $classDefinition, ClassPartObject $classPartObject, string $classGroupId): void
     {
         $classPartObject->validators[] = new ClassValidatorObject(
             classGroupId: $classGroupId,
@@ -90,7 +87,7 @@ final class ClassMap
      * @param array<array-key, mixed>    $classDefinition
      * @param array<string, list<mixed>> $theme
      */
-    public function processObjectDefinition(array $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
+    private function processObjectDefinition(array $classDefinition, ClassPartObject $classPartObject, string $classGroupId, array $theme): void
     {
         foreach ($classDefinition as $key => $classGroup) {
             if (!\is_string($key) || !\is_array($classGroup)) {
@@ -106,7 +103,7 @@ final class ClassMap
         }
     }
 
-    public function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
+    private function getPart(ClassPartObject $classPartObject, string $path): ClassPartObject
     {
         $currentClassPartObject = $classPartObject;
 

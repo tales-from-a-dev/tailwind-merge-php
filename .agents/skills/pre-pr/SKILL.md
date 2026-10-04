@@ -74,8 +74,10 @@ asserts the whole default class map.
   validators (colors especially) registered before specific ones silently steal
   classes. Confirm the ordering is deliberate.
 - New static state, or anything making the class map depend on mutable state.
-  `ClassGroupUtils` memoizes both the trie and class name → class group id per
-  instance; a mutable dependency breaks both memos. `Config::getMergedConfig()`
+  `ClassListMerger` memoizes class name → resolved class id and conflicts, and
+  `ClassGroupUtils` memoizes both the trie and class name → class group id;
+  default-config instances share one static merger, so these memos are
+  process-wide. A mutable dependency breaks all of them. `Config::getMergedConfig()`
   must return its memo untouched on a hit — re-running the merge loop over an
   already-merged config duplicates list entries.
 - Validator work on the hot path. Validators run once per *distinct* class name,

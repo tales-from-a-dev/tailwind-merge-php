@@ -17,6 +17,8 @@ final class ClassNameParser
 
     public const EMPTY_MODIFIERS = [];
 
+    private const SIGNIFICANT_CHARACTERS = ':/[]()';
+
     public function __construct(
         private readonly ?string $prefix = null,
     ) {
@@ -24,7 +26,7 @@ final class ClassNameParser
 
     public function parse(string $className): ParsedClassName
     {
-        if ($this->prefix) {
+        if (null !== $this->prefix && '' !== $this->prefix) {
             $fullPrefix = $this->prefix.self::MODIFIER_SEPARATOR;
 
             if (!str_starts_with($className, $fullPrefix)) {
@@ -49,7 +51,7 @@ final class ClassNameParser
 
         $length = \strlen($className);
 
-        for ($index = 0; $index < $length; ++$index) {
+        for ($index = strcspn($className, self::SIGNIFICANT_CHARACTERS); $index < $length; $index += 1 + strcspn($className, self::SIGNIFICANT_CHARACTERS, $index + 1)) {
             $currentCharacter = $className[$index];
 
             if (0 === $bracketDepth && 0 === $parentDepth) {
@@ -80,8 +82,7 @@ final class ClassNameParser
 
         $baseClassNameWithImportantModifier = [] === $modifiers ? $className : substr($className, $modifierStart);
 
-        // Order matters: a trailing `!` is the current syntax and takes priority
-        // over the legacy leading one, so `!p-2!` strips only the suffix.
+        // The trailing `!` wins over the legacy leading one: `!p-2!` strips only the suffix.
         $hasTrailingImportantModifier = str_ends_with($baseClassNameWithImportantModifier, self::IMPORTANT_MODIFIER);
         $hasLeadingImportantModifier = !$hasTrailingImportantModifier && str_starts_with($baseClassNameWithImportantModifier, self::IMPORTANT_MODIFIER);
 
@@ -95,9 +96,7 @@ final class ClassNameParser
 
         $hasImportantModifier = $hasTrailingImportantModifier || $hasLeadingImportantModifier;
 
-        // Stripping a leading `!` shifts every offset into the base class name
-        // left by one. Without this correction `!text-lg/7` reports the postfix
-        // one character too far right and resolves against a corrupt base name.
+        // Stripping a leading `!` shifts the postfix offset left by one.
         $maybePostfixModifierPosition = $postfixModifierPosition && $postfixModifierPosition > $modifierStart
             ? $postfixModifierPosition - $modifierStart - ($hasLeadingImportantModifier ? 1 : 0)
             : null

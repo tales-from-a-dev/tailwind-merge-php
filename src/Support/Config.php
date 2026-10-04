@@ -51,9 +51,6 @@ final class Config
     private static array $additionalConfig = [];
 
     /**
-     * The fully merged config, memoized. Holding the *merged* result rather
-     * than the default one is what keeps this idempotent: see getMergedConfig().
-     *
      * @var Configuration|null
      */
     private static ?array $mergedConfig = null;
@@ -68,32 +65,23 @@ final class Config
      */
     public static function getMergedConfig(): array
     {
-        // The memo must be returned as-is on a hit. Re-entering the merge loop
-        // would fold $additionalConfig into an already-merged config, and
-        // mergePropertyRecursively concatenates lists -- so every call would
-        // duplicate custom entries and grow the config without bound.
+        // Return the memo untouched: re-merging concatenates lists again.
         if (null !== self::$mergedConfig && self::$lastAdditionalConfig === self::$additionalConfig) {
             return self::$mergedConfig;
         }
 
         $config = self::getDefaultConfig();
 
-        // mergePropertyRecursively merges arbitrary user data under an arbitrary
-        // key, so its result cannot be tied back to that key's declared type.
-        // The two PHPStan errors this produces are baselined: narrowing them
-        // away would mean constraining the merge to the Configuration shape,
-        // which would change documented behaviour -- notably that an empty array
-        // *replaces* rather than merges (`['theme' => []]` wipes the theme).
+        // The PHPStan errors here are baselined: narrowing them would change the
+        // documented behaviour that an empty array replaces (`['theme' => []]`).
         foreach (self::$additionalConfig as $key => $additionalConfig) {
             if (\is_array($additionalConfig) || \is_scalar($additionalConfig) || null === $additionalConfig) {
                 $config[$key] = self::mergePropertyRecursively($config, $key, $additionalConfig);
             }
         }
 
-        // Note: comparing additional configs with !== compares any contained
-        // objects (ThemeGetter, validator closures) by identity, so a config
-        // built inline on each construction always misses this memo. That costs
-        // a rebuild, never a wrong result.
+        // Objects compare by identity, so an inline-built config always misses
+        // the memo: a rebuild, never a wrong result.
         self::$lastAdditionalConfig = self::$additionalConfig;
 
         return self::$mergedConfig = $config;
@@ -101,9 +89,6 @@ final class Config
 
     /**
      * Restore the process-global configuration to its default state.
-     *
-     * Constructing a TailwindMerge writes to static config, so a test or a
-     * long-running worker needs a way back to a known baseline.
      */
     public static function reset(): void
     {

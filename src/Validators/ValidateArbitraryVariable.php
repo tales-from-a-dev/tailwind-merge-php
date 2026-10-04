@@ -22,8 +22,7 @@ trait ValidateArbitraryVariable
             return false;
         }
 
-        // See ValidatesArbitraryValue: a label of "0" is a label, not an absent
-        // one, and the group cannot be empty.
+        // See ValidatesArbitraryValue.
         if (null !== $matches[1]) {
             return \in_array($matches[1], \is_string($labels) ? [$labels] : $labels);
         }

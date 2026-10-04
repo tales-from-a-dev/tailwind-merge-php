@@ -11,15 +11,11 @@ use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
  */
 final class ClassGroupUtils
 {
-    private const CLASS_PART_SEPARATOR = '-';
-
-    // I use two dots here because one dot is used as prefix for class groups in plugins
+    // Two dots, because plugins use one as their class group prefix.
     private const ARBITRARY_PROPERTY_PREFIX = 'arbitrary..';
 
     /**
-     * Upper bound for the class-group-id memo. A real application renders a
-     * bounded set of distinct class names, but a long-running worker merging
-     * generated class strings could otherwise grow this without limit.
+     * Bounds the memo for long-running workers merging generated class names.
      */
     private const CLASS_GROUP_ID_CACHE_LIMIT = 5000;
 
@@ -27,10 +23,6 @@ final class ClassGroupUtils
     private ?ClassPartObject $classPartObject = null;
 
     /**
-     * Resolved class name => class group id (null when the class belongs to no
-     * group). Resolving walks the trie and runs validators, so the same class
-     * appearing in many merges would otherwise pay that cost every time.
-     *
      * @var array<string, ?string>
      */
     private array $classGroupIdCache = [];
@@ -52,8 +44,7 @@ final class ClassGroupUtils
 
     public function getClassGroupId(string $class): ?string
     {
-        // array_key_exists, not isset: a null result means "belongs to no class
-        // group", which is worth caching just as much as a hit.
+        // array_key_exists, not isset: null ("no class group") is cached too.
         if (\array_key_exists($class, $this->classGroupIdCache)) {
             return $this->classGroupIdCache[$class];
         }
@@ -73,8 +64,8 @@ final class ClassGroupUtils
             return $this->getGroupIdForArbitraryProperty($class);
         }
 
-        $classParts = explode(self::CLASS_PART_SEPARATOR, $class);
-        // Classes like `-inset-1` produce an empty string as first classPart. We assume that classes for negative values are used correctly and skip it.
+        $classParts = explode(ClassMap::CLASS_PART_SEPARATOR, $class);
+        // Negative values like `-inset-1` start with an empty part.
         $startIndex = '' === $classParts[0] && \count($classParts) > 1 ? 1 : 0;
         $classPartObject = $this->classPartObject ??= $this->classMap->processClassGroup($this->classGroups, $this->theme);
 
@@ -84,7 +75,7 @@ final class ClassGroupUtils
     /**
      * @param array<array-key, string> $classParts
      */
-    public function getGroupRecursive(array $classParts, int $startIndex, ClassPartObject $classPartObject): ?string
+    private function getGroupRecursive(array $classParts, int $startIndex, ClassPartObject $classPartObject): ?string
     {
         $classPathsLength = \count($classParts) - $startIndex;
 
@@ -105,7 +96,7 @@ final class ClassGroupUtils
             : null
         ;
 
-        if ($classGroupFromNextClassPart) {
+        if (null !== $classGroupFromNextClassPart) {
             return $classGroupFromNextClassPart;
         }
 
@@ -114,8 +105,8 @@ final class ClassGroupUtils
         }
 
         $classRest = 0 === $startIndex
-            ? implode(self::CLASS_PART_SEPARATOR, $classParts)
-            : implode(self::CLASS_PART_SEPARATOR, \array_slice($classParts, $startIndex))
+            ? implode(ClassMap::CLASS_PART_SEPARATOR, $classParts)
+            : implode(ClassMap::CLASS_PART_SEPARATOR, \array_slice($classParts, $startIndex))
         ;
 
         foreach ($classPartObject->validators as $validator) {
@@ -127,7 +118,7 @@ final class ClassGroupUtils
         return null;
     }
 
-    public function getGroupIdForArbitraryProperty(string $className): ?string
+    private function getGroupIdForArbitraryProperty(string $className): ?string
     {
         $content = substr($className, 1, -1);
         $colonIndex = strpos($content, ':');

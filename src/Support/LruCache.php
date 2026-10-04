@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace TalesFromADev\TailwindMerge\Support;
 
+/**
+ * @internal
+ */
 final class LruCache
 {
     private int $cacheSize = 0;
@@ -24,8 +27,7 @@ final class LruCache
 
     public function get(string $key): ?string
     {
-        // Compare against null rather than testing truthiness: '' and '0' are
-        // both valid merge results and would otherwise never be served.
+        // Not a truthiness test: '' and '0' are valid merge results.
         $value = $this->cache[$key] ?? null;
 
         if (null !== $value) {

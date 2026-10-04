@@ -5,21 +5,25 @@ declare(strict_types=1);
 namespace TalesFromADev\TailwindMerge;
 
 use Psr\SimpleCache\CacheInterface;
-use TalesFromADev\TailwindMerge\Helper\Collection;
 use TalesFromADev\TailwindMerge\Support\ClassListMerger;
 use TalesFromADev\TailwindMerge\Support\Config;
 use TalesFromADev\TailwindMerge\Support\LruCache;
 
 final class TailwindMerge implements TailwindMergeInterface
 {
+    /**
+     * Shared by every instance built without additional configuration, so the
+     * class map is built once per process.
+     */
+    private static ?ClassListMerger $defaultMerger = null;
+
     private ClassListMerger $merger;
 
     private ?LruCache $lruCache = null;
 
     /**
-     * Prefix for every cache key produced by this instance. It embeds a
-     * fingerprint of the configuration so that two differently-configured
-     * instances sharing one cache pool cannot read each other's results.
+     * Embeds a configuration fingerprint so instances sharing a cache pool
+     * cannot read each other's results.
      */
     private string $cacheKeyPrefix;
 
@@ -34,12 +38,12 @@ final class TailwindMerge implements TailwindMergeInterface
 
         $configuration = Config::getMergedConfig();
 
-        $this->merger = new ClassListMerger($configuration);
+        $this->merger = [] === $additionalConfiguration
+            ? self::$defaultMerger ??= new ClassListMerger($configuration)
+            : new ClassListMerger($configuration);
         $this->cacheKeyPrefix = 'tailwind-merge-'.self::fingerprint($additionalConfiguration).'-';
 
-        // The in-memory cache fronts an injected PSR-16 one rather than
-        // replacing it: a PSR-16 round trip per merge is itself expensive
-        // enough to dominate a request that merges a lot (see #15).
+        // Fronts an injected PSR-16 pool: a round trip per merge is too costly (see #15).
         if ($configuration['cacheSize'] > 0) {
             $this->lruCache = new LruCache($configuration['cacheSize']);
         }
@@ -50,7 +54,7 @@ final class TailwindMerge implements TailwindMergeInterface
      */
     public function merge(...$classLists): string
     {
-        $classList = Collection::make($classLists)->flatten()->join(' ');
+        $classList = implode(' ', self::flatten($classLists));
 
         if (!$this->cache instanceof CacheInterface && !$this->lruCache instanceof LruCache) {
             return $this->merger->merge($classList);
@@ -79,8 +83,7 @@ final class TailwindMerge implements TailwindMergeInterface
             return $cachedValue;
         }
 
-        // A single get(), rather than has() then get(): on a file or Redis pool
-        // the two-call form doubles the round-trips.
+        // Not has() then get(): that doubles the round trips.
         $cachedValue = $this->cache?->get($key);
 
         if (!\is_string($cachedValue)) {
@@ -99,12 +102,30 @@ final class TailwindMerge implements TailwindMergeInterface
     }
 
     /**
-     * Build a fingerprint of the additional configuration.
+     * @param array<array-key, mixed> $classLists
      *
-     * Only the additional configuration is fingerprinted: the default config is
-     * fixed for a given release, so it cannot distinguish two instances. The
-     * result has to be stable across processes for a persistent cache pool to
-     * stay valid, which rules out spl_object_id and friends.
+     * @return list<string>
+     */
+    private static function flatten(array $classLists): array
+    {
+        $flattened = [];
+
+        foreach ($classLists as $classList) {
+            if (\is_array($classList)) {
+                array_push($flattened, ...self::flatten($classList));
+            } elseif (\is_scalar($classList) || null === $classList || $classList instanceof \Stringable) {
+                $flattened[] = (string) $classList;
+            } else {
+                throw new \TypeError(\sprintf('Class lists must be strings or arrays of strings, %s given.', get_debug_type($classList)));
+            }
+        }
+
+        return $flattened;
+    }
+
+    /**
+     * Must be stable across processes for a persistent cache pool, which rules
+     * out spl_object_id and friends.
      *
      * @param array<array-key, mixed> $configuration
      */
@@ -129,8 +150,7 @@ final class TailwindMerge implements TailwindMergeInterface
         }
 
         if ($value instanceof \Closure) {
-            // A closure cannot be serialized, but its definition site is stable
-            // for a given version of the code -- which is what the cache needs.
+            // Not serializable, but its definition site is stable for a given release.
             $reflection = new \ReflectionFunction($value);
 
             return 'fn@'.$reflection->getFileName().':'.$reflection->getStartLine();
