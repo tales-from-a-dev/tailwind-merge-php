@@ -30,11 +30,13 @@ final class ClassGroupUtils
     private array $classGroupIdCache = [];
 
     /**
-     * Rotated out when the memo filled up, as in ClassListMerger.
+     * Rotated out of the memo, with the same admission rule as ClassListMerger.
      *
      * @var array<string, ?string>
      */
     private array $previousClassGroupIdCache = [];
+
+    private int $missesSinceFull = 0;
 
     /**
      * @param array<string, list<mixed>>        $theme
@@ -67,12 +69,13 @@ final class ClassGroupUtils
             ? $this->previousClassGroupIdCache[$class]
             : $this->resolveClassGroupId($class);
 
-        if (\count($this->classGroupIdCache) >= self::CLASS_GROUP_ID_CACHE_LIMIT) {
+        if (\count($this->classGroupIdCache) < self::CLASS_GROUP_ID_CACHE_LIMIT) {
+            $this->classGroupIdCache[$class] = $classGroupId;
+        } elseif (++$this->missesSinceFull >= self::CLASS_GROUP_ID_CACHE_LIMIT) {
             $this->previousClassGroupIdCache = $this->classGroupIdCache;
-            $this->classGroupIdCache = [];
+            $this->classGroupIdCache = [$class => $classGroupId];
+            $this->missesSinceFull = 0;
         }
-
-        $this->classGroupIdCache[$class] = $classGroupId;
 
         return $classGroupId;
     }

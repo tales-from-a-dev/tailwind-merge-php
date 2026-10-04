@@ -16,7 +16,7 @@ import { createRequire } from "node:module"
 
 // Pinned so the corpora only change when this script does.
 const CN_COMMIT = "b7ec0fce43d824a60517fab508584eb860fdf717"
-const REPOSITORIES = ["shadcn-ui", "calcom", "dub", "supabase"]
+const REPOSITORIES = ["shadcn-ui", "calcom", "dub"]
 
 const prefix = process.env.TAILWIND_MERGE_PREFIX
 if (!prefix) throw new Error("set TAILWIND_MERGE_PREFIX to a directory where tailwind-merge is installed")

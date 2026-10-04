@@ -10,12 +10,29 @@ use TalesFromADev\TailwindMerge\Support\Config;
 
 final class ClassListMergerTest extends TestCase
 {
-    public function testMemosRotateInsteadOfFreezingWhenFull(): void
+    private const MEMO_LIMIT = 5000;
+
+    public function testFullMemoIsNotChurnedByAScan(): void
     {
         $merger = new ClassListMerger(Config::getDefaultConfig(), true);
 
-        // More distinct class names than either memo holds, as a long-running worker sees.
-        for ($i = 0; $i < 6000; ++$i) {
+        // More distinct names than the memo holds, but fewer misses than trigger a rotation.
+        for ($i = 0; $i < self::MEMO_LIMIT + 1000; ++$i) {
+            $merger->merge("p-[{$i}px]");
+        }
+
+        $resolvedClassCache = $this->readProperty($merger, 'resolvedClassCache');
+        $this->assertCount(self::MEMO_LIMIT, $resolvedClassCache);
+        $this->assertArrayHasKey('p-[0px]', $resolvedClassCache);
+        $this->assertArrayNotHasKey('p-[5500px]', $resolvedClassCache);
+    }
+
+    public function testFullMemoRotatesOnceTheWorkingSetHasMoved(): void
+    {
+        $merger = new ClassListMerger(Config::getDefaultConfig(), true);
+
+        // Fill the memo, then miss as many times again, as a long-running worker does.
+        for ($i = 0; $i < 2 * self::MEMO_LIMIT; ++$i) {
             $merger->merge("p-[{$i}px]");
         }
 
@@ -24,11 +41,10 @@ final class ClassListMergerTest extends TestCase
         $resolvedClassCache = $this->readProperty($merger, 'resolvedClassCache');
         $this->assertArrayHasKey('p-2', $resolvedClassCache);
         $this->assertArrayHasKey('p-4', $resolvedClassCache);
-        $this->assertLessThanOrEqual(5000, \count($resolvedClassCache));
 
-        // A name from the rotated-out generation is promoted, not resolved again.
-        $this->assertArrayHasKey('p-[5500px]', $resolvedClassCache);
-        $this->assertSame('p-[5999px]', $merger->merge('p-[5500px] p-[5999px]'));
+        // The rotated-out generation still answers.
+        $this->assertArrayHasKey('p-[100px]', $this->readProperty($merger, 'previousResolvedClassCache'));
+        $this->assertSame('p-[200px]', $merger->merge('p-[100px] p-[200px]'));
     }
 
     /**
