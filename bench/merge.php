@@ -3,24 +3,13 @@
 declare(strict_types=1);
 
 /*
- * Benchmark harness for TailwindMerge::merge().
+ * Run with `composer bench` (Xdebug off). Each workload is measured twice:
  *
- * Run with `composer bench`. Xdebug must be off for meaningful numbers; the
- * composer script disables it. Each workload targets a different characteristic:
- * see the comments on $workloads below.
+ * - cold (`cacheSize => 0`): the full pipeline. Compare this column across
+ *   pipeline changes.
+ * - cached (default config): what a caller gets; a hit is a hash plus a lookup.
  *
- * Every workload is measured twice, against a fresh instance each time:
- *
- * - cold, built with `cacheSize => 0`, so every merge walks the full pipeline.
- *   This is the column that guards the merge algorithm; compare it before and
- *   after any change to the pipeline.
- * - cached, built with the default configuration, so the built-in LRU is in
- *   play. This column reports what a caller actually gets, and it is not a
- *   pipeline measurement -- a cache hit is a hash plus an array lookup no
- *   matter how the merger behaves.
- *
- * The ratio column is cold/cached. Above 1 the cache pays for itself; below 1
- * it costs more than it saves, which the last workload deliberately provokes.
+ * The ratio is cold/cached; below 1 the cache costs more than it saves.
  */
 
 use TalesFromADev\TailwindMerge\TailwindMerge;
@@ -32,15 +21,12 @@ if (extension_loaded('xdebug') && '' !== (string) ini_get('xdebug.mode') && 'off
 }
 
 /**
- * Entries the default `cacheSize` holds. The high-cardinality workloads are
- * sized around this so that one sits comfortably inside the cache and the
- * other overruns it.
+ * The default `cacheSize`; the high-cardinality workloads fit in or overrun it.
  */
 const CACHE_SIZE = 500;
 
 /**
- * A realistic component class string: mixed utilities, variants, and a few
- * overrides at the end, as produced by a `tw_merge(base, overrides)` call.
+ * As produced by a `tw_merge(base, overrides)` call.
  */
 const REALISTIC = 'flex items-center justify-between gap-2 rounded-lg border border-gray-200 '
     .'bg-white px-4 py-2 text-sm font-medium text-gray-900 shadow-sm hover:bg-gray-50 '
@@ -52,9 +38,7 @@ const REALISTIC = 'flex items-center justify-between gap-2 rounded-lg border bor
  */
 function nonConflictingClasses(int $count): array
 {
-    // Distinct grid-column utilities never conflict, so every class is kept and
-    // the result string grows with n -- which is what exposes quadratic result
-    // building. Conflicting classes hide it, because the result stays short.
+    // Nothing conflicts, so the result grows with n and exposes quadratic building.
     $classes = [];
     for ($i = 1; $i <= $count; ++$i) {
         $classes[] = 'col-start-'.$i;
@@ -68,8 +52,7 @@ function nonConflictingClasses(int $count): array
  */
 function highCardinalityLists(int $count): array
 {
-    // Mostly-unique arbitrary values, so a per-class-name memo cannot amortise
-    // and the trie descent plus validators are paid on nearly every lookup.
+    // Mostly-unique arbitrary values, so per-class-name memos cannot amortise.
     $lists = [];
     for ($i = 0; $i < $count; ++$i) {
         $lists[] = sprintf('p-[%dpx] m-[%drem] text-[#%06x] w-[%d%%] grid-cols-%d', $i, $i, $i, $i, $i % 12 + 1);
@@ -85,9 +68,7 @@ function highCardinalityLists(int $count): array
  */
 function measure(callable $callback, TailwindMerge $tailwindMerge, int $iterations): array
 {
-    // One untimed pass so lazily-built state (the class map) is not charged to
-    // the first measured iteration. For the cached instance this also fills the
-    // cache, so what follows is steady-state behaviour rather than a cold start.
+    // Untimed warm-up: builds lazy state and, for the cached instance, fills the cache.
     $callback($tailwindMerge);
 
     $start = hrtime(true);
@@ -121,11 +102,8 @@ $workloads = [
         25,
     ],
     'high cardinality, overruns cache (2000)' => [
-        // A cyclic scan of more distinct lists than the cache holds is the
-        // adversarial case for an LRU: by the time a key comes round again it
-        // has been evicted, so every merge pays the pipeline *and* the cache
-        // maintenance, including generation rotation. Real traffic is skewed
-        // rather than cyclic, so treat this as a floor, not a forecast.
+        // Adversarial for an LRU: every key is evicted before it comes round
+        // again. Real traffic is skewed, so treat this as a floor.
         static function (TailwindMerge $tw) use ($exceedsCache): void {
             foreach ($exceedsCache as $classList) {
                 $tw->merge($classList);
@@ -149,8 +127,6 @@ foreach ($workloads as $name => [$callback, $iterations]) {
     printf("%-42s %14.5f %14.5f %8.1fx\n", $name, $cold, $cached, $cold / $cached);
 }
 
-// Measured on its own rather than through measure(), because the cost under
-// test is the construction itself and so cannot be hoisted out of the loop.
 (new TailwindMerge())->merge('p-2 p-4');
 
 $constructionStart = hrtime(true);
@@ -158,6 +134,6 @@ for ($i = 0; $i < 20; ++$i) {
     (new TailwindMerge())->merge('p-2 p-4');
 }
 
-printf("\ninstance construction + first merge: %.2f ms\n", (hrtime(true) - $constructionStart) / 1e6 / 20);
+printf("\ninstance construction + first merge: %.4f ms\n", (hrtime(true) - $constructionStart) / 1e6 / 20);
 
 printf("peak memory: %.1f MB\n", memory_get_peak_usage(true) / 1048576);

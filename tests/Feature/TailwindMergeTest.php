@@ -6,10 +6,16 @@ namespace TalesFromADev\TailwindMerge\Tests\Feature;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use TalesFromADev\TailwindMerge\Support\Config;
 use TalesFromADev\TailwindMerge\TailwindMerge;
 
 final class TailwindMergeTest extends TestCase
 {
+    protected function tearDown(): void
+    {
+        Config::reset();
+    }
+
     /**
      * @return list<list<string>>
      */
@@ -72,5 +78,57 @@ final class TailwindMergeTest extends TestCase
         ]);
 
         $this->assertSame($output, $instance->merge($input));
+    }
+
+    public function testItHandlesMultibyteArbitraryValuesWithAPostfix(): void
+    {
+        $this->assertSame(
+            'text-[length:var(--größe)]/7',
+            (new TailwindMerge())->merge('text-[length:var(--größe)]/[3] text-[length:var(--größe)]/7'),
+        );
+        $this->assertSame(
+            'hover:[content:\'日本:/\'] p-2',
+            (new TailwindMerge())->merge('hover:[content:\'日本:/\'] p-1 p-2'),
+        );
+    }
+
+    public function testItGivesTheSameResultOnRepeatedMerges(): void
+    {
+        $instance = new TailwindMerge(['cacheSize' => 0]);
+
+        foreach (range(1, 3) as $iteration) {
+            $this->assertSame('hover:p-4 p-3 [color:red]', $instance->merge('p-2 hover:p-2 hover:p-4 p-3 [color:blue] [color:red]'));
+        }
+    }
+
+    public function testDefaultInstancesAreUnaffectedByCustomConfigurations(): void
+    {
+        $default = new TailwindMerge();
+        $this->assertSame('tw:p-2 p-4', $default->merge('tw:p-2 p-2 p-4'));
+
+        $prefixed = new TailwindMerge(['prefix' => 'tw']);
+        $this->assertSame('p-2 tw:p-4', $prefixed->merge('tw:p-2 p-2 tw:p-4'));
+
+        $this->assertSame('tw:p-2 p-4', $default->merge('tw:p-2 p-2 p-4'));
+        $this->assertSame('tw:p-2 p-4', (new TailwindMerge())->merge('tw:p-2 p-2 p-4'));
+    }
+
+    public function testItConvertsStringableArguments(): void
+    {
+        $stringable = new class implements \Stringable {
+            public function __toString(): string
+            {
+                return 'p-4';
+            }
+        };
+
+        $this->assertSame('p-4', (new TailwindMerge())->merge('p-2', [$stringable]));
+    }
+
+    public function testItRejectsArgumentsThatAreNotStrings(): void
+    {
+        $this->expectException(\TypeError::class);
+
+        (new TailwindMerge())->merge('p-2', [new \stdClass()]);
     }
 }

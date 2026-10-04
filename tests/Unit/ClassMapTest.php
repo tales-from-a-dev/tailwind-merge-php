@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace TalesFromADev\TailwindMerge\Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use TalesFromADev\TailwindMerge\Helper\Collection;
 use TalesFromADev\TailwindMerge\Support\ClassMap;
 use TalesFromADev\TailwindMerge\Support\Config;
 use TalesFromADev\TailwindMerge\ValueObjects\ClassPartObject;
@@ -19,10 +18,12 @@ final class ClassMapTest extends TestCase
 
         $classPartObject = $classMap->processClassGroup($configuration['classGroups'], $configuration['theme']);
 
-        $classGroupsByFirstPart = Collection::make($classPartObject->nextPart)
-            ->mapWithKeys(function ($value, $key) {
-                return [$key => Collection::make($this->getClassGroupsInClassPart($value))->sort()->values()];
-            })->toArray();
+        $classGroupsByFirstPart = array_map(function (ClassPartObject $classPart): array {
+            $classGroups = $this->getClassGroupsInClassPart($classPart);
+            sort($classGroups);
+
+            return $classGroups;
+        }, $classPartObject->nextPart);
 
         $this->assertNull($classPartObject->classGroupId);
         $this->assertCount(1, $classPartObject->validators);

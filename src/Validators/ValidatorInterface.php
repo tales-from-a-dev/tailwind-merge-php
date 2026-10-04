@@ -11,9 +11,7 @@ namespace TalesFromADev\TailwindMerge\Validators;
  */
 interface ValidatorInterface
 {
-    // The `u` modifier is part of the contract, not decoration: `\w` must match
-    // Unicode letters so that labels in arbitrary values behave the same as in
-    // the JS original.
+    // The `u` modifier is part of the contract: `\w` must match Unicode letters, as in JS.
     final public const ARBITRARY_VALUE_REGEX = '/^\[(?:(\w[\w-]*):)?(.+)\]$/iu';
 
     final public const ARBITRARY_VARIABLE_REGEX = '/^\((?:(\w[\w-]*):)?(.+)\)$/iu';
