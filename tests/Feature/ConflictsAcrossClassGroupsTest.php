@@ -68,8 +68,44 @@ final class ConflictsAcrossClassGroupsTest extends TestCase
         ];
     }
 
+    /**
+     * Since Tailwind CSS v4 the axis utilities compile to logical shorthand
+     * properties (px → padding-inline), which fully override their logical-side
+     * longhands (ps → padding-inline-start) in every writing mode.
+     *
+     * @return list<list<string>>
+     */
+    public static function axisShorthandsOverrideLogicalSidesProvider(): array
+    {
+        return [
+            ['ps-2 px-4', 'px-4'],
+            ['pe-2 px-4', 'px-4'],
+            ['px-4 ps-2', 'px-4 ps-2'],
+            ['pbs-2 py-4', 'py-4'],
+            ['ms-2 mx-4', 'mx-4'],
+            ['mbe-2 my-4', 'my-4'],
+            ['start-2 inset-x-4', 'inset-x-4'],
+            ['end-2 inset-x-4', 'inset-x-4'],
+            ['inset-bs-2 inset-y-4', 'inset-y-4'],
+            ['border-s-2 border-x-4', 'border-x-4'],
+            ['border-be-2 border-y-4', 'border-y-4'],
+            ['border-s-red-500 border-x-blue-500', 'border-x-blue-500'],
+            ['border-bs-red-500 border-y-blue-500', 'border-y-blue-500'],
+            ['scroll-ms-2 scroll-mx-4', 'scroll-mx-4'],
+            ['scroll-mbs-2 scroll-my-4', 'scroll-my-4'],
+            ['scroll-ps-2 scroll-px-4', 'scroll-px-4'],
+            ['scroll-pbe-2 scroll-py-4', 'scroll-py-4'],
+        ];
+    }
+
     #[DataProvider('conflictsAcrossClassGroupsProvider')]
     public function testItHandlesConflictsAcrossClassGroupsCorrectly(string $input, string $output): void
+    {
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
+    }
+
+    #[DataProvider('axisShorthandsOverrideLogicalSidesProvider')]
+    public function testAxisShorthandsOverrideLogicalSidesCorrectly(string $input, string $output): void
     {
         $this->assertSame($output, (new TailwindMerge())->merge($input));
     }

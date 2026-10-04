@@ -80,10 +80,18 @@ final class TailwindCssVersionsTest extends TestCase
             ['perspective-origin-center perspective-origin-top-left', 'perspective-origin-top-left'],
             ['bg-linear-to-r bg-linear-45', 'bg-linear-45'],
             ['bg-linear-to-r bg-radial-[something] bg-conic-10', 'bg-conic-10'],
+            ['bg-conic bg-conic-10', 'bg-conic-10'],
+            ['bg-conic-10 bg-conic', 'bg-conic'],
+            ['bg-radial bg-conic/decreasing', 'bg-conic/decreasing'],
+            ['bg-red-500 bg-conic', 'bg-red-500 bg-conic'],
             ['ring-4 ring-orange inset-ring inset-ring-3 inset-ring-blue', 'ring-4 ring-orange inset-ring-3 inset-ring-blue'],
             ['field-sizing-content field-sizing-fixed', 'field-sizing-fixed'],
             ['scheme-normal scheme-dark', 'scheme-dark'],
             ['font-stretch-expanded font-stretch-[66.66%] font-stretch-50%', 'font-stretch-50%'],
+            // shadow-inner is deprecated in v4 but still sets --tw-shadow, so it conflicts with other shadow utilities and not with shadow color utilities
+            ['shadow-inner shadow-lg', 'shadow-lg'],
+            ['shadow-lg shadow-inner', 'shadow-inner'],
+            ['shadow-initial shadow-inner', 'shadow-initial shadow-inner'],
         ];
     }
 
@@ -171,6 +179,9 @@ final class TailwindCssVersionsTest extends TestCase
             ['max-inline-none max-inline-10', 'max-inline-10'],
             ['min-block-auto min-block-lh min-block-10', 'min-block-10'],
             ['max-block-none max-block-lh max-block-10', 'max-block-10'],
+            ['inline-2xl inline-3xl', 'inline-3xl'],
+            ['min-inline-xs min-inline-1/2', 'min-inline-1/2'],
+            ['max-inline-svw max-inline-xl', 'max-inline-xl'],
 
             ['w-10 inline-20', 'w-10 inline-20'],
             ['h-10 block-20', 'h-10 block-20'],

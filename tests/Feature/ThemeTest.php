@@ -19,6 +19,9 @@ final class ThemeTest extends TestCase
         return [
             ['p-3 p-my-space p-my-margin', 'p-my-space p-my-margin'],
             ['leading-3 leading-my-space leading-my-leading', 'leading-my-leading'],
+            ['leading-my-leading leading-none', 'leading-none'],
+            ['leading-none leading-my-leading', 'leading-my-leading'],
+            ['leading-4 leading-none', 'leading-none'],
         ];
     }
 

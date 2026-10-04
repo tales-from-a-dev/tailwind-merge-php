@@ -22,7 +22,24 @@ final class ClassGroupConflictsTest extends TestCase
             ['overflow-x-auto hover:overflow-x-hidden overflow-x-scroll', 'hover:overflow-x-hidden overflow-x-scroll'],
             ['overflow-x-auto hover:overflow-x-hidden hover:overflow-x-auto overflow-x-scroll', 'hover:overflow-x-auto overflow-x-scroll'],
             ['col-span-1 col-span-full', 'col-span-full'],
+            ['columns-12 columns-auto', 'columns-auto'],
+            ['columns-auto columns-2xl', 'columns-2xl'],
             ['gap-2 gap-px basis-px basis-3', 'gap-px basis-3'],
+        ];
+    }
+
+    /**
+     * @return list<list<string>>
+     */
+    public static function noneValuesInSizingGroupsProvider(): array
+    {
+        return [
+            ['max-w-lg max-w-none', 'max-w-none'],
+            ['max-w-none max-w-lg', 'max-w-lg'],
+            ['max-h-96 max-h-none', 'max-h-none'],
+            ['max-h-none max-h-96', 'max-h-96'],
+            ['max-h-[300px] max-h-none', 'max-h-none'],
+            ['max-h-none max-h-screen', 'max-h-screen'],
         ];
     }
 
@@ -41,6 +58,12 @@ final class ClassGroupConflictsTest extends TestCase
 
     #[DataProvider('classesFromSameGroupProvider')]
     public function testItMergesClassesFromSameGroupCorrectly(string $input, string $output): void
+    {
+        $this->assertSame($output, (new TailwindMerge())->merge($input));
+    }
+
+    #[DataProvider('noneValuesInSizingGroupsProvider')]
+    public function testItMergesNoneValuesInSizingGroupsCorrectly(string $input, string $output): void
     {
         $this->assertSame($output, (new TailwindMerge())->merge($input));
     }

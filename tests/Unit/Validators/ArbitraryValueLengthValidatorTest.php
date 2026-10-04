@@ -35,6 +35,8 @@ final class ArbitraryValueLengthValidatorTest extends TestCase
             ['[12px', false],
             ['12px]', false],
             ['one', false],
+            ['[color(display-p3_1_0_0/50%)]', false],
+            ['[light-dark(white,rgb(0_0_0/50%))]', false],
         ];
     }
 
