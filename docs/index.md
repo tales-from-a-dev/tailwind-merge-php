@@ -124,7 +124,7 @@ new TailwindMerge([
 ```
 
 > [!TIP]
-> For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/docs/configuration.md).
+> For a more detailed explanation of the configuration options, visit the [original package documentation](https://github.com/dcastil/tailwind-merge/blob/main/packages/tailwind-merge/docs/configuration.md).
 
 > [!NOTE]
 > The default class groups ship precompiled, so with opcache an instance costs
