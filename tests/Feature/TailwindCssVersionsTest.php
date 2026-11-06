@@ -236,6 +236,25 @@ final class TailwindCssVersionsTest extends TestCase
             // Named container (last) conflicts with and overrides container-type
             ['@container @container/sidebar', '@container/sidebar'],
             ['@container-size @container-size/main', '@container-size/main'],
+
+            // Viewport and font-relative length units are font sizes, not colors (v4.3.4, tailwindcss#20516)
+            ['text-lg text-[1rex]', 'text-[1rex]'],
+            ['text-red-500 text-[1rex]', 'text-red-500 text-[1rex]'],
+            ['text-lg text-[1ic] text-[1rcap] text-[1dvmin]', 'text-[1dvmin]'],
+            ['border-2 border-[1rch]', 'border-[1rch]'],
+            ['border-red-500 border-[1ric]', 'border-red-500 border-[1ric]'],
+
+            // Quarter-millimeters are lengths, matched case-sensitively as Tailwind CSS does
+            ['text-lg text-[2Q]', 'text-[2Q]'],
+            ['text-red-500 text-[2Q]', 'text-red-500 text-[2Q]'],
+
+            // --spacing(…) is a length and --alpha(…) a color (v4.3.2, tailwindcss#20260)
+            ['text-lg text-[--spacing(4)]', 'text-[--spacing(4)]'],
+            ['text-[--spacing(4)] text-red-500', 'text-[--spacing(4)] text-red-500'],
+            ['border-2 border-[--spacing(1)]', 'border-[--spacing(1)]'],
+            ['text-red-500 text-[--alpha(red/20%)]', 'text-[--alpha(red/20%)]'],
+            ['text-[--alpha(red/20%)] text-lg', 'text-[--alpha(red/20%)] text-lg'],
+            ['hover:!text-lg hover:!text-[--spacing(4)]', 'hover:!text-[--spacing(4)]'],
         ];
     }
 
