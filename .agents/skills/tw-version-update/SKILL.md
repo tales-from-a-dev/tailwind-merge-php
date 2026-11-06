@@ -73,6 +73,18 @@ order, and link targets.
   syntax or conflicts? It may not require a tailwind-merge-php change.
 - Does it remove or rename classes? Check whether keeping old classes would
   create incorrect merges for the supported Tailwind range.
+- Does it change how Tailwind infers the type of an arbitrary value
+  (`packages/tailwindcss/src/utils/infer-data-type.ts`, `utils/is-color.ts`)?
+  That decides which property an ambiguous class like `text-[…]` or
+  `border-[…]` sets, so mirror it in `LENGTH_UNIT_REGEX` or
+  `COLOR_FUNCTION_REGEX` in `src/Validators/ValidatorInterface.php`. Patch
+  releases do this too (v4.3.2 `--spacing(…)`/`--alpha(…)`, v4.3.4 length
+  units), so a patch-level update audits every patch since the last audited
+  tag and diffs those files, plus `utilities.ts` and `candidate.ts`, between
+  the two tags. Validators are
+  compared with upstream by name, so a regex that deliberately goes beyond
+  tailwind-merge cannot be recorded in `generate.mjs`; pin it in the validator
+  tests and `TailwindCssVersionsTest` instead.
 
 ### Output of this phase
 
